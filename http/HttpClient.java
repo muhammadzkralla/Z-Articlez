@@ -26,14 +26,14 @@ class HttpClient {
         }
     }
 
-    public <T> void get(String url, Callback<T> callback, Class<T> type) {
+    public <T> void get(String endpoint, Callback<T> callback, Class<T> type) {
         connect();
 
         try (BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
 
             StringBuilder requestBuilder = new StringBuilder();
-            requestBuilder.append("GET ").append(url).append(" HTTP/1.1");
+            requestBuilder.append("GET ").append(endpoint).append(" HTTP/1.1");
 
             requestBuilder.append("\r\n");
 
@@ -93,7 +93,7 @@ class HttpClient {
         }
     }
 
-    public <T> void post(String url, Object body, Callback<T> callback, Class<T> type) {
+    public <T> void post(String endpoint, Object body, Callback<T> callback, Class<T> type) {
         connect();
 
         try (BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -103,7 +103,7 @@ class HttpClient {
             int contentLength = requestBody.getBytes().length;
 
             StringBuilder requestBuilder = new StringBuilder();
-            requestBuilder.append("POST ").append(url).append(" HTTP/1.1");
+            requestBuilder.append("POST ").append(endpoint).append(" HTTP/1.1");
 
             requestBuilder.append("\r\n");
 
