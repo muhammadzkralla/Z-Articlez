@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import javax.net.ssl.SSLSocketFactory;
 
 interface Callback<T> {
     void onComplete(T success, String failure);
@@ -12,32 +13,32 @@ class HttpClient {
     private Socket socket;
     private final String url;
     private final int port;
+    private final boolean isHttps;
 
     public HttpClient(String url, int port) {
-        this.url = url;
+        this.url = url.replace("https://", "").replace("http://", "").split("/")[0];
         this.port = port;
+        this.isHttps = url.startsWith("https://");
     }
 
-    private void connect() {
-        try {
+    private void connect() throws IOException {
+        if (isHttps) {
+            socket = SSLSocketFactory.getDefault().createSocket(url, port);
+        } else {
             socket = new Socket(url, port);
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
         }
     }
 
     public <T> void get(String endpoint, Callback<T> callback, Class<T> type) {
-        connect();
 
         try (BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
+            connect();
 
             StringBuilder requestBuilder = new StringBuilder();
-            requestBuilder.append("GET ").append(endpoint).append(" HTTP/1.1");
+            requestBuilder.append("GET ").append(endpoint).append(" HTTP/1.1").append("\r\n");
 
-            requestBuilder.append("\r\n");
-
-            requestBuilder.append("Host: localhost:420\r\n");
+            requestBuilder.append("Host: ").append(url).append("\r\n");
             requestBuilder.append("User-Agent: zclient\r\n");
             requestBuilder.append("Accept: */*\r\n");
 
@@ -78,15 +79,11 @@ class HttpClient {
                 callback.onComplete(null, "HTTP Error " + statusCode + ": " + responseBody);
             }
         } catch (Exception ex) {
-            System.out.println("Could not hanlde client " + ex.getMessage());
-            try {
-                socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            callback.onComplete(null, "Error: " + ex.getMessage());
         } finally {
             try {
-                socket.close();
+                if (socket != null)
+                    socket.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -94,23 +91,21 @@ class HttpClient {
     }
 
     public <T> void post(String endpoint, Object body, Callback<T> callback, Class<T> type) {
-        connect();
 
         try (BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
+            connect();
 
             String requestBody = body instanceof String ? (String) body : body.toString();
             int contentLength = requestBody.getBytes().length;
 
             StringBuilder requestBuilder = new StringBuilder();
-            requestBuilder.append("POST ").append(endpoint).append(" HTTP/1.1");
+            requestBuilder.append("POST ").append(endpoint).append(" HTTP/1.1").append("\r\n");
 
-            requestBuilder.append("\r\n");
-
-            requestBuilder.append("Host: localhost:420\r\n");
+            requestBuilder.append("Host: ").append(url).append("\r\n");
             requestBuilder.append("User-Agent: zclient\r\n");
             requestBuilder.append("Accept: */*\r\n");
-            requestBuilder.append("Content-Type: application/x-www-form-urlencoded\r\n");
+            requestBuilder.append("Content-Type: application/json\r\n");
             requestBuilder.append("Content-Length: ").append(contentLength).append("\r\n");
 
             requestBuilder.append("\r\n");
@@ -152,15 +147,11 @@ class HttpClient {
                 callback.onComplete(null, "HTTP Error " + statusCode + ": " + responseBody);
             }
         } catch (Exception ex) {
-            System.out.println("Could not hanlde client " + ex.getMessage());
-            try {
-                socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            callback.onComplete(null, "Error: " + ex.getMessage());
         } finally {
             try {
-                socket.close();
+                if (socket != null)
+                    socket.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -168,21 +159,22 @@ class HttpClient {
     }
 
     public static void main(String[] args) {
-        HttpClient client = new HttpClient("localhost", 420);
+        HttpClient client = new HttpClient("https://httpbin.org", 443);
 
-        client.get("/hello", (success, failure) -> {
+        client.get("/get", (success, failure) -> {
             if (success != null)
                 System.out.println("Success " + success);
             else
                 System.out.println("Failure " + failure);
         }, String.class);
 
-        client.post("/hello", "test", (success, failure) -> {
-            if (success != null)
-                System.out.println("Success " + success);
-            else
-                System.out.println("Failure " + failure);
+        String jsonBody = "{\"name\": \"John\", \"age\": 30}";
+        client.post("/post", jsonBody, (success, failure) -> {
+            if (success != null) {
+                System.out.println("Success: " + success);
+            } else {
+                System.out.println("Failure: " + failure);
+            }
         }, String.class);
-
     }
 }
