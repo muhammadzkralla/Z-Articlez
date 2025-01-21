@@ -21,19 +21,23 @@ class HttpClient {
         this.isHttps = url.startsWith("https://");
     }
 
-    private void connect() throws IOException {
-        if (isHttps) {
-            socket = SSLSocketFactory.getDefault().createSocket(url, port);
-        } else {
-            socket = new Socket(url, port);
+    private void connect() {
+        try {
+            if (isHttps) {
+                socket = SSLSocketFactory.getDefault().createSocket(url, port);
+            } else {
+                socket = new Socket(url, port);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 
     public <T> void get(String endpoint, Callback<T> callback, Class<T> type) {
+        connect();
 
         try (BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
-            connect();
 
             StringBuilder requestBuilder = new StringBuilder();
             requestBuilder.append("GET ").append(endpoint).append(" HTTP/1.1").append("\r\n");
@@ -91,10 +95,10 @@ class HttpClient {
     }
 
     public <T> void post(String endpoint, Object body, Callback<T> callback, Class<T> type) {
+        connect();
 
         try (BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
-            connect();
 
             String requestBody = body instanceof String ? (String) body : body.toString();
             int contentLength = requestBody.getBytes().length;
@@ -169,7 +173,7 @@ class HttpClient {
         }, String.class);
 
         String jsonBody = "{\"name\": \"John\", \"age\": 30}";
-        client.post("/post", jsonBody, (success, failure) -> {
+        client.post("/post", jsonBody,(success, failure) -> {
             if (success != null) {
                 System.out.println("Success: " + success);
             } else {
