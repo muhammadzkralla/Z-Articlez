@@ -11,12 +11,12 @@ interface Callback<T> {
 
 class HttpClient {
     private Socket socket;
-    private final String url;
+    private final String host;
     private final int port;
     private final boolean isHttps;
 
     public HttpClient(String url, int port) {
-        this.url = url.replace("https://", "").replace("http://", "").split("/")[0];
+        this.host = url.replace("https://", "").replace("http://", "").split("/")[0];
         this.port = port;
         this.isHttps = url.startsWith("https://");
     }
@@ -24,9 +24,9 @@ class HttpClient {
     private void connect() {
         try {
             if (isHttps) {
-                socket = SSLSocketFactory.getDefault().createSocket(url, port);
+                socket = SSLSocketFactory.getDefault().createSocket(host, port);
             } else {
-                socket = new Socket(url, port);
+                socket = new Socket(host, port);
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -42,7 +42,7 @@ class HttpClient {
             StringBuilder requestBuilder = new StringBuilder();
             requestBuilder.append("GET ").append(endpoint).append(" HTTP/1.1").append("\r\n");
 
-            requestBuilder.append("Host: ").append(url).append("\r\n");
+            requestBuilder.append("Host: ").append(host).append("\r\n");
             requestBuilder.append("User-Agent: zclient\r\n");
             requestBuilder.append("Accept: */*\r\n");
 
@@ -106,7 +106,7 @@ class HttpClient {
             StringBuilder requestBuilder = new StringBuilder();
             requestBuilder.append("POST ").append(endpoint).append(" HTTP/1.1").append("\r\n");
 
-            requestBuilder.append("Host: ").append(url).append("\r\n");
+            requestBuilder.append("Host: ").append(host).append("\r\n");
             requestBuilder.append("User-Agent: zclient\r\n");
             requestBuilder.append("Accept: */*\r\n");
             requestBuilder.append("Content-Type: application/json\r\n");
@@ -173,7 +173,7 @@ class HttpClient {
         }, String.class);
 
         String jsonBody = "{\"name\": \"John\", \"age\": 30}";
-        client.post("/post", jsonBody,(success, failure) -> {
+        client.post("/post", jsonBody, (success, failure) -> {
             if (success != null) {
                 System.out.println("Success: " + success);
             } else {
