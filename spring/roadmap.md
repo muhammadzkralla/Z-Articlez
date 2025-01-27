@@ -9,9 +9,15 @@ This roadmap is designed to guide you through the fundamentals of Spring Boot an
 - Bonuses: Bonuses are included for deeper learning. They are not optional, don’t skip them entirely, do them later if you don't have time then. Most bonuses will be already discussed in later weeks.
 - AI-Assisted Learning: Feel free to use AI to explore topics further but avoid relying on it to complete tasks or write code for you.
 
+
+---
+
 # Level 1: Beginner (Weeks 1–10)
 
 Focus: Basics of programming, backend fundamentals, and Java.
+
+
+---
 
 ## Week 1: Introduction to Programming
 
