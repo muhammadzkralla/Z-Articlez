@@ -32,8 +32,8 @@ Resources:
 
 
 Task: <br>
-1- Create a basic student management system with classes for Student and Course.
-2- Shapes Task
+1- Create a basic student management system with classes for Student and Course. <br>
+2- Shapes Task <br>
 
 Note: Do not stop learning OOP after this week. OOP is from the fundamentals of computer science. You should be learning OOP all the time, specially in Java.
 
@@ -113,7 +113,7 @@ Resources:
 - [MySQL Tutorial 2 (NetworkChuck)](https://youtu.be/xiUTqnI6xk8?si=iLejnmfNfXbcdYBF)
 - [PostgreSQL Tutorial (FreeCodeCamp.org)](https://www.youtube.com/watch?v=SpfIwlAYaKk)
 
-Task: 
+Task: <br>
 1- Create a database for the book management system. <br>
 2- Try to solve some easy SQL questions on HackerRank or Leetcode. <br>
 
