@@ -1,3 +1,14 @@
+# Spring Boot Roadmap
+
+## Introduction
+This roadmap is designed to guide you through the fundamentals of Spring Boot and backend development, from beginner to advanced levels. Each stage is thoughtfully structured with specific goals, curated resources, and hands-on tasks to ensure practical learning.
+
+## Criteria
+- Three Levels: Beginner, Intermediate, and Advanced, with a focus on building strong fundamentals before progressing to advanced topics.
+- Practical Approach: Tasks are abstracted for brevity, with more details available in Notion.
+- Bonuses: Bonuses are included for deeper learning. They are not optional, don’t skip them entirely, do them later if you don't have time then. Most bonuses will be already discussed in later weeks.
+- AI-Assisted Learning: Feel free to use AI to explore topics further but avoid relying on it to complete tasks or write code for you.
+
 # Level 1: Beginner (Weeks 1–10)
 
 Focus: Basics of programming, backend fundamentals, and Java.
