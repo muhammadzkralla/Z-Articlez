@@ -122,6 +122,7 @@ Resources:
 - [Spring Documentation](https://docs.spring.io/spring-framework/reference/)
 - [Spring Boot Documentation](https://docs.spring.io/spring-boot/)
 - [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service)
+- [What is Spring Boot? (Telusko)](https://youtu.be/L0v_3MzC1io?si=-Zd_KV1llMlKtvm-)
 - [Spring Boot Tutorial (Amigoscode)](https://www.youtube.com/watch?v=9SGDpanrc8U)
 
 Task: Create a simple REST API to manage books.
@@ -186,19 +187,24 @@ Focus: Deepen Spring Boot knowledge, explore asynchronous programming, Spring Se
 
 ## Week 11: Advanced Spring Boot Features
 
-Topics: Dependency injection, bean lifecycle, Spring profiles.
+Topics: Invesion of Control, Dependency injection, bean lifecycle.
 
 Resources:
 
-Spring Core Concepts
+- [Spring IoC Documentation](https://docs.spring.io/spring-framework/reference/core/beans.html)
+- [Dependency Injection (Yehia Tech)](https://youtu.be/ttza41X-O6k?si=gC4w2oNyL-0HUNTf)
+- [Spring IoC & DI (Telusko)](https://youtu.be/5cRaQqQb14Q?si=LMnNJ8FzBxvzd5gj)
+- [Dependency Injection in Spring Boot (Telusko)](https://youtu.be/9EoAXpjnsxM?si=3nXAy7l-UgAuiosv)
+- [Autowire in Spring Boot (Telusko)](https://youtu.be/ET39IFffr24?si=HWPLKUybWdwse9jF)
 
+Task: Apply what you understood to the Student Management System or revisit what you already did for dependency injection.
 
-Task: Implement dev and prod profiles in the Student Management System.
+Bonus: Learn about Spring Profiles.
 
 
 ## Week 12: Validation and Error Handling
 
-Topics: Input validation (@Valid, @NotNull), custom exception handling (@ControllerAdvice).
+Topics: Input validation (@Valid, @NotNull, Optional<>), custom exception handling (@ControllerAdvice), global exception handling (@RestControllerAdvice, @ExceptionHandler).
 
 Task: Add validation to the Student Management System and create custom error messages for invalid inputs.
 
