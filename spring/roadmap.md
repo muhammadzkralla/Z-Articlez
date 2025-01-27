@@ -51,6 +51,8 @@ Resources:
 
 Task: Set up a GitHub repository and upload the student management system.
 
+Bonus: Learn about Date Formatting.
+
 
 ## Week 4: Basics of Web Development
 
@@ -64,7 +66,11 @@ Resources:
 - [HTTP Internals](https://medium.com/@muhammad.heshamyt/http-internals-and-building-your-own-http-client-from-scratch-part-i-d62b1028408d)
 - [HTTP Messages](https://developer.mozilla.org/en-US/docs/Web/HTTP/Messages)
 
-Task: Write a document explaining how a REST API works and how clients and servers communicate through HTTP.
+Task: <br>
+1- Write a document explaining how a REST API works and how clients and servers communicate through HTTP. <br>
+2- Build a simple HTTP client program that performs GET, POST requests to some online fake API. <br>
+
+Bonus: Learn about Postman API.
 
 Note: Do not stop learning computer networking after this week. Computer networking is from the fundamentals of computer science, specially in backend.
 
@@ -98,9 +104,12 @@ Resources:
 
 - [Spring Documentation](https://docs.spring.io/spring-framework/reference/)
 - [Spring Boot Documentation](https://docs.spring.io/spring-boot/)
+- [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service)
 - [Spring Boot Tutorial (Amigoscode)](https://www.youtube.com/watch?v=9SGDpanrc8U)
 
 Task: Create a simple REST API to manage books.
+
+Bonus: Learn about MULTIPART requests.
 
 Note: Dependency Injection, Spring JPA, and some concepts are mentioned in this tutorial but we will go through the details of them in later weeks.
 
@@ -115,14 +124,15 @@ Resources:
 - [MySQL Tutorial 1 (Fireship)](https://youtu.be/Cz3WcZLRaWc?si=CfB3po-zsdlbV678)
 - [MySQL Tutorial 2 (NetworkChuck)](https://youtu.be/xiUTqnI6xk8?si=iLejnmfNfXbcdYBF)
 - [PostgreSQL Tutorial (FreeCodeCamp.org)](https://www.youtube.com/watch?v=SpfIwlAYaKk)
+- [SQLZoo Interactive Quizes](https://sqlzoo.net/wiki/SQL_Tutorial)
 
 Task: <br>
 1- Create a database for the book management system. <br>
 2- Try to solve some easy SQL questions on HackerRank or Leetcode. <br>
 
-Note: Do not stop learning database after this week. Database is from the the fundamentals of computer science, specially in backend.
-
 Bonus: Learn about relationships and join statements.
+
+Note: Do not stop learning database after this week. Database is from the the fundamentals of computer science, specially in backend.
 
 
 ## Week 8: Integrating Spring Boot with PostgreSQL with JPA
@@ -534,7 +544,3 @@ Pagination and sorting for API endpoints.
 
 
 3. Optimize database queries to avoid N+1 issues and enable lazy loading where appropriate.
-
-
-
-Let me know if you want additional exercises!
