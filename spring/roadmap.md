@@ -75,6 +75,7 @@ Topics: Maven/Gradle, basic file I/O, and Java collections.
 
 Resources:
 
+- [Spring Boot Build Tool Documentation](https://docs.spring.io/spring-boot/reference/using/build-systems.html#using.build-systems)
 - [Maven in 10 minutes](https://www.youtube.com/watch?v=bBqxC43ASsM)
 - [Introduction to Manven](https://www.youtube.com/watch?v=bSaBmXFym30)
 - [Maven Tutorial (6:12~)](https://www.youtube.com/watch?v=Xatr8AZLOsE)
@@ -95,6 +96,8 @@ Topics: Spring Boot overview, setup, and basic annotations (@RestController, @Ge
 
 Resources:
 
+- [Spring Documentation](https://docs.spring.io/spring-framework/reference/)
+- [Spring Boot Documentation](https://docs.spring.io/spring-boot/)
 - [Spring Boot Tutorial (Amigoscode)](https://www.youtube.com/watch?v=9SGDpanrc8U)
 
 Task: Create a simple REST API to manage books.
@@ -128,6 +131,8 @@ Topics: Spring Data JPA, CRUD operations.
 
 Resources:
 
+- [Spring Boot Data Access Documentation](https://docs.spring.io/spring-boot/reference/data/index.html)
+- [Spring Data JPA Documentation](https://docs.spring.io/spring-data/jpa/reference/index.html)
 - [Spring JPA Tutorial (Amigoscode)](https://www.youtube.com/watch?v=8SGI_XS5OPw&t=2364s)
 
 Task: Enhance the book management system with a PostgreSQL database.
@@ -135,7 +140,7 @@ Task: Enhance the book management system with a PostgreSQL database.
 
 ## Week 9: Middle-Level Project
 
-Project: Build a Student Management System with REST APIs and MySQL.
+Project: Build a Student Management System with REST APIs and PostgreSQL.
 
 
 ## Week 10: Project Review and Basics Recap
