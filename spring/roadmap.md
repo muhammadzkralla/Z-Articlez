@@ -13,7 +13,7 @@ Resources:
 - [Java Basics (GeeksForGeeks)](https://www.geeksforgeeks.org/java/)
 
 
-Task: 
+Task: <br>
 1- Write simple programs like calculating the sum of numbers or finding the largest number in an array. <br>
 2- Implement basic binary search in Java. <br>
 3- Try to solve some Leetcode easy questions using Java. <br>
@@ -31,7 +31,7 @@ Resources:
 - [OOP in Java (Adel Naseem)](https://youtube.com/playlist?list=PLCInYL3l2AagY7fFlhCrjpLiIFybW3yQv&si=okMB2Lf0kXE6I6No)
 
 
-Task: 
+Task: <br>
 1- Create a basic student management system with classes for Student and Course.
 2- Shapes Task
 
