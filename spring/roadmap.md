@@ -14,9 +14,9 @@ Resources:
 
 
 Task: 
-1- Write simple programs like calculating the sum of numbers or finding the largest number in an array.
-2- Implement basic binary search in Java.
-3- Try to solve some Leetcode easy questions using Java.
+1- Write simple programs like calculating the sum of numbers or finding the largest number in an array. <br>
+2- Implement basic binary search in Java. <br>
+3- Try to solve some Leetcode easy questions using Java. <br>
 
 
 ## Week 2: Object-Oriented Programming (OOP)
@@ -114,8 +114,8 @@ Resources:
 - [PostgreSQL Tutorial (FreeCodeCamp.org)](https://www.youtube.com/watch?v=SpfIwlAYaKk)
 
 Task: 
-1- Create a database for the book management system.
-2- Try to solve some easy SQL questions on HackerRank or Leetcode.
+1- Create a database for the book management system. <br>
+2- Try to solve some easy SQL questions on HackerRank or Leetcode. <br>
 
 Note: Do not stop learning database after this week. Database is from the the fundamentals of computer science, specially in backend.
 
