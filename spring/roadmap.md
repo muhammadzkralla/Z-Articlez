@@ -14,7 +14,7 @@ This roadmap is designed to guide you through the fundamentals of Spring Boot an
 
 # Level 1: Beginner (Weeks 1–10)
 
-Focus: Basics of programming, backend fundamentals, and Java.
+Focus: Basics of Java programming, backend fundamentals, Spring Boot, SQL, and database basics.
 
 
 ---
@@ -63,7 +63,7 @@ Resources:
 
 - [Git and GitHub for Beginners (FreeCodeCamp.org)](https://www.youtube.com/watch?v=RGOj5yH7evk)
 - [Git and GitHub Tutorial for Beginners (Kevin Stratvert)](https://www.youtube.com/watch?v=tRZGeaHPoaw)
-- [Git and Github (Arabic)](https://www.youtube.com/watch?v=Q6G-J54vgKc)
+- [Git and Github (Big Data)](https://www.youtube.com/watch?v=Q6G-J54vgKc)
 
 
 Task: Set up a GitHub repository and upload the student management system.
@@ -78,7 +78,7 @@ Topics: HTTP, REST APIs, and introduction to backend development.
 Resources:
 - [Network Fundamentals for Web Developers](https://www.youtube.com/playlist?list=PLCy5RQkQgvf4yaL-AMDO8rpAAi90sWfGl)
 - [Cisco CCNA 200-301](https://www.youtube.com/playlist?list=PLF1hDMPPRqGxpYdo0ctaa7MxfOi9vjs1u)
-- [OSI Layers (Arabic)](https://youtu.be/A31bxOyj5mk?si=BbKU-ebPy2sD7LqB)
+- [OSI Layers (Metwally Labs)](https://youtu.be/A31bxOyj5mk?si=BbKU-ebPy2sD7LqB)
 - [What is a REST API?](https://www.youtube.com/watch?v=-mN3VyJuCjM)
 - [HTTP Internals](https://medium.com/@muhammad.heshamyt/http-internals-and-building-your-own-http-client-from-scratch-part-i-d62b1028408d)
 - [HTTP Messages](https://developer.mozilla.org/en-US/docs/Web/HTTP/Messages)
@@ -100,9 +100,9 @@ Resources:
 
 - [Spring Boot Build Tool Documentation](https://docs.spring.io/spring-boot/reference/using/build-systems.html#using.build-systems)
 - [Maven in 10 minutes](https://www.youtube.com/watch?v=bBqxC43ASsM)
-- [Introduction to Manven](https://www.youtube.com/watch?v=bSaBmXFym30)
+- [Introduction to Maven](https://www.youtube.com/watch?v=bSaBmXFym30)
 - [Maven Tutorial (6:12~)](https://www.youtube.com/watch?v=Xatr8AZLOsE)
-- [Apache Maven Tutorial (Article)](https://www.baeldung.com/maven#introduction-3)
+- [Apache Maven Tutorial (Baeldung)](https://www.baeldung.com/maven#introduction-3)
 - [Maven (GeeksForGeeks)](https://www.geeksforgeeks.org/apache-maven/)
 - [Java Files (W3Schools)](https://www.w3schools.com/java/java_files.asp)
 - [Java Files (Coding With John)](https://www.youtube.com/watch?v=ScUJx4aWRi0)
