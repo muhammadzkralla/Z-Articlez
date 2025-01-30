@@ -106,7 +106,7 @@ Resources:
 - [Maven (GeeksForGeeks)](https://www.geeksforgeeks.org/apache-maven/)
 - [Java Files (W3Schools)](https://www.w3schools.com/java/java_files.asp)
 - [Java Files (Coding With John)](https://www.youtube.com/watch?v=ScUJx4aWRi0)
-- [Java Colletions](https://www.youtube.com/watch?v=viTHc_4XfCA)
+- [Java Collections](https://www.youtube.com/watch?v=viTHc_4XfCA)
 
 Task: Create a Java application to manage a library system using ArrayList.
 
