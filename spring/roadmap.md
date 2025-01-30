@@ -187,7 +187,7 @@ Focus: Deepen Spring Boot knowledge, explore asynchronous programming, Spring Se
 
 ## Week 11: Advanced Spring Boot Features
 
-Topics: Invesion of Control, Dependency injection, bean lifecycle.
+Topics: Inversion of Control, Dependency injection, bean lifecycle.
 
 Resources:
 
