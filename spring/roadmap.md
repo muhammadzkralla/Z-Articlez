@@ -206,7 +206,18 @@ Bonus: Learn about Spring Profiles.
 
 Topics: Input validation (@Valid, @NotNull, Optional<>), custom exception handling (@ControllerAdvice), global exception handling (@RestControllerAdvice, @ExceptionHandler).
 
+Resources:
+
+- [Java Exceptions (Coding With John)](https://youtu.be/1XAfapkBQjk?si=C3_nKYdqbD0TmqNj)
+- [Spring Exceptions Documentation](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-exceptionhandler.html)
+- [Spring ControllerAdvice Documentation](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-advice.html)
+- [Spring Validation Documentation](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-validation.html)
+- [Spring Exception Handling (CodeSnippet)](https://youtu.be/IdHHwZg3v58?si=twwo-oeASqVKvxmY)
+- [Spring Input Validation (Fast & Simple Dev)](https://youtu.be/LItERTUC9y4?si=89VXDylJC7LmtE-W)
+
 Task: Add validation to the Student Management System and create custom error messages for invalid inputs.
+
+Bonus: Learn about CORS.
 
 
 ## Week 13: Testing in Spring Boot
