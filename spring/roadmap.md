@@ -8,6 +8,7 @@ This roadmap is designed to guide you through the fundamentals of Spring Boot an
 - Practical Approach: Tasks are abstracted for brevity, with more details available in Notion.
 - Bonuses: Bonuses are included for deeper learning. They are not optional, don’t skip them entirely, do them later if you don't have time then. Most bonuses will be already discussed in later weeks.
 - AI-Assisted Learning: Feel free to use AI to explore topics further but avoid relying on it to complete tasks or write code for you.
+- Some topics can not be finished in just one week, try to learn as much as you can and get back later.
 
 
 ---
@@ -222,23 +223,19 @@ Bonus: Learn about CORS.
 
 ## Week 13: Testing in Spring Boot
 
-Topics:
-
-Unit testing with JUnit and Mockito.
-
-Integration testing with Testcontainers.
-
+Topics: Unit testing with JUnit and Mockito, integration testing with testcontainers.
 
 Resources:
 
-Spring Boot Testing Tutorial
-
+- [Spring Testing Documentation](https://docs.spring.io/spring-framework/reference/testing.html)
+- [Spring Boot Documentation](https://docs.spring.io/spring-boot/reference/testing/index.html)
+- [Unit vs Int Testing Intro (Dan Vega)](https://youtu.be/pNiRNRgi5Ws?si=-SMzaUukHOHGe-97)
+- [Spring Boot Unit Testing (Teddy)](https://youtube.com/playlist?list=PL82C6-O4XrHcg8sNwpoDDhcxUCbFy855E&si=mGi5nqRWf7j4My9c)
 
 Task: Write unit tests for services and controllers, and integration tests for the database layer.
 
+Bonus: Learn about Swagger.
 
-
----
 
 ## Week 14: Introduction to Spring Security (Part 1)
 
