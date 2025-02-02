@@ -258,9 +258,11 @@ Task: <br>
 1- Implement basic authentication in your Spring Boot application.
 * Use httpBasic() in your security configuration.
 * Test the secured endpoints using Postman. <br>
+
 2- Implement session-based authentication.
 * Configure formLogin() for session management.
 * Use HttpSession to store user-specific data. <br>
+
 3- Configure role-based access control (e.g., allow only admins to delete resources). <br>
 4- Test the secured endpoints using Postman. <br>
 
@@ -281,6 +283,7 @@ Task: <br>
 1- Implement JWT-based authentication in your Spring Boot application.
 * Generate and validate JWTs.
 * Add a refresh token mechanism for token renewal. <br>
+
 2- Secure your REST APIs with role-based access using JWT. <br>
 3- Integrate OAuth2 with a provider like Google or GitHub. <br>
 4- Test the secured endpoints using Postman. <br>
