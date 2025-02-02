@@ -194,9 +194,11 @@ Resources:
 
 - [Spring IoC Documentation](https://docs.spring.io/spring-framework/reference/core/beans.html)
 - [Dependency Injection (Yehia Tech)](https://youtu.be/ttza41X-O6k?si=gC4w2oNyL-0HUNTf)
+- [Spring Beans and DI (Maaike)](https://www.youtube.com/watch?v=aS9SQITRocc)
 - [Spring IoC & DI (Telusko)](https://youtu.be/5cRaQqQb14Q?si=LMnNJ8FzBxvzd5gj)
 - [Dependency Injection in Spring Boot (Telusko)](https://youtu.be/9EoAXpjnsxM?si=3nXAy7l-UgAuiosv)
 - [Autowire in Spring Boot (Telusko)](https://youtu.be/ET39IFffr24?si=HWPLKUybWdwse9jF)
+- [Spring Configuration (Code Java)](https://www.youtube.com/watch?v=xP04pANWBxE)
 
 Task: Apply what you understood to the Student Management System or revisit what you already did for dependency injection.
 
@@ -231,6 +233,7 @@ Resources:
 - [Spring Boot Documentation](https://docs.spring.io/spring-boot/reference/testing/index.html)
 - [Unit vs Int Testing Intro (Dan Vega)](https://youtu.be/pNiRNRgi5Ws?si=-SMzaUukHOHGe-97)
 - [Spring Boot Unit Testing (Teddy)](https://youtube.com/playlist?list=PL82C6-O4XrHcg8sNwpoDDhcxUCbFy855E&si=mGi5nqRWf7j4My9c)
+- [Spring Boot Testing (Amigoscode)](https://www.youtube.com/watch?v=Geq60OVyBPg)
 
 Task: Write unit tests for services and controllers, and integration tests for the database layer.
 
@@ -239,35 +242,51 @@ Bonus: Learn about Swagger.
 
 ## Week 14: Introduction to Spring Security (Part 1)
 
-Topics:
-
-Basics of Spring Security.
-
-Authentication using in-memory and JDBC authentication.
-
+Topics: Authentication vs Authorization, Basic authentication, session-based authentication, role-based access control, CORS.
 
 Resources:
 
-Spring Security Getting Started
+- [Spring Security Documentation](https://docs.spring.io/spring-security/reference/index.html)
+- [Spring Boot Security Documentation](https://docs.spring.io/spring-boot/reference/web/spring-security.html#web.security)
+- [Authentication vs Authorization & Security Concepts (Java Brains)](https://www.youtube.com/watch?v=I0poT4UxFxE)
+- [Spring Security Basics (Java Brains)](https://www.youtube.com/playlist?list=PLqq-6Pq4lTTYTEooakHchTGglSvkZAjnE)
+- [session-based Authentication (Baeldung)](https://www.baeldung.com/spring-security-session)
+- [Basic Authentication (Baeldung)](https://www.baeldung.com/spring-security-basic-authentication)
+- [CORS in Spring (Telusko)](https://www.youtube.com/watch?v=iC1a8cUzGgc)
 
+Task: <br>
+1- Implement basic authentication in your Spring Boot application.
+* Use httpBasic() in your security configuration.
+* Test the secured endpoints using Postman. <br>
+2- Implement session-based authentication.
+* Configure formLogin() for session management.
+* Use HttpSession to store user-specific data. <br>
+3- Configure role-based access control (e.g., allow only admins to delete resources). <br>
+4- Test the secured endpoints using Postman. <br>
 
-Task: Secure the Student Management System with in-memory authentication.
+Bonus: Learn more about CORS.
 
 
 ## Week 15: Spring Security (Part 2): JWT and Role-Based Access Control
 
-Topics:
+Topics: JWT (JSON Web Tokens), OAuth2, custom security configurations.
 
-JWT Authentication.
+Resources:
+- [Spring Security Documentation](https://docs.spring.io/spring-security/reference/index.html)
+- [Spring Boot Security Documentation](https://docs.spring.io/spring-boot/reference/web/spring-security.html#web.security)
+- [JWT & OAuth2 with Spring Security (Telusko)](https://www.youtube.com/watch?v=oeni_9g7too)
+- [JWT Authentication (Baeldung)](https://www.baeldung.com/spring-security-oauth-jwt)
 
-Role-based access control.
+Task: <br>
+1- Implement JWT-based authentication in your Spring Boot application.
+* Generate and validate JWTs.
+* Add a refresh token mechanism for token renewal. <br>
+2- Secure your REST APIs with role-based access using JWT. <br>
+3- Integrate OAuth2 with a provider like Google or GitHub. <br>
+4- Test the secured endpoints using Postman. <br>
 
+Bonus: Learn how to hot-reload a Spring Boot project.
 
-Task: Add JWT-based authentication and role-based permissions to the Student Management System.
-
-
-
----
 
 ## Week 16: Introduction to NoSQL Databases
 
