@@ -290,6 +290,23 @@ Task: <br>
 
 Bonus: Learn how to hot-reload a Spring Boot project.
 
+## Week 16: Sending Messages to Users via E-mail & SMS
+
+Topics: SMTP servers, SMS messages, and OTPs.
+
+Resources:
+
+- [Setup Gmail SMTP Server](https://youtu.be/kTcmbZqNiGw?si=rHu155NGP6VkaAZ9)
+- [Sending E-mails in Spring Boot](https://youtu.be/ugIUObNHZdo?si=V65zzbeGJxMLy7eP)
+- [Spring Email (Baeldung)](https://www.baeldung.com/spring-email)
+- [SMS via Twilio in Spring Boot (Amigoscode)](https://youtu.be/OuBttmaPlhM?si=ZzRaiO3Ufw-VvogN)
+
+Task: <br>
+1- Configure a Gmail SMTP and write the email sending service. <br>
+2- Create a simple email verification service by sending an OTP to the given email. <br>
+
+Bonus: Learn about pagination.
+
 
 ## Week 16: Introduction to NoSQL Databases
 
