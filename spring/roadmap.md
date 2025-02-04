@@ -307,6 +307,22 @@ Task: <br>
 
 Bonus: Learn about pagination.
 
+## Week 17: More SQL Databases and Hibernate ORM
+
+Topics: Advanced SQL concepts, Hibernate ORM, joins & relationships, aggregate functions, and performance optimization.
+
+Resources:
+
+- [Hibernate Documentation](https://docs.jboss.org/hibernate/orm/6.6/introduction/html_single/Hibernate_Introduction.html)
+- [Spring Hibernate Documentation](https://docs.spring.io/spring-framework/reference/data-access/orm/hibernate.html)
+- [Hibernate and JPA Tutorial (Marco)](https://youtu.be/xHminZ9Dxm4?si=O1FXR-ga9GZb8KtL)
+
+Task:
+
+Bonus:
+
+Note:
+
 
 ## Week 16: Introduction to NoSQL Databases
 
