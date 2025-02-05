@@ -23,9 +23,11 @@ Focus: Basics of Java programming, backend fundamentals, Spring Boot, SQL, and d
 ## Week 1: Introduction to Programming
 
 Topics:
-* Basics of programming 
-* variables, loops
-* conditionals.
+* Java syntax
+* Basics of programming
+* Variables
+* Loops
+* Conditionals
 
 Resources:
 
@@ -42,7 +44,13 @@ Task: <br>
 
 ## Week 2: Object-Oriented Programming (OOP)
 
-Topics: Classes, objects, inheritance, polymorphism, encapsulation.
+Topics:
+* Classes
+* Objects
+* Abstraction
+* Inheritance
+* polymorphism
+* Encapsulation
 
 Resources:
 
@@ -61,7 +69,12 @@ Note: Do not stop learning OOP after this week. OOP is from the fundamentals of 
 
 ## Week 3: Introduction to Version Control with Git
 
-Topics: Git basics, GitHub, branches, commits.
+Topics:
+* Git basics
+* GitHub
+* Branches
+* Commits
+* Pull requests
 
 Resources:
 
@@ -77,7 +90,12 @@ Bonus: Learn about Date Formatting.
 
 ## Week 4: Basics of Web Development
 
-Topics: HTTP, REST APIs, and introduction to backend development.
+Topics:
+* HTTP internals
+* REST APIs
+* Introduction to backend development
+* CCNA
+* OSI model
 
 Resources:
 - [Network Fundamentals for Web Developers](https://www.youtube.com/playlist?list=PLCy5RQkQgvf4yaL-AMDO8rpAAi90sWfGl)
@@ -98,7 +116,10 @@ Note: Do not stop learning computer networking after this week. Computer network
 
 ## Week 5: Java Essentials for Spring Boot
 
-Topics: Maven/Gradle, basic file I/O, and Java collections.
+Topics:
+* Maven/Gradle
+* Basic file I/O
+* Java collections
 
 Resources:
 
@@ -119,7 +140,10 @@ Bonus: Learn about Java Generics and Callback functions.
 
 ## Week 6: Introduction to Spring Boot
 
-Topics: Spring Boot overview, setup, and basic annotations (@RestController, @GetMapping, @PostMapping).
+Topics:
+* Spring Boot overview and setup
+* Basic annotations (@RestController, @GetMapping, @PostMapping)
+* Spring MVC
 
 Resources:
 
@@ -138,7 +162,12 @@ Note: Dependency Injection, Spring JPA, and some concepts are mentioned in this 
 
 ## Week 7: Database Basics with MySQL and PostgreSQL
 
-Topics: Introduction to SQL, setting up the RDBMS, basic queries.
+Topics:
+* What is a database?
+* Introduction to SQL
+* Introduction to PostgreSQL and MySQL Server
+* Setting up the RDBMS
+* Basic queries
 
 Resources:
 
@@ -160,7 +189,10 @@ Note: Do not stop learning database after this week. Database is from the the fu
 
 ## Week 8: Integrating Spring Boot with PostgreSQL with JPA
 
-Topics: Spring Data JPA, CRUD operations.
+Topics:
+* Spring Data JPA ORM
+* CRUD operations
+* SQL and ORMs
 
 Resources:
 
@@ -192,7 +224,11 @@ Focus: Deepen Spring Boot knowledge, explore asynchronous programming, Spring Se
 
 ## Week 11: Advanced Spring Boot Features
 
-Topics: Inversion of Control, Dependency injection, bean lifecycle.
+Topics:
+* Inversion of Control & IoC Container
+* Dependency Injection design pattern
+* Beans and Bean lifecycle.
+* Spring annotations (@Bean, @Component, @Configuration, etc)
 
 Resources:
 
@@ -211,7 +247,10 @@ Bonus: Learn about Spring Profiles.
 
 ## Week 12: Validation and Error Handling
 
-Topics: Input validation (@Valid, @NotNull, Optional<>), custom exception handling (@ControllerAdvice), global exception handling (@RestControllerAdvice, @ExceptionHandler).
+Topics:
+* Input validation (@Valid, @NotNull, Optional<>)
+* Custom exception handling (@ControllerAdvice)
+* Global exception handling (@RestControllerAdvice, @ExceptionHandler)
 
 Resources:
 
@@ -229,7 +268,10 @@ Bonus: Learn about CORS.
 
 ## Week 13: Testing in Spring Boot
 
-Topics: Unit testing with JUnit and Mockito, integration testing with testcontainers.
+Topics:
+* Unit testing with JUnit and Mockito
+* Integration testing with testcontainers
+* API Documentation
 
 Resources:
 
@@ -246,7 +288,12 @@ Bonus: Learn about Swagger.
 
 ## Week 14: Introduction to Spring Security (Part 1)
 
-Topics: Authentication vs Authorization, Basic authentication, session-based authentication, role-based access control, CORS.
+Topics:
+* Authentication vs Authorization
+* Basic Authentication
+* Session-based authentication
+* Role-based access control
+* CORS
 
 Resources:
 
@@ -275,7 +322,10 @@ Bonus: Learn more about CORS.
 
 ## Week 15: Spring Security (Part 2): JWT and Role-Based Access Control
 
-Topics: JWT (JSON Web Tokens), OAuth2, custom security configurations.
+Topics:
+* JWT (JSON Web Tokens)
+* OAuth2
+* Custom security configurations
 
 Resources:
 - [Spring Security Documentation](https://docs.spring.io/spring-security/reference/index.html)
@@ -296,7 +346,10 @@ Bonus: Learn how to hot-reload a Spring Boot project.
 
 ## Week 16: Sending Messages to Users via E-mail & SMS
 
-Topics: SMTP servers, SMS messages, and OTPs.
+Topics:
+* SMTP servers
+* SMS messages
+* OTPs (One Time Password)
 
 Resources:
 
@@ -313,7 +366,11 @@ Bonus: Learn about pagination.
 
 ## Week 17: More SQL Databases and Hibernate ORM
 
-Topics: Advanced SQL concepts, Hibernate ORM, joins & relationships, aggregate functions.
+Topics:
+* Advanced SQL concepts
+* Hibernate ORM
+* Joins & relationships
+* Aggregate functions
 
 Resources:
 
