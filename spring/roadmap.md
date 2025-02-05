@@ -22,7 +22,10 @@ Focus: Basics of Java programming, backend fundamentals, Spring Boot, SQL, and d
 
 ## Week 1: Introduction to Programming
 
-Topics: Basics of programming, variables, loops, conditionals.
+Topics:
+* Basics of programming 
+* variables, loops
+* conditionals.
 
 Resources:
 
@@ -144,6 +147,7 @@ Resources:
 - [MySQL Tutorial 2 (NetworkChuck)](https://youtu.be/xiUTqnI6xk8?si=iLejnmfNfXbcdYBF)
 - [PostgreSQL Tutorial (FreeCodeCamp.org)](https://www.youtube.com/watch?v=SpfIwlAYaKk)
 - [SQLZoo Interactive Quizes](https://sqlzoo.net/wiki/SQL_Tutorial)
+- [PostgreSQL Tutorials (Neon)](https://neon.tech/postgresql/tutorial)
 
 Task: <br>
 1- Create a database for the book management system. <br>
@@ -309,19 +313,22 @@ Bonus: Learn about pagination.
 
 ## Week 17: More SQL Databases and Hibernate ORM
 
-Topics: Advanced SQL concepts, Hibernate ORM, joins & relationships, aggregate functions, and performance optimization.
+Topics: Advanced SQL concepts, Hibernate ORM, joins & relationships, aggregate functions.
 
 Resources:
 
 - [Hibernate Documentation](https://docs.jboss.org/hibernate/orm/6.6/introduction/html_single/Hibernate_Introduction.html)
 - [Spring Hibernate Documentation](https://docs.spring.io/spring-framework/reference/data-access/orm/hibernate.html)
 - [Hibernate and JPA Tutorial (Marco)](https://youtu.be/xHminZ9Dxm4?si=O1FXR-ga9GZb8KtL)
+- [Advanced SQL Tutorial (Mode Analytics)](https://mode.com/sql-tutorial)
+- [SQL Aggregate Functions (W3Schools)](https://www.w3schools.com/sql/sql_count_avg_sum.asp)
+- [SQLZoo Interactive Quizes](https://sqlzoo.net/wiki/SQL_Tutorial)
 
-Task:
+Task: Solve SQL problems on HackerRank or Leetcode.
 
-Bonus:
+Bonus: Learn how to design a database (will be discussed in details in a later week).
 
-Note:
+Note: It's important to understand the difference between `JPA`, `Hibernate`, and `Spring Data JPA`. `JPA` is a specification or an interface, `Hibernate` is an implementation of this interface and an ORM, and `Spring Data JPA` is a framework that relies on `JPA` implementations like `Hibernate` or any other implementation (but `Hibernate` is the default one). While `Spring Data JPA` is the most used option for ORMs and database interactions and that you will rarely need to do raw `Hibernate`, it's good to understand what's happening under the hood. Do not get overwhelmed if you don't understand `Hibernate` well for now, it has a complex learning curve, just do your best.
 
 
 ## Week 16: Introduction to NoSQL Databases
