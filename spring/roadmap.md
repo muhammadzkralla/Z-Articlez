@@ -228,21 +228,16 @@ Task: Enhance the book management system with a PostgreSQL database.
 Project: Build a Student Management System with REST APIs and PostgreSQL.
 
 
-## Week 11: Project Review and Basics Recap
-
-Task: Review the project code, address mistakes, and document learnings.
-
-
 ---
 
-# Level 2: Intermediate (Weeks 11–22)
+# Level 2: Intermediate (Weeks 11–24)
 
 Focus: Deepen Spring Boot knowledge, explore asynchronous programming, Spring Security, NoSQL databases, and real-time communication.
 
 
 ---
 
-## Week 12: Advanced Spring Boot Features
+## Week 11: Advanced Spring Boot Features
 
 Topics:
 * Inversion of Control & IoC Container
@@ -265,7 +260,7 @@ Task: Apply what you understood to the Student Management System or revisit what
 Bonus: Learn about Spring Profiles.
 
 
-## Week 13: Validation and Error Handling
+## Week 12: Validation and Error Handling
 
 Topics:
 * Input validation (@Valid, @NotNull, Optional<>)
@@ -286,7 +281,7 @@ Task: Add validation to the Student Management System and create custom error me
 Bonus: Learn about CORS.
 
 
-## Week 14: Testing in Spring Boot
+## Week 13: Testing in Spring Boot
 
 Topics:
 * Unit testing with JUnit and Mockito
@@ -306,7 +301,7 @@ Task: Write unit tests for services and controllers, and integration tests for t
 Bonus: Learn about Swagger.
 
 
-## Week 15: Introduction to Spring Security (Part 1)
+## Week 14: Introduction to Spring Security (Part 1)
 
 Topics:
 * Authentication vs Authorization
@@ -340,7 +335,7 @@ Task: <br>
 Bonus: Learn more about CORS.
 
 
-## Week 16: Spring Security (Part 2): JWT and Role-Based Access Control
+## Week 15: Spring Security (Part 2): JWT and Role-Based Access Control
 
 Topics:
 * JWT (JSON Web Tokens)
@@ -364,7 +359,7 @@ Task: <br>
 
 Bonus: Learn how to hot-reload a Spring Boot project.
 
-## Week 17: Sending Messages to Users via E-mail & SMS
+## Week 16: Sending Messages to Users via E-mail & SMS
 
 Topics:
 * SMTP servers
@@ -384,7 +379,7 @@ Task: <br>
 
 Bonus: Learn about pagination.
 
-## Week 18: More SQL Databases and Hibernate ORM
+## Week 17: More SQL Databases and Hibernate ORM
 
 Topics:
 * Advanced SQL concepts
@@ -413,11 +408,11 @@ Bonus: Learn how to design a database (will be discussed in details in a later w
 Note: It's important to understand the difference between `JPA`, `Hibernate`, and `Spring Data JPA`. `JPA` is a specification or an interface, `Hibernate` is an implementation of this interface and an ORM, and `Spring Data JPA` is a framework that relies on `JPA` implementations like `Hibernate` or any other implementation (but `Hibernate` is the default one). While `Spring Data JPA` is the most used option for ORMs and database interactions and that you will rarely need to do raw `Hibernate`, it's good to understand what's happening under the hood. Do not get overwhelmed if you don't understand `Hibernate` well for now, it has a complex learning curve, just do your best.
 
 
-## Week 19: Building an E-Commerce Website Backend
+## Week 18: Building an E-Commerce Website Backend
 
 Project: Build the backend of an E-Commerce website with REST APIs, Spring Security, PostgreSQL, Spring Data JPA, JWT Authentication, Email verification using SMTP, and write some unit tests.
 
-## Week 20: Introduction to NoSQL Databases
+## Week 19: Introduction to NoSQL Databases
 
 Topics:
 
