@@ -87,8 +87,28 @@ Task: Set up a GitHub repository and upload the student management system.
 
 Bonus: Learn about Date Formatting.
 
+## Week 4: Basic HTML, CSS, and JS for the Front-end
 
-## Week 4: Basics of Web Development
+Topics:
+* HTML
+* CSS
+* JavaScipt
+* Basic Front-end Knowledge
+
+Resources:
+
+- [HTML5 and CSS3 (SuperSimpleDev)](https://youtu.be/G3e-cpL7ofc?si=nkOWX7S6EwYhBta1)
+- [HTML5 and CSS3 (FreeCodeCamp.org)](https://youtu.be/mU6anWqZJcc?si=1MvHczhsZxkgS_pO)
+- [JavaScipt Basics (Mosh)](https://youtu.be/W6NZfCO5SIk?si=B2J2hKqugXf_sTS1)
+- [Build a Simple Portfolio Front-end (WEB CIFAR)](https://youtu.be/ZFQkb26UD1Y?si=UR4FNhijugBQzV_u)
+- [Build a Simple To-Do List Front-end (Web Dev Simplified)](https://youtu.be/W7FaYfuwu70?si=PJpssoprYNyUQp69)
+
+Task: Build a simple front-end for a website of your choice (portfolio, to-do list app, blog, etc).
+
+Bonus: Learn about Regex (Regular Expressions).
+
+
+## Week 5: Basics of Web Development
 
 Topics:
 * HTTP internals
@@ -114,7 +134,7 @@ Bonus: Learn about Postman API.
 Note: Do not stop learning computer networking after this week. Computer networking is from the fundamentals of computer science, specially in backend.
 
 
-## Week 5: Java Essentials for Spring Boot
+## Week 6: Java Essentials for Spring Boot
 
 Topics:
 * Maven/Gradle
@@ -138,7 +158,7 @@ Task: Create a Java application to manage a library system using ArrayList.
 Bonus: Learn about Java Generics and Callback functions.
 
 
-## Week 6: Introduction to Spring Boot
+## Week 7: Introduction to Spring Boot
 
 Topics:
 * Spring Boot overview and setup
@@ -160,7 +180,7 @@ Bonus: Learn about MULTIPART requests.
 Note: Dependency Injection, Spring JPA, and some concepts are mentioned in this tutorial but we will go through the details of them in later weeks.
 
 
-## Week 7: Database Basics with MySQL and PostgreSQL
+## Week 8: Database Basics with MySQL and PostgreSQL
 
 Topics:
 * What is a database?
@@ -187,7 +207,7 @@ Bonus: Learn about relationships and join statements.
 Note: Do not stop learning database after this week. Database is from the the fundamentals of computer science, specially in backend.
 
 
-## Week 8: Integrating Spring Boot with PostgreSQL with JPA
+## Week 9: Integrating Spring Boot with PostgreSQL with JPA
 
 Topics:
 * Spring Data JPA ORM
@@ -203,12 +223,12 @@ Resources:
 Task: Enhance the book management system with a PostgreSQL database.
 
 
-## Week 9: Middle-Level Project
+## Week 10 Middle-Level Project
 
 Project: Build a Student Management System with REST APIs and PostgreSQL.
 
 
-## Week 10: Project Review and Basics Recap
+## Week 11: Project Review and Basics Recap
 
 Task: Review the project code, address mistakes, and document learnings.
 
@@ -222,7 +242,7 @@ Focus: Deepen Spring Boot knowledge, explore asynchronous programming, Spring Se
 
 ---
 
-## Week 11: Advanced Spring Boot Features
+## Week 12: Advanced Spring Boot Features
 
 Topics:
 * Inversion of Control & IoC Container
@@ -245,7 +265,7 @@ Task: Apply what you understood to the Student Management System or revisit what
 Bonus: Learn about Spring Profiles.
 
 
-## Week 12: Validation and Error Handling
+## Week 13: Validation and Error Handling
 
 Topics:
 * Input validation (@Valid, @NotNull, Optional<>)
@@ -266,7 +286,7 @@ Task: Add validation to the Student Management System and create custom error me
 Bonus: Learn about CORS.
 
 
-## Week 13: Testing in Spring Boot
+## Week 14: Testing in Spring Boot
 
 Topics:
 * Unit testing with JUnit and Mockito
@@ -286,7 +306,7 @@ Task: Write unit tests for services and controllers, and integration tests for t
 Bonus: Learn about Swagger.
 
 
-## Week 14: Introduction to Spring Security (Part 1)
+## Week 15: Introduction to Spring Security (Part 1)
 
 Topics:
 * Authentication vs Authorization
@@ -320,7 +340,7 @@ Task: <br>
 Bonus: Learn more about CORS.
 
 
-## Week 15: Spring Security (Part 2): JWT and Role-Based Access Control
+## Week 16: Spring Security (Part 2): JWT and Role-Based Access Control
 
 Topics:
 * JWT (JSON Web Tokens)
@@ -344,7 +364,7 @@ Task: <br>
 
 Bonus: Learn how to hot-reload a Spring Boot project.
 
-## Week 16: Sending Messages to Users via E-mail & SMS
+## Week 17: Sending Messages to Users via E-mail & SMS
 
 Topics:
 * SMTP servers
@@ -364,7 +384,7 @@ Task: <br>
 
 Bonus: Learn about pagination.
 
-## Week 17: More SQL Databases and Hibernate ORM
+## Week 18: More SQL Databases and Hibernate ORM
 
 Topics:
 * Advanced SQL concepts
@@ -377,6 +397,11 @@ Resources:
 - [Hibernate Documentation](https://docs.jboss.org/hibernate/orm/6.6/introduction/html_single/Hibernate_Introduction.html)
 - [Spring Hibernate Documentation](https://docs.spring.io/spring-framework/reference/data-access/orm/hibernate.html)
 - [Hibernate and JPA Tutorial (Marco)](https://youtu.be/xHminZ9Dxm4?si=O1FXR-ga9GZb8KtL)
+- [SQL Joins Animated + Practice (Anton)](https://youtu.be/Yh4CrPHVBdE?si=NTskK_hzaFnPVUSo)
+- [Learn SQL Joins (Decomplexify)](https://youtu.be/nivyaiCeWjs?si=orLEGaNaKXiWqL_i)
+- [Aggregate Functions in SQL (Bro Code)](https://youtu.be/9HXJUGT-06w?si=rorP_uXiUKYTbPsG)
+- [Aggregate Functions in SQL (Becoming a Data Scientist)](https://youtu.be/jcoJuc5e3RE?si=G2_n7MxtfF8koxPX)
+- [Advanced Aggregate Functions in SQL (Becoming a Data Scientist)](https://youtu.be/nNrgRVIzeHg?si=Nav2epckJhLvgRYS)
 - [Advanced SQL Tutorial (Mode Analytics)](https://mode.com/sql-tutorial)
 - [SQL Aggregate Functions (W3Schools)](https://www.w3schools.com/sql/sql_count_avg_sum.asp)
 - [SQLZoo Interactive Quizes](https://sqlzoo.net/wiki/SQL_Tutorial)
@@ -388,7 +413,11 @@ Bonus: Learn how to design a database (will be discussed in details in a later w
 Note: It's important to understand the difference between `JPA`, `Hibernate`, and `Spring Data JPA`. `JPA` is a specification or an interface, `Hibernate` is an implementation of this interface and an ORM, and `Spring Data JPA` is a framework that relies on `JPA` implementations like `Hibernate` or any other implementation (but `Hibernate` is the default one). While `Spring Data JPA` is the most used option for ORMs and database interactions and that you will rarely need to do raw `Hibernate`, it's good to understand what's happening under the hood. Do not get overwhelmed if you don't understand `Hibernate` well for now, it has a complex learning curve, just do your best.
 
 
-## Week 16: Introduction to NoSQL Databases
+## Week 19: Building an E-Commerce Website Backend
+
+Project: Build the backend of an E-Commerce website with REST APIs, Spring Security, PostgreSQL, Spring Data JPA, JWT Authentication, Email verification using SMTP, and write some unit tests.
+
+## Week 20: Introduction to NoSQL Databases
 
 Topics:
 
@@ -406,9 +435,6 @@ Spring Data MongoDB Guide
 
 Task: Migrate a part of the Student Management System (e.g., users or tasks) to MongoDB.
 
-
-
----
 
 ## Week 17: Introduction to Asynchronous Programming in Spring Boot
 
