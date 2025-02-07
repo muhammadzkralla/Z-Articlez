@@ -208,7 +208,7 @@ Bonus: Learn about relationships and join statements.
 Note: Do not stop learning database after this week. Database is from the the fundamentals of computer science, specially in backend.
 
 
-## Week 9: Integrating Spring Boot with PostgreSQL with JPA
+## Week 9: Integrating Spring Boot with PostgreSQL & Spring Data JPA
 
 Topics:
 * Spring Data JPA ORM
@@ -226,14 +226,14 @@ Task: Enhance the book management system with a PostgreSQL database.
 Bonus: Learn how to hot-reload a Spring Boot project.
 
 
-## Week 10 Middle-Level Project
+## Week 10: Building a Student Management System
 
 Project: Build a Student Management System with REST APIs and PostgreSQL.
 
 
 ---
 
-# Level 2: Intermediate (Weeks 11–24)
+# Level 2: Intermediate (Weeks 11–25)
 
 Focus: Deepen Spring Boot knowledge, explore asynchronous programming, Spring Security, NoSQL databases, and real-time communication.
 
@@ -294,7 +294,7 @@ Topics:
 Resources:
 
 - [Spring Testing Documentation](https://docs.spring.io/spring-framework/reference/testing.html)
-- [Spring Boot Documentation](https://docs.spring.io/spring-boot/reference/testing/index.html)
+- [Spring Boot Testing Documentation](https://docs.spring.io/spring-boot/reference/testing/index.html)
 - [Unit vs Int Testing Intro (Dan Vega)](https://youtu.be/pNiRNRgi5Ws?si=-SMzaUukHOHGe-97)
 - [Spring Boot Unit Testing (Teddy)](https://youtube.com/playlist?list=PL82C6-O4XrHcg8sNwpoDDhcxUCbFy855E&si=mGi5nqRWf7j4My9c)
 - [Spring Boot Testing (Amigoscode)](https://www.youtube.com/watch?v=Geq60OVyBPg)
@@ -304,7 +304,44 @@ Task: Write unit tests for services and controllers, and integration tests for t
 Bonus: Learn about Swagger.
 
 
-## Week 14: Introduction to Spring Security (Part 1)
+## Week 14: Filters & Interceptors, Lombok, Pagination & Filtering, File Uploads
+
+Topics:
+* Spring Boot Filters
+* Spring Boot Interceptors
+* Lombok Annotations
+* Pagination & Filtering Data
+* Uploading a File with MULTIPART Requests
+
+Resources:
+
+- [Spring Filters Documentation](https://docs.spring.io/spring-framework/reference/web/webmvc/filters.html)
+- [Spring Interceptors Documentation](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-config/interceptors.html)
+- [Spring Boot File Upload Documentation](https://spring.io/guides/gs/uploading-files)
+- [Spring Filter Series (Sergey Tech)](https://youtube.com/playlist?list=PLrHjhj3I5M_ljv8s-Bejj4tbYPjOnjwQp&si=yugB_pYcNNg_Rpbb)
+- [Spring Boot Interceptors (CodeSnippet)](https://youtu.be/fNMciZvDN6A?si=zPzkU_IPoglQFkBw)
+- [Lombok Tutorial (Amigoscode)](https://youtu.be/z7bsNF2Dtf0?si=9U5U17NdttXdL33w)
+- [Spring Boot File Upload & Download (Java Techie)](https://youtu.be/XUL60-Ke-L8?si=6Ri2ulOIQfBgVNN7)
+- [Spring Boot File Upload & Download (Telusko)](https://youtu.be/JIWdBBtCrjM?si=_BwWlx7GBGuBOadD)
+- [Pagination in Spring Boot (Teddy)](https://youtu.be/HJw8p4SIJSs?si=XnPFyoRk56kAKTyP)
+- [Pagination and Sorting in Spring Boot (Java Techie)](https://youtu.be/Wa0GQwWwzJE?si=OaVGNiEQeosIwwnr)
+- [How to Define a Spring Boot Filter (GeeksforGeeks)](https://www.geeksforgeeks.org/how-to-define-a-spring-boot-filter/)
+- [How to Define a Spring Boot Interceptors (GeeksforGeeks)](https://www.geeksforgeeks.org/spring-boot-interceptor/)
+- [Pagination and Sorting in Spring Data JPA (Baeldung)](https://www.baeldung.com/spring-data-jpa-pagination-sorting)
+- [Spring Boot File Upload & Download (GeeksforGeeks)](https://www.geeksforgeeks.org/spring-mvc-implementing-file-uploads-and-downloads/)
+
+Task: <br>
+1- Add logging feature to the students' management system using filters once and using interceptors once. <br>
+2- Add the pagination feature to the students' management system. <br>
+3- Add lombok annotations to the students' management system. <br>
+4- Create a simple Spring Boot application that allows users to upload files using multipart requests and stores them in the local file system (or database for learning purposes). <br>
+
+Bonus: Take a look on `Firebase` and try to implement file upload & download feature using `Firebase` instead of the above ways.
+
+Note: In these resources, uploaded files are either stored in a database or saved as local files on the server. However, in most cases, this is not the best approach. Typically, uploaded files should be stored in a cloud service provider such as `AWS` or `Firebase`, while only the file URL is saved in the database. We will cover this in more detail during the `Firebase` week.
+
+
+## Week 15: Introduction to Spring Security (Part 1)
 
 Topics:
 * Authentication vs Authorization
@@ -318,10 +355,13 @@ Resources:
 - [Spring Security Documentation](https://docs.spring.io/spring-security/reference/index.html)
 - [Spring Boot Security Documentation](https://docs.spring.io/spring-boot/reference/web/spring-security.html#web.security)
 - [Authentication vs Authorization & Security Concepts (Java Brains)](https://www.youtube.com/watch?v=I0poT4UxFxE)
+- [Spring Boot Basic Authentication (Lazy Programmer)](https://youtu.be/IeDxBpe8j64?si=yv6JxVN7muM4XL21)
+- [Role-based Access Control (Lazy Programmer)](https://youtu.be/Wq3MZxBlVzI?si=tXLiV4Wcygg3z7af)
+- [Spring Security (Lazy Programmer) (start from end to start)](https://youtube.com/playlist?list=PLOktGWstEblrgb_rNddv3HGaazetE3t1A&si=AjT0vZs2OOBOVoq1)
 - [Spring Security Basics (Java Brains)](https://www.youtube.com/playlist?list=PLqq-6Pq4lTTYTEooakHchTGglSvkZAjnE)
+- [CORS in Spring (Telusko)](https://www.youtube.com/watch?v=iC1a8cUzGgc)
 - [session-based Authentication (Baeldung)](https://www.baeldung.com/spring-security-session)
 - [Basic Authentication (Baeldung)](https://www.baeldung.com/spring-security-basic-authentication)
-- [CORS in Spring (Telusko)](https://www.youtube.com/watch?v=iC1a8cUzGgc)
 
 Task: <br>
 1- Implement basic authentication in your Spring Boot application.
@@ -337,8 +377,10 @@ Task: <br>
 
 Bonus: Learn about Lombok.
 
+Note: I recommend the first part of Lazy Programmer's playlist for this week.
 
-## Week 15: Spring Security (Part 2): JWT and Role-Based Access Control
+
+## Week 16: Spring Security (Part 2): JWT and Role-Based Access Control
 
 Topics:
 * JWT (JSON Web Tokens)
@@ -348,6 +390,8 @@ Topics:
 Resources:
 - [Spring Security Documentation](https://docs.spring.io/spring-security/reference/index.html)
 - [Spring Boot Security Documentation](https://docs.spring.io/spring-boot/reference/web/spring-security.html#web.security)
+- [Spring Security (Lazy Programmer) (start from end to start)](https://youtube.com/playlist?list=PLOktGWstEblrgb_rNddv3HGaazetE3t1A&si=AjT0vZs2OOBOVoq1)
+- [Spring Security Basics (Java Brains)](https://www.youtube.com/playlist?list=PLqq-6Pq4lTTYTEooakHchTGglSvkZAjnE)
 - [JWT & OAuth2 with Spring Security (Telusko)](https://www.youtube.com/watch?v=oeni_9g7too)
 - [JWT Authentication (Baeldung)](https://www.baeldung.com/spring-security-oauth-jwt)
 
@@ -362,7 +406,10 @@ Task: <br>
 
 Bonus: Learn about Filters in Spring Boot.
 
-## Week 16: Sending Messages to Users via E-mail & SMS
+Note: I recommend watching the second part of Lazy Programmer's playlist and Telusko's video for this week.
+
+
+## Week 17: Sending Messages to Users via E-mail & SMS
 
 Topics:
 * SMTP servers
@@ -382,7 +429,8 @@ Task: <br>
 
 Bonus: Learn about pagination.
 
-## Week 17: More SQL Databases and Hibernate ORM
+
+## Week 18: More SQL Databases and Hibernate ORM
 
 Topics:
 * Advanced SQL concepts
@@ -411,11 +459,11 @@ Bonus: Learn how to design a database.
 Note: It's important to understand the difference between `JPA`, `Hibernate`, and `Spring Data JPA`. `JPA` is a specification or an interface, `Hibernate` is an implementation of this interface and an ORM, and `Spring Data JPA` is a framework that relies on `JPA` implementations like `Hibernate` or any other implementation (but `Hibernate` is the default one). While `Spring Data JPA` is the most used option for ORMs and database interactions and that you will rarely need to do raw `Hibernate`, it's good to understand what's happening under the hood. Do not get overwhelmed if you don't understand `Hibernate` well for now, it has a complex learning curve, just do your best.
 
 
-## Week 18: Building an E-Commerce Website Backend
+## Week 19: Building an E-Commerce Website Backend
 
 Project: Build the backend of an E-Commerce website with REST APIs, Spring Security, PostgreSQL, Spring Data JPA, JWT Authentication, Email verification using SMTP, and write some unit tests.
 
-## Week 19: Introduction to NoSQL Databases
+## Week 20: Introduction to NoSQL Databases
 
 Topics:
 * Introduction to NoSQL Databases
