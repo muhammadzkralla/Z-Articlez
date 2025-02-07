@@ -8,7 +8,8 @@ This roadmap is designed to guide you through the fundamentals of Spring Boot an
 - Practical Approach: Tasks are abstracted for brevity, with more details available in Notion.
 - Bonuses: Bonuses are included for deeper learning. They are not optional, don’t skip them entirely, do them later if you don't have time then. Most bonuses will be already discussed in later weeks.
 - AI-Assisted Learning: Feel free to use AI to explore topics further but avoid relying on it to complete tasks or write code for you.
-- Some topics can not be finished in just one week, try to learn as much as you can and get back later.
+- Time Interval: Some topics can not be finished in just one week, try to learn as much as you can and get back later.
+- Quick Tip: I beleive in learning by building. Build what you want to learn and learn from what you build. Do not just study theory, but implement what you have learned in a project or even a simple program.
 
 
 ---
@@ -222,6 +223,8 @@ Resources:
 
 Task: Enhance the book management system with a PostgreSQL database.
 
+Bonus: Learn how to hot-reload a Spring Boot project.
+
 
 ## Week 10 Middle-Level Project
 
@@ -237,7 +240,7 @@ Focus: Deepen Spring Boot knowledge, explore asynchronous programming, Spring Se
 
 ---
 
-## Week 11: Advanced Spring Boot Features
+## Week 11: Spring Core (IoC & DI)
 
 Topics:
 * Inversion of Control & IoC Container
@@ -332,7 +335,7 @@ Task: <br>
 3- Configure role-based access control (e.g., allow only admins to delete resources). <br>
 4- Test the secured endpoints using Postman. <br>
 
-Bonus: Learn more about CORS.
+Bonus: Learn about Lombok.
 
 
 ## Week 15: Spring Security (Part 2): JWT and Role-Based Access Control
@@ -357,7 +360,7 @@ Task: <br>
 3- Integrate OAuth2 with a provider like Google or GitHub. <br>
 4- Test the secured endpoints using Postman. <br>
 
-Bonus: Learn how to hot-reload a Spring Boot project.
+Bonus: Learn about Filters in Spring Boot.
 
 ## Week 16: Sending Messages to Users via E-mail & SMS
 
@@ -403,7 +406,7 @@ Resources:
 
 Task: Solve SQL problems on HackerRank or Leetcode.
 
-Bonus: Learn how to design a database (will be discussed in details in a later week).
+Bonus: Learn how to design a database.
 
 Note: It's important to understand the difference between `JPA`, `Hibernate`, and `Spring Data JPA`. `JPA` is a specification or an interface, `Hibernate` is an implementation of this interface and an ORM, and `Spring Data JPA` is a framework that relies on `JPA` implementations like `Hibernate` or any other implementation (but `Hibernate` is the default one). While `Spring Data JPA` is the most used option for ORMs and database interactions and that you will rarely need to do raw `Hibernate`, it's good to understand what's happening under the hood. Do not get overwhelmed if you don't understand `Hibernate` well for now, it has a complex learning curve, just do your best.
 
@@ -415,20 +418,32 @@ Project: Build the backend of an E-Commerce website with REST APIs, Spring Secur
 ## Week 19: Introduction to NoSQL Databases
 
 Topics:
-
-Introduction to NoSQL and MongoDB.
-
-MongoDB basics: Collections, documents, CRUD operations.
-
-Integrating MongoDB with Spring Boot using Spring Data MongoDB.
-
+* Introduction to NoSQL Databases
+* MongoDB
+* Mongosh & MongoDBCompass
+* Spring Data MongoDB
+* Collections, Documents, CRUD operations
 
 Resources:
 
-Spring Data MongoDB Guide
+- [Install MongoDB & mongosh on Windows (Amit Thinks)](https://youtu.be/1LiZRYzgM2o?si=isJpU8C-Nk3-NhEE)
+- [Complete MongoDB Tutorial (The Net Ninja)](https://youtube.com/playlist?list=PL4cUxeGkcC9h77dJ-QJlwGlZlTd4ecZOA&si=jOhL8DKF3esJIZmL)
+- [MongoDB in 1 Hour (Bro Code)](https://youtu.be/c2M-rlkkT5o?si=9taMSnuBpjnLA54H)
+- [MongoDB in 30 Minutes (Web Deve Simplified)](https://youtu.be/ofme2o29ngU?si=WsX9BaUFTSDtssP0)
+- [Getting Started with Spring Data MongoDB Documentation](https://spring.io/guides/gs/accessing-data-mongodb)
+- [Getting started with MongoDB and Spring Boot Documentation](https://www.mongodb.com/en-us/resources/products/compatibilities/spring-boot)
+- [MongoDB in Spring Boot Low-Level Tutorial (Telusko)](https://youtu.be/6QnY7Ri_ORw?si=nz5H9eT1YB97WyIC)
+- [MongoDB in Spring Boot Tutorial (Amigoscode) (26:23~)](https://youtu.be/ssj0CGxv60k?si=Oy2txu2KsYq9nYbY)
+- [MongoDB in Spring Boot Tutorial (Programming Techie) (~15:00)](https://youtu.be/GvPhube6Mls?si=Bc6yBEQ8fsZTo2RV)
 
+Task: <br>
+1- Build a simple CRUD application of your choice (task manager, profile manager, books manager, etc) with Spring Data MongoDB. <br>
+2- Implement pagination and sorting in MongoDB queries. <br>
+3- Implement a search feature using MongoDB’s text indexes. <br>
 
-Task: Migrate a part of the Student Management System (e.g., users or tasks) to MongoDB.
+Bonus: Learn about filtering data.
+
+Note: `Spring Data MongoDB` is so close to `Spring Data JPA`, if you are good with `Spring Data JPA`, this week would be easy for you.
 
 
 ## Week 17: Introduction to Asynchronous Programming in Spring Boot
