@@ -123,8 +123,8 @@ Resources:
 - [Cisco CCNA 200-301](https://www.youtube.com/playlist?list=PLF1hDMPPRqGxpYdo0ctaa7MxfOi9vjs1u)
 - [OSI Layers (Metwally Labs)](https://youtu.be/A31bxOyj5mk?si=BbKU-ebPy2sD7LqB)
 - [What is a REST API?](https://www.youtube.com/watch?v=-mN3VyJuCjM)
-- [HTTP Internals](https://medium.com/@muhammad.heshamyt/http-internals-and-building-your-own-http-client-from-scratch-part-i-d62b1028408d)
-- [HTTP Messages](https://developer.mozilla.org/en-US/docs/Web/HTTP/Messages)
+- [HTTP Internals (Zkrallah)](https://medium.com/@muhammad.heshamyt/http-internals-and-building-your-own-http-client-from-scratch-part-i-d62b1028408d)
+- [HTTP Messages (MDN)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Messages)
 
 Task: <br>
 1- Write a document explaining how a REST API works and how clients and servers communicate through HTTP. <br>
@@ -272,10 +272,11 @@ Topics:
 
 Resources:
 
-- [Java Exceptions (Coding With John)](https://youtu.be/1XAfapkBQjk?si=C3_nKYdqbD0TmqNj)
 - [Spring Exceptions Documentation](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-exceptionhandler.html)
 - [Spring ControllerAdvice Documentation](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-advice.html)
 - [Spring Validation Documentation](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-validation.html)
+- [Java Exceptions (Coding With John)](https://youtu.be/1XAfapkBQjk?si=C3_nKYdqbD0TmqNj)
+- [Validation in Spring Boot (Java Techie)](https://youtu.be/gPnd-hzM_6A?si=RA7QdMFwXyiPaWYd)
 - [Spring Exception Handling (CodeSnippet)](https://youtu.be/IdHHwZg3v58?si=twwo-oeASqVKvxmY)
 - [Spring Input Validation (Fast & Simple Dev)](https://youtu.be/LItERTUC9y4?si=89VXDylJC7LmtE-W)
 
@@ -494,66 +495,57 @@ Bonus: Learn about filtering data.
 Note: `Spring Data MongoDB` is so close to `Spring Data JPA`, if you are good with `Spring Data JPA`, this week would be easy for you.
 
 
-## Week 17: Introduction to Asynchronous Programming in Spring Boot
+## Week 21: Introduction to Asynchronous Programming in Spring Boot
 
 Topics:
-
-@Async annotation.
-
-CompletableFuture.
-
-Overview of reactive programming.
-
+* Blocking vs Non-blocking Programming
+* Reactive Programming
+* Threads and Threading
+* CompletableFuture in Java
+* @Async & @EnableAsync Annotations in Spring Boot
 
 Resources:
 
-Spring Boot Async Programming Guide
+- [Creating Asynchronous Methods in Spring Boot Documentation](https://spring.io/guides/gs/async-method)
+- [Blocking vs Non-blocking Programming (Zkrallah)](https://medium.com/@muhammad.heshamyt/introduction-to-blocking-vs-non-blocking-programming-e6f7f0c106db)
+- [A Theoretical Guide to Java CompletableFuture (Geekific)](https://youtu.be/xpjvY45Hbyg?si=eMMyf4FUU-C54Vk2)
+- [Java CompletableFuture (Lemubit)](https://youtube.com/playlist?list=PLL-4P1BOZnWwauNPsQ_Q13hVL1LHvhy30&si=T3LafPPJ8OFrltAV)
+- [CompletableFuture in Java Part I (Tech Recipes)](https://youtu.be/2ddCC6R5u0E?si=P6paHAlMTHFbl6UL)
+- [CompletableFuture in Java Part II (Tech Recipes)](https://youtu.be/217XaErWYJE?si=Bn914tBDky5RT9iU)
+- [@Async & @EnableAsync in Spring Boot (Java Techie) (recommended)](https://youtu.be/R_gejlOXR7g?si=urMDXE-yF5P_mkfw)
+- [@Async & @EnableAsync in Spring Boot (Java Techie) (older but good version)](https://youtu.be/3rJBLFA95Io?si=2GMgVtH7BAf4-EqO)
+- [CompletableFuture Guide (GeeksforGeeks)](https://www.geeksforgeeks.org/completablefuture-in-java/)
+- [CompletableFuture Guide (Baeldung)](https://www.baeldung.com/java-completablefuture)
+
+Task: <br>
+1- Create a method that performs a long-running task asynchronously using CompletableFuture. <br>
+* Apply what you have learned using `runAsync` and `supplyAsync`.
+* Apply what you have learned using `thenAccept`, `thenApply`, and `thenRun`.
+* Run multiple CompletableFuture tasks in parallel and combine their results. <br>
+
+2- Implement a Spring Boot service with an @Async annotated method. <br>
+3- Redo the above task but this time configure a custom thread pool executor. <br>
+
+Bonus: Learn about Java Virtual Threads (please note that this is an advanced topic, just take a quick look).
 
 
-Task: Create a background job that runs asynchronously (e.g., generating a report).
-
-
-
----
-
-## Week 18: Mid-Level Project
-
-Project: Build a Task Management System with Spring Boot.
-
-Features:
-
-CRUD operations.
-
-Authentication with JWT.
-
-MongoDB integration for tasks or users.
-
-Asynchronous report generation.
-
-Validation and testing.
-
-
-
-
-
----
-
-## Week 19: Introduction to Spring WebFlux
+## Week 22: Introduction to Spring WebFlux
 
 Topics:
-
-Reactive programming concepts.
-
-Spring WebFlux basics.
-
+* Parallelism vs Concurrency
+* Introduction to Spring WebFlux
+* Non-blocking Code in Spring Boot
+* @Mono & @Flux annotations
 
 Resources:
 
-Spring WebFlux Tutorial
-
+- []()
 
 Task: Build a simple reactive API to fetch and display data.
 
+Bonus:
+
+Note:
 
 
 ---
