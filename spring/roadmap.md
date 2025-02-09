@@ -549,15 +549,44 @@ Resources:
 - [Spring WebFlux Documentation](https://docs.spring.io/spring-framework/reference/web/webflux.html)
 - [Spring WebFlux Annotation-based Model Documentation](https://docs.spring.io/spring-framework/reference/web/webflux/controller.html)
 - [Spring WebFlux Functional Model Documentation](https://docs.spring.io/spring-framework/reference/web/webflux-functional.html)
+- [Spring Data R2DBC Documentation](https://docs.spring.io/spring-data/relational/reference/)
 - [What is Spring WebFlux and When to Use It? (Defog)](https://youtu.be/M3jNn3HMeWg?si=aZApNefpQ1IkBglh)
+- [Spring WebFlux (Code With Dilip)](https://youtube.com/playlist?list=PLnXn1AViWyL70R5GuXt_nIDZytYBnvBdd&si=29TxOL3ovga0cqeLv)
+- [Spring WebFlux (Java Techie)](https://youtube.com/playlist?list=PLVz2XdJiJQxyB4Sy29sAnU3Eqz0pvGCkD&si=YHMNg8ZiFU9I_u5k)
+- [Spring Boot WebFlux CRUD Tutorial with R2DBC (Genka)](https://youtu.be/3LxtmlaX3Y0?si=pl0avyME_xwplAsZ)
+- [Spring Boot WebFlux CRUD Tutorial with R2DBC (Bouali)](https://youtu.be/EnUsNVHveyU?si=hW1dvD_vxvrH3q8n)
 - [Spring WebFlux Guide (Baeldung)](https://www.baeldung.com/spring-webflux)
 - [Basic Introduction to Spring WebFlux (GeeksforGeeks)](https://www.geeksforgeeks.org/basic-introduction-to-spring-webflux/)
 
-Task:
+Task: <br>
+1- Create a Spring WebFlux REST API:
+* Set up a Spring Boot project with WebFlux.
+* Create a simple reactive endpoint that returns a Mono<String> and a Flux<String>.
+* Test the API using Postman. <br>
+
+2- Implement a Reactive CRUD API with WebFlux:
+* Create a Product entity and a corresponding ProductController.
+* Implement CRUD operations using Mono and Flux.
+* Use a reactive database (PostgreSQL + R2DBC for example). <br>
+
+3- Spring WebFlux Functional API:
+* Implement the same CRUD API using the functional programming model (instead of the annotation-based approach). <br>
+
+4- Create a Spring MVC REST API:
+* Recreate the REST API you did in the first task using Spring MVC instead of Spring WebFlux.
+* Add logs in both projects.
+* Observe the thread names handling each request. <br>
 
 Bonus:
+* Learn how to integrate **Spring Security** with WebFlux (`SecurityWebFilterChain`).  
+* Explore `WebClient` as a non-blocking alternative to `RestTemplate`.
 
-Note:
+Note: <br>
+* WebFlux is not always better than Spring MVC. It’s optimized for high-concurrency and real-time streaming applications.
+* Use Spring WebFlux when you need to handle thousands of concurrent requests with minimal resource usage.
+* If your project does not require reactive programming, sticking with Spring MVC might be a better choice.
+* Spring WebFlux is a big topic, don't get overwhelmed, learn as much as you can and revisit later.
+* Try to map what you've learned so far to WebFlux and explore alternative approaches for future topics to be applicable to Spring WebFlux.
 
 
 ## Week 20: Real-Time Communication with Socket.IO
