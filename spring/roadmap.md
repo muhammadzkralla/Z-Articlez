@@ -158,6 +158,8 @@ Task: Create a Java application to manage a library system using ArrayList.
 
 Bonus: Learn about Java Generics and Callback functions.
 
+Note: While it's okay to use either Maven or Gradle for both Java and Kotlin Spring Boot Projects, I recommend sticking with Maven as it's more easy to understand and work with than Gradle. Also it's more common to use Maven with Java projects and Gradle with Kotlin projects. Anyways, I recommend using Maven alawys (specially as long as you are a beginner).
+
 
 ## Week 7: Introduction to Spring Boot
 
@@ -381,7 +383,7 @@ Bonus: Learn about Lombok.
 Note: I recommend the first part of Lazy Programmer's playlist for this week.
 
 
-## Week 16: Spring Security (Part 2): JWT and Role-Based Access Control
+## Week 16: Spring Security (Part 2): JWT and OAuth2
 
 Topics:
 * JWT (JSON Web Tokens)
@@ -500,6 +502,7 @@ Note: `Spring Data MongoDB` is so close to `Spring Data JPA`, if you are good wi
 Topics:
 * Blocking vs Non-blocking Programming
 * Reactive Programming
+* Parallelism vs Concurrency
 * Threads and Threading
 * CompletableFuture in Java
 * @Async & @EnableAsync Annotations in Spring Boot
@@ -515,6 +518,7 @@ Resources:
 - [@Async & @EnableAsync in Spring Boot (Java Techie) (recommended)](https://youtu.be/R_gejlOXR7g?si=urMDXE-yF5P_mkfw)
 - [@Async & @EnableAsync in Spring Boot (Java Techie) (older but good version)](https://youtu.be/3rJBLFA95Io?si=2GMgVtH7BAf4-EqO)
 - [CompletableFuture Guide (GeeksforGeeks)](https://www.geeksforgeeks.org/completablefuture-in-java/)
+- [Parallelism vs Concurrency (GeeksforGeeks)](https://www.geeksforgeeks.org/difference-between-concurrency-and-parallelism/)
 - [CompletableFuture Guide (Baeldung)](https://www.baeldung.com/java-completablefuture)
 
 Task: <br>
@@ -532,23 +536,29 @@ Bonus: Learn about Java Virtual Threads (please note that this is an advanced to
 ## Week 22: Introduction to Spring WebFlux
 
 Topics:
-* Parallelism vs Concurrency
 * Introduction to Spring WebFlux
 * Non-blocking Code in Spring Boot
-* @Mono & @Flux annotations
+* Mono & Flux
+* Spring WebFlux Annotation-based programming model
+* Spring WebFlux Functional programming model
+* Introduction to Spring Data R2DBC
 
 Resources:
 
-- []()
+- [Web on Reactive Stack Documentation](https://docs.spring.io/spring-framework/reference/web-reactive.html)
+- [Spring WebFlux Documentation](https://docs.spring.io/spring-framework/reference/web/webflux.html)
+- [Spring WebFlux Annotation-based Model Documentation](https://docs.spring.io/spring-framework/reference/web/webflux/controller.html)
+- [Spring WebFlux Functional Model Documentation](https://docs.spring.io/spring-framework/reference/web/webflux-functional.html)
+- [What is Spring WebFlux and When to Use It? (Defog)](https://youtu.be/M3jNn3HMeWg?si=aZApNefpQ1IkBglh)
+- [Spring WebFlux Guide (Baeldung)](https://www.baeldung.com/spring-webflux)
+- [Basic Introduction to Spring WebFlux (GeeksforGeeks)](https://www.geeksforgeeks.org/basic-introduction-to-spring-webflux/)
 
-Task: Build a simple reactive API to fetch and display data.
+Task:
 
 Bonus:
 
 Note:
 
-
----
 
 ## Week 20: Real-Time Communication with Socket.IO
 
