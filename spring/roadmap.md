@@ -533,7 +533,7 @@ Task: <br>
 Bonus: Learn about Java Virtual Threads (please note that this is an advanced topic, just take a quick look).
 
 
-## Week 22: Introduction to Spring WebFlux
+## Week 22: Introduction to Spring WebFlux, Spring Data R2DBC, Reactive Programming in Spring Boot
 
 Topics:
 * Introduction to Spring WebFlux
@@ -588,50 +588,45 @@ Note: <br>
 * Spring WebFlux is a big topic, don't get overwhelmed, learn as much as you can and revisit later.
 * Try to map what you've learned so far to WebFlux and explore alternative approaches for future topics to be applicable to Spring WebFlux.
 
-
-## Week 20: Real-Time Communication with Socket.IO
+## Week 23: Caching and Introduction to Redis Cache in Spring MVC & Spring WebFlux
 
 Topics:
-
-Basics of WebSocket communication.
-
-Using Socket.IO with Spring Boot.
-
+* What is caching?
+* Caching in Spring Boot
+* Redis cache
+* Spring Data Redis
+* Spring Data Reactive Redis
 
 Resources:
 
-Spring WebSocket Guide
-
-
-Task: Implement a real-time notification system using WebSocket (e.g., notify users of task updates).
-
-
-## Week 21: Advanced API Development
-
-Topics:
-
-Pagination and filtering.
-
-Custom query methods in Spring Data JPA.
-
-
-Task: Add pagination and filtering to the Task Management System.
-
-
-
----
-
-## Week 22: Project Review and Reflection
+- [Spring Boot Caching Documentation](https://docs.spring.io/spring-boot/reference/io/caching.html#io.caching)
+- [Spring Data Redis Documentation](https://docs.spring.io/spring-data/redis/reference/)
+- [Caching Simply Explained (Simply Explained)](https://youtu.be/6FyXURRVmR0?si=1_bIHY6C6BvEgMvF)
+- [How Does Caching Work on the Backend (Software Developer Diaries)](https://youtu.be/bP4BeUjNkXc?si=o3cpJj9CqK-c3I3n)
 
 Task:
 
-Review the Task Management System.
+Bonus:
 
-Add missing features or enhancements.
-
-Reflect on lessons learned.
+Note:
 
 
+## Week 24: Real-Time Communication with Sockets & Socket.IO, Streaming with WebRTC Basics.
+
+Topics:
+* Sockets & Socket.IO
+* Real-time communication
+* Introduction to WebRTC
+* Socket.io in Spring Boot
+* SockJS & STOMP in Spring Boot
+
+Resources:
+
+Task:
+
+Bonus:
+
+Note:
 
 
 ---
@@ -639,6 +634,9 @@ Reflect on lessons learned.
 # Level 3: Advanced (Weeks 21–30)
 
 Focus: Scaling, microservices, Docker, deployment, and advanced concepts.
+
+
+---
 
 ## Week 21: Microservices Basics
 
