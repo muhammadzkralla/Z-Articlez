@@ -3,6 +3,9 @@
 ## Introduction
 This roadmap is designed to guide you through the fundamentals of Spring Boot and backend development, from beginner to advanced levels. Each stage is thoughtfully structured with specific goals, curated resources, and hands-on tasks to ensure practical learning.
 
+Created and Prepared By [Mohamed Zkrallah](https://github.com/muhammadzkralla).
+
+
 ## Criteria
 - Three Levels: Beginner, Intermediate, and Advanced, with a focus on building strong fundamentals before progressing to advanced topics.
 - Practical Approach: Tasks are abstracted for brevity, with more details available in Notion.
@@ -17,58 +20,19 @@ This roadmap is designed to guide you through the fundamentals of Spring Boot an
 # Level 1: Beginner (Weeks 1–10)
 
 Focus: Basics of Java programming, backend fundamentals, Spring Boot, SQL, and database basics.
+* Version control using Git & GitHub.
+* Basic knowledge of HTML, CSS, and JavaScipt for the Front-end.
+* The OSI Model, specially, the application layer and HTTP internals.
+* Java programming language and OOP (Object-Oriented Programming) in Java.
+* Prerequisites for Spring Boot.
+* Introduction to Spring Boot and Spring MVC.
+* Introduction to Database sytems and RDBMS (MySQL Server & PostgreSQL).
+* Introduction to ORMs and Spring Data JPA.
 
 
 ---
 
-## Week 1: Introduction to Programming
-
-Topics:
-* Java syntax
-* Basics of programming
-* Variables
-* Loops
-* Conditionals
-
-Resources:
-
-- [Java Basics Crash Course (FreeCodeCamp.org)](https://www.youtube.com/watch?v=GdzRzWymT4c&t=25s)
-- [Java Beginners (Playlist by Bro Code)](https://www.youtube.com/playlist?list=PLZPZq0r_RZOOj_NOZYq_R2PECIMglLemc)
-- [Java Basics (GeeksForGeeks)](https://www.geeksforgeeks.org/java/)
-
-
-Task: <br>
-1- Write simple programs like calculating the sum of numbers or finding the largest number in an array. <br>
-2- Implement basic binary search in Java. <br>
-3- Try to solve some Leetcode easy questions using Java. <br>
-
-
-## Week 2: Object-Oriented Programming (OOP)
-
-Topics:
-* Classes
-* Objects
-* Abstraction
-* Inheritance
-* polymorphism
-* Encapsulation
-
-Resources:
-
-- [Java OOP Concepts (GeeksforGeeks)](https://www.geeksforgeeks.org/object-oriented-programming-oops-concept-in-java/)
-- [Introduction to OOP (Mosh)](https://youtu.be/pTB0EiLXUC8?si=Cwy9pzQIeTAqdvuI)
-- [Introduction to OOP (FreeCodeCamp.org)](https://youtu.be/SiBw7os-_zI?si=odVcb7Cx78TxrR0X)
-- [OOP in Java (Adel Naseem)](https://youtube.com/playlist?list=PLCInYL3l2AagY7fFlhCrjpLiIFybW3yQv&si=okMB2Lf0kXE6I6No)
-
-
-Task: <br>
-1- Create a basic student management system with classes for Student and Course. <br>
-2- Shapes Task <br>
-
-Note: Do not stop learning OOP after this week. OOP is from the fundamentals of computer science. You should be learning OOP all the time, specially in Java.
-
-
-## Week 3: Introduction to Version Control with Git
+## Week 1: Introduction to Version Control with Git
 
 Topics:
 * Git basics
@@ -88,7 +52,7 @@ Task: Set up a GitHub repository and upload the student management system.
 
 Bonus: Learn about Date Formatting.
 
-## Week 4: Basic HTML, CSS, and JS for the Front-end
+## Week 2: Basic HTML, CSS, and JS for the Front-end
 
 Topics:
 * HTML
@@ -109,7 +73,7 @@ Task: Build a simple front-end for a website of your choice (portfolio, to-do li
 Bonus: Learn about Regex (Regular Expressions).
 
 
-## Week 5: Basics of Web Development
+## Week 3: Basics of Web Development
 
 Topics:
 * HTTP internals
@@ -133,6 +97,53 @@ Task: <br>
 Bonus: Learn about Postman API.
 
 Note: Do not stop learning computer networking after this week. Computer networking is from the fundamentals of computer science, specially in backend.
+
+
+## Week 4: Introduction to Programming
+
+Topics:
+* Java syntax
+* Basics of programming
+* Variables
+* Loops
+* Conditionals
+
+Resources:
+
+- [Java Basics Crash Course (FreeCodeCamp.org)](https://www.youtube.com/watch?v=GdzRzWymT4c&t=25s)
+- [Java Beginners (Playlist by Bro Code)](https://www.youtube.com/playlist?list=PLZPZq0r_RZOOj_NOZYq_R2PECIMglLemc)
+- [Java Basics (GeeksForGeeks)](https://www.geeksforgeeks.org/java/)
+
+
+Task: <br>
+1- Write simple programs like calculating the sum of numbers or finding the largest number in an array. <br>
+2- Implement basic binary search in Java. <br>
+3- Try to solve some Leetcode easy questions using Java. <br>
+
+
+## Week 5: Object-Oriented Programming (OOP)
+
+Topics:
+* Classes
+* Objects
+* Abstraction
+* Inheritance
+* polymorphism
+* Encapsulation
+
+Resources:
+
+- [Java OOP Concepts (GeeksforGeeks)](https://www.geeksforgeeks.org/object-oriented-programming-oops-concept-in-java/)
+- [Introduction to OOP (Mosh)](https://youtu.be/pTB0EiLXUC8?si=Cwy9pzQIeTAqdvuI)
+- [Introduction to OOP (FreeCodeCamp.org)](https://youtu.be/SiBw7os-_zI?si=odVcb7Cx78TxrR0X)
+- [OOP in Java (Adel Naseem)](https://youtube.com/playlist?list=PLCInYL3l2AagY7fFlhCrjpLiIFybW3yQv&si=okMB2Lf0kXE6I6No)
+
+
+Task: <br>
+1- Create a basic student management system with classes for Student and Course. <br>
+2- Shapes Task <br>
+
+Note: Do not stop learning OOP after this week. OOP is from the fundamentals of computer science. You should be learning OOP all the time, specially in Java.
 
 
 ## Week 6: Java Essentials for Spring Boot
@@ -603,6 +614,7 @@ Resources:
 - [Spring Data Redis Documentation](https://docs.spring.io/spring-data/redis/reference/)
 - [Caching Simply Explained (Simply Explained)](https://youtu.be/6FyXURRVmR0?si=1_bIHY6C6BvEgMvF)
 - [How Does Caching Work on the Backend (Software Developer Diaries)](https://youtu.be/bP4BeUjNkXc?si=o3cpJj9CqK-c3I3n)
+- []()
 
 Task:
 
@@ -629,9 +641,14 @@ Bonus:
 Note:
 
 
+## Week 25: Building 
+
+Project: Build
+
+
 ---
 
-# Level 3: Advanced (Weeks 21–30)
+# Level 3: Advanced (Weeks 26–35)
 
 Focus: Scaling, microservices, Docker, deployment, and advanced concepts.
 
