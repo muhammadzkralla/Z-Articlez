@@ -8,22 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
+record HttpResponse(int statusCode, String body) {}
+
 interface HttpHandler {
     HttpResponse handle(String method, String body);
 }
 
-class HttpResponse {
-    public final int statusCode;
-    public final String body;
-
-    public HttpResponse(int statusCode, String body) {
-        this.statusCode = statusCode;
-        this.body = body;
-    }
-}
-
 class FrontController {
-    ServerSocket serverSocket;
     private final ConcurrentHashMap<String, HttpHandler> routes = new ConcurrentHashMap<>();
 
     public void start(int port) {
@@ -89,7 +80,7 @@ class FrontController {
             }
 
             HttpResponse response = handler.handle(method, body);
-            sendResponse(out, response.statusCode, response.body);
+            sendResponse(out, response.statusCode(), response.body());
 
         } catch (Exception ex) {
             System.out.println("Could not hanlde client " + ex.getMessage());
