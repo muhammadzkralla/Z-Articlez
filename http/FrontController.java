@@ -99,10 +99,20 @@ class FrontController {
     }
 
     private void sendResponse(PrintWriter out, int statusCode, String body) {
-        String statusLine = "HTTP/1.1 " + statusCode + " " + getStatusCode(statusCode) + "\r\n";
-        String headers = "Content-Length: " + body.length() + "\r\n" +
-                "Content-Type: text/plain\r\n\r\n";
-        String response = (statusLine + headers + body);
+        StringBuilder responseBuilder = new StringBuilder();
+
+        responseBuilder.append("HTTP/1.1 ")
+                .append(statusCode).append(" ")
+                .append(getStatusCode(statusCode)).append("\r\n");
+
+        responseBuilder.append("Content-Length: ").append(body.length()).append("\r\n");
+        responseBuilder.append("Content-Type: text/plain").append("\r\n");
+
+        responseBuilder.append("\r\n");
+
+        responseBuilder.append(body);
+
+        String response = responseBuilder.toString();
 
         out.println(response);
     }
