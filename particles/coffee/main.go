@@ -11,7 +11,7 @@ func main() {
 	ansiImage := ConvertImage(img)
 
 	var wg sync.WaitGroup
-	wg.Add(1)
+	wg.Add(2)
 
 	go Render(&wg, ansiImage)
 	go Launch(&wg)
