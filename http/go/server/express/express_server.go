@@ -30,7 +30,7 @@ type Handler func(req Req, res Res)
 var getRoutes map[string]Handler
 var postRoutes map[string]Handler
 
-func Init() {
+func init() {
 	getRoutes = make(map[string]Handler)
 	postRoutes = make(map[string]Handler)
 }
@@ -161,8 +161,6 @@ func getHTTPStatusMessage(code int) string {
 }
 
 func main() {
-	Init()
-
 	Get("/home", func(req Req, res Res) {
 		res.send("Hello, World!")
 	})
