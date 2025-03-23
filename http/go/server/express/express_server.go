@@ -22,7 +22,7 @@ type Req struct {
 }
 
 func (res *Res) send(data string) {
-	SendResponse(res.socket, data, res.status)
+	sendResponse(res.socket, data, res.status)
 }
 
 type Handler func(req Req, res Res)
@@ -48,7 +48,7 @@ func Start(port int) {
 			log.Println("err accepting socket")
 		}
 
-		go HandleClient(socket)
+		go handleClient(socket)
 	}
 }
 
@@ -60,7 +60,7 @@ func Post(endpoint string, handler Handler) {
 	postRoutes[endpoint] = handler
 }
 
-func HandleClient(socket net.Conn) {
+func handleClient(socket net.Conn) {
 	defer socket.Close()
 
 	rdr := bufio.NewReader(socket)
@@ -133,11 +133,11 @@ func HandleClient(socket net.Conn) {
 
 		handler(req, res)
 	} else {
-		SendResponse(socket, "Not Found", 404)
+		sendResponse(socket, "Not Found", 404)
 	}
 }
 
-func SendResponse(socket net.Conn, body string, code int) {
+func sendResponse(socket net.Conn, body string, code int) {
 	statusMessage := getHTTPStatusMessage(code)
 	fmt.Fprintf(socket, "HTTP/1.1 %d %s\r\n", code, statusMessage)
 	fmt.Fprintf(socket, "Content-Length: %d\r\n", len(body))

@@ -32,7 +32,7 @@ func Start(port int) {
 			log.Println("err accepting socket")
 		}
 
-		go HandleClient(socket)
+		go handleClient(socket)
 	}
 }
 
@@ -40,7 +40,7 @@ func AddRoute(route string, handler Handler) {
 	routes[route] = handler
 }
 
-func HandleClient(socket net.Conn) {
+func handleClient(socket net.Conn) {
 	defer socket.Close()
 
 	rdr := bufio.NewReader(socket)
@@ -97,18 +97,18 @@ func HandleClient(socket net.Conn) {
 	if handler != nil {
 		response := handler(method, string(body))
 		if method == "POST" {
-			SendResponse(socket, response.body, "Created", response.code)
+			sendResponse(socket, response.body, "Created", response.code)
 		} else if method == "GET" {
-			SendResponse(socket, response.body, "OK", response.code)
+			sendResponse(socket, response.body, "OK", response.code)
 		} else {
-			SendResponse(socket, response.body, "Not Found", response.code)
+			sendResponse(socket, response.body, "Not Found", response.code)
 		}
 	} else {
-		SendResponse(socket, "Not Found", "Not Found", 404)
+		sendResponse(socket, "Not Found", "Not Found", 404)
 	}
 }
 
-func SendResponse(socket net.Conn, body, message string, code int) {
+func sendResponse(socket net.Conn, body, message string, code int) {
 	fmt.Fprintf(socket, "HTTP/1.1 %d %s\r\n", code, message)
 	fmt.Fprintf(socket, "Content-Length: %d\r\n", len(body))
 	fmt.Fprintf(socket, "Content-Type: text/plain\r\n")
