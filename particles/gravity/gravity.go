@@ -8,10 +8,11 @@ import (
 
 const (
 	w = 150
-	h = 40
+	h = 70
 )
 
-var body1, body2 Body
+var sun Body
+var planets []Body
 var screen [][]rune
 
 type Body struct {
@@ -21,14 +22,14 @@ type Body struct {
 	vx, vy float64
 }
 
-func CreateBody(x, y, mass float64, char rune) Body {
+func CreateBody(x, y, mass float64, char rune, vx, vy float64) Body {
 	return Body{
 		mass: mass,
 		char: char,
 		x:    x,
 		y:    y,
-		vx:   0,
-		vy:   0,
+		vx:   vx,
+		vy:   vy,
 	}
 }
 
@@ -59,30 +60,24 @@ func ClearScreen() {
 }
 
 func UpdateBodies() {
-	Fx := CalculateFx(body1, body2)
-	Fy := CalculateFy(body1, body2)
+	for i := range planets {
+		Fx := CalculateFx(planets[i], sun)
+		Fy := CalculateFy(planets[i], sun)
 
-	Dvx1 := Fx / body1.mass
-	Dvy1 := Fy / body1.mass
+		Dvx := Fx / planets[i].mass
+		Dvy := Fy / planets[i].mass
 
-	Dvx2 := Fx / body2.mass
-	Dvy2 := Fy / body2.mass
+		planets[i].vx += Dvx
+		planets[i].vy += Dvy
+		planets[i].Update()
 
-	body1.vx += Dvx1
-	body1.vy += Dvy1
-
-	body2.vx -= Dvx2
-	body2.vy -= Dvy2
-
-	body1.Update()
-	body2.Update()
-
-	if int(body1.x) >= 0 && int(body1.x) < w && int(body1.y) >= 0 && int(body1.y) < h {
-		screen[int(body1.y)][int(body1.x)] = body1.char
+		if int(planets[i].x) >= 0 && int(planets[i].x) < w && int(planets[i].y) >= 0 && int(planets[i].y) < h {
+			screen[int(planets[i].y)][int(planets[i].x)] = planets[i].char
+		}
 	}
 
-	if int(body2.x) >= 0 && int(body2.x) < w && int(body2.y) >= 0 && int(body2.y) < h {
-		screen[int(body2.y)][int(body2.x)] = body2.char
+	if int(sun.x) >= 0 && int(sun.x) < w && int(sun.y) >= 0 && int(sun.y) < h {
+		screen[int(sun.y)][int(sun.x)] = sun.char
 	}
 }
 
@@ -132,18 +127,23 @@ func Render() {
 			fmt.Println(string(row))
 		}
 
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(120 * time.Millisecond)
 	}
 }
 
 func Launch() {
-	sunMass := 100000
-	earthMass := 10
-	body1 = CreateBody(w/2, h/2, float64(sunMass), '@')
-	body2 = CreateBody((2*w)/3, h/3, float64(earthMass), '*')
+	sun = CreateBody(w/2, h/2, 100000, '@', 0, 0)
 
-	body2.vy = 1.2
-	body2.vx = 1.0
+	planets = []Body{
+		CreateBody(w/2+10, h/2, 3, 'M', 0, 2.5),
+		CreateBody(w/2+15, h/2, 6, 'V', 0, 2.2),
+		CreateBody(w/2+20, h/2, 10, 'E', 0, 2.0),
+		CreateBody(w/2+25, h/2, 7, 'M', 0, 1.8),
+		CreateBody(w/2+35, h/2, 200, 'J', 0, 1.4),
+		CreateBody(w/2+45, h/2, 95, 'S', 0, 1.1),
+		CreateBody(w/2+55, h/2, 40, 'U', 0, 0.9),
+		CreateBody(w/2+65, h/2, 30, 'N', 0, 0.7),
+	}
 }
 
 func main() {
