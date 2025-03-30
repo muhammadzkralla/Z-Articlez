@@ -26,9 +26,11 @@ func (res *Res) send(data string) {
 }
 
 type Handler func(req Req, res Res)
+type Middleware func(req Req, res Res, next func())
 
 var getRoutes map[string]Handler
 var postRoutes map[string]Handler
+var middlewares []Middleware
 
 func init() {
 	getRoutes = make(map[string]Handler)
@@ -52,12 +54,35 @@ func Start(port int) {
 	}
 }
 
+func Use(m Middleware) {
+	middlewares = append(middlewares, m)
+}
+
+func applyMiddleware(finalHandler Handler) Handler {
+	return func(req Req, res Res) {
+		i := 0
+
+		var next func()
+		next = func() {
+			if i < len(middlewares) {
+				middleware := middlewares[i]
+				i++
+				middleware(req, res, next)
+			} else {
+				finalHandler(req, res)
+			}
+		}
+
+		next()
+	}
+}
+
 func Get(endpoint string, handler Handler) {
-	getRoutes[endpoint] = handler
+	getRoutes[endpoint] = applyMiddleware(handler)
 }
 
 func Post(endpoint string, handler Handler) {
-	postRoutes[endpoint] = handler
+	postRoutes[endpoint] = applyMiddleware(handler)
 }
 
 func handleClient(socket net.Conn) {
@@ -158,18 +183,4 @@ func getHTTPStatusMessage(code int) string {
 		return msg
 	}
 	return "Unknown Status"
-}
-
-func main() {
-	Get("/home", func(req Req, res Res) {
-		res.send("Hello, World!")
-	})
-
-	Post("/home", func(req Req, res Res) {
-		reqBody := req.body
-		respone := "You sent: " + reqBody
-		res.send(respone)
-	})
-
-	Start(1069)
 }
