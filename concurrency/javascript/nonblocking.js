@@ -8,7 +8,7 @@ class NonBlocking {
             const now = new Date();
 
             if (now - startTime >= 5000 && now - startTime <= 6000) {
-                await this.doRequest();
+                this.doRequest();
             }
         }, 1000);
     }
