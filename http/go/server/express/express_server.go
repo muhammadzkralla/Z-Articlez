@@ -19,6 +19,12 @@ type Req struct {
 	method string
 	path   string
 	body   string
+	params map[string]string
+}
+
+type Route struct {
+	path    string
+	handler Handler
 }
 
 func (res *Res) send(data string) {
@@ -28,14 +34,9 @@ func (res *Res) send(data string) {
 type Handler func(req Req, res Res)
 type Middleware func(req Req, res Res, next func())
 
-var getRoutes map[string]Handler
-var postRoutes map[string]Handler
+var getRoutes []Route
+var postRoutes []Route
 var middlewares []Middleware
-
-func init() {
-	getRoutes = make(map[string]Handler)
-	postRoutes = make(map[string]Handler)
-}
 
 func Start(port int) {
 	p := ":" + strconv.Itoa(port)
@@ -77,12 +78,41 @@ func applyMiddleware(finalHandler Handler) Handler {
 	}
 }
 
+func matchRoute(requestPath string, routes []Route) (Handler, map[string]string) {
+	for _, route := range routes {
+		params := make(map[string]string)
+		routeParts := strings.Split(route.path, "/")
+		requestParts := strings.Split(requestPath, "/")
+
+		if len(routeParts) != len(requestParts) {
+			continue
+		}
+
+		match := true
+		for i := range routeParts {
+			if strings.HasPrefix(routeParts[i], ":") {
+				paramName := routeParts[i][1:]
+				params[paramName] = requestParts[i]
+			} else if routeParts[i] != requestParts[i] {
+				match = false
+				break
+			}
+		}
+
+		if match {
+			return route.handler, params
+		}
+	}
+
+	return nil, nil
+}
+
 func Get(endpoint string, handler Handler) {
-	getRoutes[endpoint] = applyMiddleware(handler)
+	getRoutes = append(getRoutes, Route{endpoint, applyMiddleware(handler)})
 }
 
 func Post(endpoint string, handler Handler) {
-	postRoutes[endpoint] = applyMiddleware(handler)
+	postRoutes = append(postRoutes, Route{endpoint, applyMiddleware(handler)})
 }
 
 func handleClient(socket net.Conn) {
@@ -138,11 +168,12 @@ func handleClient(socket net.Conn) {
 	method := requestParts[0]
 	endPoint := requestParts[1]
 	var handler Handler
+	var params map[string]string
 
 	if method == "GET" {
-		handler = getRoutes[endPoint]
+		handler, params = matchRoute(endPoint, getRoutes)
 	} else if method == "POST" {
-		handler = postRoutes[endPoint]
+		handler, params = matchRoute(endPoint, postRoutes)
 	}
 
 	if handler != nil {
@@ -150,6 +181,7 @@ func handleClient(socket net.Conn) {
 			method: method,
 			path:   endPoint,
 			body:   body,
+			params: params,
 		}
 		res := Res{
 			socket: socket,

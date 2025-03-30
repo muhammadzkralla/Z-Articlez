@@ -24,5 +24,11 @@ func main() {
 		res.send(respone)
 	})
 
+	Get("/post/:postId/comment/:commentId", func(req Req, res Res) {
+		postId := req.params["postId"]
+		commentId := req.params["commentId"]
+		res.send("Post ID: " + postId + ", Comment ID: " + commentId)
+	})
+
 	Start(1069)
 }
