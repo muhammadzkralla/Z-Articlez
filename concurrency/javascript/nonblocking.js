@@ -3,7 +3,7 @@ class NonBlocking {
     start() {
         const startTime = new Date();
 
-        setInterval(async () => {
+        setInterval(() => {
             console.log(`Rendring UI on... ${process.pid}`);
             const now = new Date();
 
@@ -11,6 +11,9 @@ class NonBlocking {
                 this.doRequest();
             }
         }, 1000);
+
+        // if you uncomment this line, the set interval will never call back
+        //this.block();
     }
 
     async doRequest() {
@@ -22,6 +25,17 @@ class NonBlocking {
     async sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
+
+    block(ms) {
+        const startTime = new Date().getTime();
+        while (true) {
+            const currentTime = new Date().getTime();
+            if (currentTime >= startTime + ms) {
+                return;
+            }
+        }
+    }
+
 }
 
 export { NonBlocking };
