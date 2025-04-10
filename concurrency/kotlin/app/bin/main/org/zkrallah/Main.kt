@@ -16,20 +16,26 @@ val client = ZHttpClient.Builder()
 fun main() {
     runBlocking {
         launch {
-            println("c1 started on ${Thread.currentThread().name}")
-            val response = client.get<String>("posts")
-            println("c1 continued with ${response?.code} on ${Thread.currentThread().name}")
+            counter()
         }
         launch {
-            println("c2 started on ${Thread.currentThread().name}")
-            val response = client.get<String>("posts")
-            println("c2 continued with ${response?.code} on ${Thread.currentThread().name}")
+            counter()
         }
-        launch {
-            println("c3 started on ${Thread.currentThread().name}")
-            val response = client.get<String>("posts")
-            println("c3 continued with ${response?.code} on ${Thread.currentThread().name}")
-        }
+        // launch {
+        //     println("c1 started on ${Thread.currentThread().name}")
+        //     val response = client.get<String>("posts")
+        //     println("c1 continued with ${response?.code} on ${Thread.currentThread().name}")
+        // }
+        // launch {
+        //     println("c2 started on ${Thread.currentThread().name}")
+        //     val response = client.get<String>("posts")
+        //     println("c2 continued with ${response?.code} on ${Thread.currentThread().name}")
+        // }
+        // launch {
+        //     println("c3 started on ${Thread.currentThread().name}")
+        //     val response = client.get<String>("posts")
+        //     println("c3 continued with ${response?.code} on ${Thread.currentThread().name}")
+        // }
 //        launch {
 //            renderUI()
 //        }
@@ -37,6 +43,13 @@ fun main() {
 //            delay(5000)
 //            doRequest()
 //        }
+    }
+}
+
+suspend fun counter() {
+    for (i in 0..9) {
+        println(i)
+        yield()
     }
 }
 

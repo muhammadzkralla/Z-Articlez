@@ -15,12 +15,20 @@ const (
 )
 
 var jett Jett
+var inputState InputState
 var screen [][]rune
 var mu sync.Mutex
 
 type Jett struct {
 	x, y int
 	char rune
+}
+
+type InputState struct {
+	up    bool
+	down  bool
+	left  bool
+	right bool
 }
 
 func createJett() Jett {
@@ -31,8 +39,22 @@ func createJett() Jett {
 	}
 }
 
-func (j *Jett) updateJettPosition(dx, dy int) {
+func (j *Jett) updateJettPosition() {
 	mu.Lock()
+
+	dx, dy := 0, 0
+
+	if inputState.up && !inputState.down {
+		dy = -1
+	} else if inputState.down && !inputState.up {
+		dy = 1
+	}
+
+	if inputState.left && !inputState.right {
+		dx = -1
+	} else if inputState.right && !inputState.left {
+		dx = 1
+	}
 
 	if j.x+dx >= 0 && j.y+dy >= 0 && j.x+dx < w && j.y+dy < h {
 		j.x += dx
@@ -93,22 +115,44 @@ func handleInput(wg *sync.WaitGroup) {
 
 	for {
 
-		switch ev := termbox.PollEvent(); ev.Type {
-		case termbox.EventKey:
-			switch ev.Key {
-			case termbox.KeyArrowUp:
-				jett.updateJettPosition(0, -1)
-			case termbox.KeyArrowDown:
-				jett.updateJettPosition(0, 1)
-			case termbox.KeyArrowLeft:
-				jett.updateJettPosition(-1, 0)
-			case termbox.KeyArrowRight:
-				jett.updateJettPosition(1, 0)
-			case termbox.KeyEsc:
-				log.Fatal("Quitting..")
-				return
-			}
+		ev := termbox.PollEvent()
+		if ev.Type != termbox.EventKey {
+			continue
 		}
+
+		mu.Lock()
+
+		switch ev.Key {
+		case termbox.KeyArrowUp:
+			inputState.up = (ev.Type == termbox.EventKey && ev.Key == termbox.KeyArrowUp)
+		case termbox.KeyArrowDown:
+			inputState.down = (ev.Type == termbox.EventKey && ev.Key == termbox.KeyArrowDown)
+		case termbox.KeyArrowLeft:
+			inputState.left = (ev.Type == termbox.EventKey && ev.Key == termbox.KeyArrowLeft)
+		case termbox.KeyArrowRight:
+			inputState.right = (ev.Type == termbox.EventKey && ev.Key == termbox.KeyArrowRight)
+		case termbox.KeyEsc:
+			mu.Unlock()
+			log.Fatal("Quitting..")
+			return
+		}
+
+		if ev.Key == termbox.KeyArrowUp && ev.Ch == 0 {
+			inputState.up = false
+		}
+		if ev.Key == termbox.KeyArrowDown && ev.Ch == 0 {
+			inputState.down = false
+		}
+		if ev.Key == termbox.KeyArrowLeft && ev.Ch == 0 {
+			inputState.left = false
+		}
+		if ev.Key == termbox.KeyArrowRight && ev.Ch == 0 {
+			inputState.right = false
+		}
+
+		mu.Unlock()
+
+		jett.updateJettPosition()
 	}
 }
 
@@ -122,6 +166,9 @@ func main() {
 		panic(err)
 	}
 	defer termbox.Close()
+
+	// Set input mode to receive keyboard input
+	termbox.SetInputMode(termbox.InputEsc)
 
 	jett = createJett()
 

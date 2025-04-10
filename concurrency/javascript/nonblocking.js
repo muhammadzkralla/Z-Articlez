@@ -1,11 +1,11 @@
 class NonBlocking {
 
     start() {
-        const startTime = new Date();
+        const startTime = new Date().getTime();
 
         setInterval(() => {
             console.log(`Rendring UI on... ${process.pid}`);
-            const now = new Date();
+            const now = new Date().getTime();
 
             if (now - startTime >= 5000 && now - startTime <= 6000) {
                 this.doRequest();
