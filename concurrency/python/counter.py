@@ -9,7 +9,15 @@ async def counter():
 
 
 async def main():
-    await asyncio.gather(counter(), counter())
+    # more manual and easy to understand than using:
+    # asyncio.gather(counter(), counter())
+    task1 = asyncio.create_task(counter())
+    task2 = asyncio.create_task(counter())
+
+    await task1
+    await task2
+
+    asyncio.gather
 
 
 if __name__ == "__main__":

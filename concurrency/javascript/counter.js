@@ -5,7 +5,7 @@ async function counter() {
     }
 }
 
-async function main() {
+function main() {
     counter();
     counter();
 }
