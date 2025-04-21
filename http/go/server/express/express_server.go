@@ -10,6 +10,14 @@ import (
 	"strings"
 )
 
+type Handler func(req Req, res Res)
+type Middleware func(req Req, res Res, next func())
+
+type Route struct {
+	path    string
+	handler Handler
+}
+
 type Res struct {
 	socket net.Conn
 	status int
@@ -22,24 +30,16 @@ type Req struct {
 	params map[string]string
 }
 
-type Route struct {
-	path    string
-	handler Handler
-}
-
 func (res *Res) send(data string) {
 	sendResponse(res.socket, data, res.status)
 }
-
-type Handler func(req Req, res Res)
-type Middleware func(req Req, res Res, next func())
 
 var getRoutes []Route
 var postRoutes []Route
 var middlewares []Middleware
 
 func Start(port int) {
-	p := ":" + strconv.Itoa(port)
+	p := fmt.Sprintf(":%d", port)
 	server, err := net.Listen("tcp", p)
 	if err != nil {
 		log.Println("err initiating server... " + err.Error())
@@ -53,6 +53,14 @@ func Start(port int) {
 
 		go handleClient(socket)
 	}
+}
+
+func Get(endpoint string, handler Handler) {
+	getRoutes = append(getRoutes, Route{endpoint, applyMiddleware(handler)})
+}
+
+func Post(endpoint string, handler Handler) {
+	postRoutes = append(postRoutes, Route{endpoint, applyMiddleware(handler)})
 }
 
 func Use(m Middleware) {
@@ -107,14 +115,6 @@ func matchRoute(requestPath string, routes []Route) (Handler, map[string]string)
 	return nil, nil
 }
 
-func Get(endpoint string, handler Handler) {
-	getRoutes = append(getRoutes, Route{endpoint, applyMiddleware(handler)})
-}
-
-func Post(endpoint string, handler Handler) {
-	postRoutes = append(postRoutes, Route{endpoint, applyMiddleware(handler)})
-}
-
 func handleClient(socket net.Conn) {
 	defer socket.Close()
 
@@ -126,47 +126,14 @@ func handleClient(socket net.Conn) {
 
 	fmt.Println("Incoming request: " + requestLine)
 
-	headers := make([]string, 0)
-	var contentLength int = 0
+	_, contentLength := extractHeaders(rdr)
 
-	for {
-		line, err := rdr.ReadString('\n')
-		if err != nil {
-			log.Println("err reading headers... " + err.Error())
-			return
-		}
-
-		if strings.HasPrefix(line, "Content-Length") {
-			parts := strings.Split(line, ":")
-			lengthStr := strings.TrimSpace(parts[1])
-			contentLength, err = strconv.Atoi(lengthStr)
-		}
-
-		line = strings.TrimSpace(line)
-
-		if line == "" {
-			break
-		}
-
-		headers = append(headers, line)
-	}
-
-	body := ""
-
-	if contentLength > 0 {
-		bodyBuffer := make([]byte, contentLength)
-		_, err := io.ReadFull(rdr, bodyBuffer)
-		if err != nil {
-			log.Println("err reading body... " + err.Error())
-			return
-		}
-
-		body = string(bodyBuffer)
-	}
+	body := extractBody(rdr, contentLength)
 
 	requestParts := strings.Split(requestLine, " ")
 	method := requestParts[0]
 	endPoint := requestParts[1]
+
 	var handler Handler
 	var params map[string]string
 
@@ -192,6 +159,53 @@ func handleClient(socket net.Conn) {
 	} else {
 		sendResponse(socket, "Not Found", 404)
 	}
+}
+
+func extractHeaders(rdr *bufio.Reader) ([]string, int) {
+	headers := make([]string, 0)
+	var contentLength int = 0
+
+	for {
+		line, err := rdr.ReadString('\n')
+		if err != nil {
+			log.Println("err reading headers... " + err.Error())
+			return nil, 0
+		}
+
+		if strings.HasPrefix(line, "Content-Length") {
+			parts := strings.Split(line, ":")
+			lengthStr := strings.TrimSpace(parts[1])
+			contentLength, err = strconv.Atoi(lengthStr)
+		}
+
+		line = strings.TrimSpace(line)
+
+		if line == "" {
+			break
+		}
+
+		headers = append(headers, line)
+	}
+
+	return headers, contentLength
+}
+
+func extractBody(rdr *bufio.Reader, contentLength int) string {
+
+	body := ""
+
+	if contentLength > 0 {
+		bodyBuffer := make([]byte, contentLength)
+		_, err := io.ReadFull(rdr, bodyBuffer)
+		if err != nil {
+			log.Println("err reading body... " + err.Error())
+			return ""
+		}
+
+		body = string(bodyBuffer)
+	}
+
+	return body
 }
 
 func sendResponse(socket net.Conn, body string, code int) {

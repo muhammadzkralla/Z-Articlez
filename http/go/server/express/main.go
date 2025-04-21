@@ -5,12 +5,12 @@ import "log"
 func main() {
 
 	Use(func(req Req, res Res, next func()) {
-		log.Printf("m1: Request: %s %s", req.method, req.path)
+		log.Printf("m1: Request: %s %s\n", req.method, req.path)
 		next()
 	})
 
 	Use(func(req Req, res Res, next func()) {
-		log.Printf("m2: Request: %s %s", req.method, req.path)
+		log.Printf("m2: Request: %s %s\n\n", req.method, req.path)
 		next()
 	})
 
