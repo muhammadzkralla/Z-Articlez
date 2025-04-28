@@ -138,3 +138,18 @@ func TestDynamicRouting(t *testing.T) {
 		t.Errorf("Expected response to contain 'Post ID:123, Comment ID:comment1', but got %s", postResponse)
 	}
 }
+
+func TestSendResponse(t *testing.T) {
+	conn := &MockConn{}
+	res := Res{
+		socket: conn,
+		status: 200,
+	}
+
+	res.send("OK")
+
+	expected := "HTTP/1.1 200 OK\r\nContent-Length: 2\r\nContent-Type: text/plain\r\n\r\nOK"
+	if string(conn.data) != expected {
+		t.Errorf("Expected response %s, but got %s", expected, string(conn.data))
+	}
+}
