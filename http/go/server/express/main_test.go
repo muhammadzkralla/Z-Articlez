@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"net"
+	"strings"
+	"testing"
 	"time"
 )
 
@@ -57,4 +59,34 @@ func mockRequest(method, path, body string) string {
 	handleClient(conn)
 
 	return string(conn.data)
+}
+
+// Test GET route matching
+func TestGetRouteMatching(t *testing.T) {
+	// Mock a GET handler
+	Get("/test", func(req Req, res Res) {
+		res.send("GET route matched")
+	})
+
+	// Mock a GET request
+	response := mockRequest("GET", "/test", "")
+
+	if !strings.Contains(response, "GET route matched") {
+		t.Errorf("Expected response to contain 'GET route matched', but got %s", response)
+	}
+}
+
+// Test POST route matching
+func TestPostRouteMatching(t *testing.T) {
+	// Mock a POST handler
+	Post("/test", func(req Req, res Res) {
+		res.send("POST route matched")
+	})
+
+	// Mock a POST request
+	response := mockRequest("POST", "/test", "")
+
+	if !strings.Contains(response, "POST route matched") {
+		t.Errorf("Expected response to containe 'POST route matched', but got %s", response)
+	}
 }
