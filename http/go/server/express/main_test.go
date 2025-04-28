@@ -51,6 +51,14 @@ func (m *MockConn) SetWriteDeadline(t time.Time) error {
 	return nil
 }
 
+// reset shared variables before each unit test to ensure
+// it is tested independently
+func resetGlobals() {
+	getRoutes = nil
+	postRoutes = nil
+	middlewares = nil
+}
+
 // Helper function to mock a request and return the response
 func mockRequest(method, path, body string) string {
 	conn := &MockConn{}
@@ -65,6 +73,8 @@ func mockRequest(method, path, body string) string {
 
 // Test GET route matching
 func TestGetRouteMatching(t *testing.T) {
+	resetGlobals()
+
 	// Mock a GET handler
 	Get("/test", func(req Req, res Res) {
 		res.send("GET route matched")
@@ -80,6 +90,8 @@ func TestGetRouteMatching(t *testing.T) {
 
 // Test POST route matching
 func TestPostRouteMatching(t *testing.T) {
+	resetGlobals()
+
 	// Mock a POST handler
 	Post("/test", func(req Req, res Res) {
 		res.send("POST route matched")
@@ -95,6 +107,8 @@ func TestPostRouteMatching(t *testing.T) {
 
 // Test middleware
 func TestMiddleware(t *testing.T) {
+	resetGlobals()
+
 	// Mock a middleware
 	Use(func(req Req, res Res, next func()) {
 		res.send("Middleware worked")
@@ -115,6 +129,8 @@ func TestMiddleware(t *testing.T) {
 
 // Test dynamic routing
 func TestDynamicRouting(t *testing.T) {
+	resetGlobals()
+
 	// Mock a GET handler
 	Get("/test/:postId/comment/:commentId", func(req Req, res Res) {
 		postId := req.params["postId"]
@@ -142,6 +158,9 @@ func TestDynamicRouting(t *testing.T) {
 }
 
 func TestSendResponse(t *testing.T) {
+	resetGlobals()
+
+	// Mock a socket
 	conn := &MockConn{}
 	res := Res{
 		socket: conn,
@@ -150,6 +169,7 @@ func TestSendResponse(t *testing.T) {
 
 	res.send("OK")
 
+	// Expected response body
 	expected := "HTTP/1.1 200 OK\r\nContent-Length: 2\r\nContent-Type: text/plain\r\n\r\nOK"
 	if string(conn.data) != expected {
 		t.Errorf("Expected response %s, but got %s", expected, string(conn.data))
@@ -157,6 +177,9 @@ func TestSendResponse(t *testing.T) {
 }
 
 func TestExtractHeaders(t *testing.T) {
+	resetGlobals()
+
+	// Mock some headers and create a bufio reader of them
 	headers := "Content-Length: 20\r\nHeader1: header1\r\nHeader2: header2\r\n\r\n"
 	rdr := bufio.NewReader(bytes.NewBufferString(headers))
 
@@ -180,6 +203,9 @@ func TestExtractHeaders(t *testing.T) {
 }
 
 func TestExtractBody(t *testing.T) {
+	resetGlobals()
+
+	// Mock a request body
 	body := "Hello, world!"
 	rdr := bufio.NewReader(bytes.NewBufferString(body))
 
@@ -187,5 +213,16 @@ func TestExtractBody(t *testing.T) {
 
 	if extractedBody != "Hello, world!" {
 		t.Errorf("Expected body to be 'Hello, world!', but got %s", extractedBody)
+	}
+}
+
+func TestNotFoundHandler(t *testing.T) {
+	resetGlobals()
+
+	// Perform a request to a non-existing handler
+	response := mockRequest("GET", "/test", "")
+
+	if !strings.Contains(response, "Not Found") {
+		t.Errorf("Expected 'Not Found', but got %s", response)
 	}
 }
