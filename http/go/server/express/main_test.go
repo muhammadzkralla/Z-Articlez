@@ -87,6 +87,26 @@ func TestPostRouteMatching(t *testing.T) {
 	response := mockRequest("POST", "/test", "")
 
 	if !strings.Contains(response, "POST route matched") {
-		t.Errorf("Expected response to containe 'POST route matched', but got %s", response)
+		t.Errorf("Expected response to contain 'POST route matched', but got %s", response)
+	}
+}
+
+// Test middleware
+func TestMiddleware(t *testing.T) {
+	// Mock a middleware
+	Use(func(req Req, res Res, next func()) {
+		res.send("Middleware worked")
+		next()
+	})
+
+	// Mock a handler
+	Get("/test", func(req Req, res Res) {
+
+	})
+
+	response := mockRequest("GET", "/test", "")
+
+	if !strings.Contains(response, "Middleware worked") {
+		t.Errorf("Expected response to contain 'Middleware worked', but got %s", response)
 	}
 }
