@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bufio"
+	"bytes"
 	"fmt"
 	"net"
 	"strings"
@@ -151,5 +153,39 @@ func TestSendResponse(t *testing.T) {
 	expected := "HTTP/1.1 200 OK\r\nContent-Length: 2\r\nContent-Type: text/plain\r\n\r\nOK"
 	if string(conn.data) != expected {
 		t.Errorf("Expected response %s, but got %s", expected, string(conn.data))
+	}
+}
+
+func TestExtractHeaders(t *testing.T) {
+	headers := "Content-Length: 20\r\nHeader1: header1\r\nHeader2: header2\r\n\r\n"
+	rdr := bufio.NewReader(bytes.NewBufferString(headers))
+
+	extractedHeaders, extractedLen := extractHeaders(rdr)
+
+	if extractedHeaders[0] != "Content-Length: 20" {
+		t.Errorf("Expected header 'Content-Length: 20', but got %s", extractedHeaders[0])
+	}
+
+	if extractedHeaders[1] != "Header1: header1" {
+		t.Errorf("Expected header 'Header1: header1', but got %s", extractedHeaders[1])
+	}
+
+	if extractedHeaders[2] != "Header2: header2" {
+		t.Errorf("Expected header 'Header2: header2', but got %s", extractedHeaders[2])
+	}
+
+	if extractedLen != 20 {
+		t.Errorf("Expected Content-Length 20, but got %d", extractedLen)
+	}
+}
+
+func TestExtractBody(t *testing.T) {
+	body := "Hello, world!"
+	rdr := bufio.NewReader(bytes.NewBufferString(body))
+
+	extractedBody := extractBody(rdr, 13)
+
+	if extractedBody != "Hello, world!" {
+		t.Errorf("Expected body to be 'Hello, world!', but got %s", extractedBody)
 	}
 }
