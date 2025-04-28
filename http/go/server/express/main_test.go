@@ -110,3 +110,31 @@ func TestMiddleware(t *testing.T) {
 		t.Errorf("Expected response to contain 'Middleware worked', but got %s", response)
 	}
 }
+
+// Test dynamic routing
+func TestDynamicRouting(t *testing.T) {
+	// Mock a GET handler
+	Get("/test/:postId/comment/:commentId", func(req Req, res Res) {
+		postId := req.params["postId"]
+		commentId := req.params["commentId"]
+		res.send("Post ID: " + postId + ", Comment ID: " + commentId)
+	})
+
+	// Mock a POST handler
+	Post("/test/:postId/comment/:commentId", func(req Req, res Res) {
+		postId := req.params["postId"]
+		commentId := req.params["commentId"]
+		res.send("Post ID: " + postId + ", Comment ID: " + commentId)
+	})
+
+	getResponse := mockRequest("GET", "/test/123/comment/comment1", "")
+	postResponse := mockRequest("POST", "/test/123/comment/comment1", "")
+
+	if !strings.Contains(getResponse, "Post ID: 123, Comment ID: comment1") {
+		t.Errorf("Expected response to contain 'Post ID:123, Comment ID:comment1', but got %s", getResponse)
+	}
+
+	if !strings.Contains(postResponse, "Post ID: 123, Comment ID: comment1") {
+		t.Errorf("Expected response to contain 'Post ID:123, Comment ID:comment1', but got %s", postResponse)
+	}
+}
