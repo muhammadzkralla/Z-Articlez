@@ -51,37 +51,29 @@ func (m *MockConn) SetWriteDeadline(t time.Time) error {
 	return nil
 }
 
-// reset shared variables before each unit test to ensure
-// it is tested independently
-func resetGlobals() {
-	getRoutes = nil
-	postRoutes = nil
-	middlewares = nil
-}
-
 // Helper function to mock a request and return the response
-func mockRequest(method, path, body string) string {
+func mockRequest(app *App, method, path, body string) string {
 	conn := &MockConn{}
 	req := fmt.Sprintf("%s %s HTTP/1.1\r\nContent-Length: %d\r\n\r\n%s", method, path, len(body), body)
 	conn.data = []byte(req)
 
 	// Call handleClient with the mocked connection
-	handleClient(conn)
+	handleClient(conn, app)
 
 	return string(conn.data)
 }
 
 // Test GET route matching
 func TestGetRouteMatching(t *testing.T) {
-	resetGlobals()
+	app := &App{}
 
 	// Mock a GET handler
-	Get("/test", func(req Req, res Res) {
+	app.Get("/test", func(req Req, res Res) {
 		res.send("GET route matched")
 	})
 
 	// Mock a GET request
-	response := mockRequest("GET", "/test", "")
+	response := mockRequest(app, "GET", "/test", "")
 
 	if !strings.Contains(response, "GET route matched") {
 		t.Errorf("Expected response to contain 'GET route matched', but got %s", response)
@@ -90,15 +82,15 @@ func TestGetRouteMatching(t *testing.T) {
 
 // Test POST route matching
 func TestPostRouteMatching(t *testing.T) {
-	resetGlobals()
+	app := &App{}
 
 	// Mock a POST handler
-	Post("/test", func(req Req, res Res) {
+	app.Post("/test", func(req Req, res Res) {
 		res.send("POST route matched")
 	})
 
 	// Mock a POST request
-	response := mockRequest("POST", "/test", "")
+	response := mockRequest(app, "POST", "/test", "")
 
 	if !strings.Contains(response, "POST route matched") {
 		t.Errorf("Expected response to contain 'POST route matched', but got %s", response)
@@ -107,20 +99,20 @@ func TestPostRouteMatching(t *testing.T) {
 
 // Test middleware
 func TestMiddleware(t *testing.T) {
-	resetGlobals()
+	app := &App{}
 
 	// Mock a middleware
-	Use(func(req Req, res Res, next func()) {
+	app.Use(func(req Req, res Res, next func()) {
 		res.send("Middleware worked")
 		next()
 	})
 
 	// Mock a handler
-	Get("/test", func(req Req, res Res) {
+	app.Get("/test", func(req Req, res Res) {
 
 	})
 
-	response := mockRequest("GET", "/test", "")
+	response := mockRequest(app, "GET", "/test", "")
 
 	if !strings.Contains(response, "Middleware worked") {
 		t.Errorf("Expected response to contain 'Middleware worked', but got %s", response)
@@ -129,24 +121,24 @@ func TestMiddleware(t *testing.T) {
 
 // Test dynamic routing
 func TestDynamicRouting(t *testing.T) {
-	resetGlobals()
+	app := &App{}
 
 	// Mock a GET handler
-	Get("/test/:postId/comment/:commentId", func(req Req, res Res) {
+	app.Get("/test/:postId/comment/:commentId", func(req Req, res Res) {
 		postId := req.params["postId"]
 		commentId := req.params["commentId"]
 		res.send("Post ID: " + postId + ", Comment ID: " + commentId)
 	})
 
 	// Mock a POST handler
-	Post("/test/:postId/comment/:commentId", func(req Req, res Res) {
+	app.Post("/test/:postId/comment/:commentId", func(req Req, res Res) {
 		postId := req.params["postId"]
 		commentId := req.params["commentId"]
 		res.send("Post ID: " + postId + ", Comment ID: " + commentId)
 	})
 
-	getResponse := mockRequest("GET", "/test/123/comment/comment1", "")
-	postResponse := mockRequest("POST", "/test/123/comment/comment1", "")
+	getResponse := mockRequest(app, "GET", "/test/123/comment/comment1", "")
+	postResponse := mockRequest(app, "POST", "/test/123/comment/comment1", "")
 
 	if !strings.Contains(getResponse, "Post ID: 123, Comment ID: comment1") {
 		t.Errorf("Expected response to contain 'Post ID:123, Comment ID:comment1', but got %s", getResponse)
@@ -158,8 +150,6 @@ func TestDynamicRouting(t *testing.T) {
 }
 
 func TestSendResponse(t *testing.T) {
-	resetGlobals()
-
 	// Mock a socket
 	conn := &MockConn{}
 	res := Res{
@@ -177,8 +167,6 @@ func TestSendResponse(t *testing.T) {
 }
 
 func TestExtractHeaders(t *testing.T) {
-	resetGlobals()
-
 	// Mock some headers and create a bufio reader of them
 	headers := "Content-Length: 20\r\nHeader1: header1\r\nHeader2: header2\r\n\r\n"
 	rdr := bufio.NewReader(bytes.NewBufferString(headers))
@@ -203,8 +191,6 @@ func TestExtractHeaders(t *testing.T) {
 }
 
 func TestExtractBody(t *testing.T) {
-	resetGlobals()
-
 	// Mock a request body
 	body := "Hello, world!"
 	rdr := bufio.NewReader(bytes.NewBufferString(body))
@@ -217,10 +203,10 @@ func TestExtractBody(t *testing.T) {
 }
 
 func TestNotFoundHandler(t *testing.T) {
-	resetGlobals()
+	app := &App{}
 
 	// Perform a request to a non-existing handler
-	response := mockRequest("GET", "/test", "")
+	response := mockRequest(app, "GET", "/test", "")
 
 	if !strings.Contains(response, "Not Found") {
 		t.Errorf("Expected 'Not Found', but got %s", response)

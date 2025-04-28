@@ -1,19 +1,17 @@
 package main
 
-var middlewares []Middleware
-
-func Use(m Middleware) {
-	middlewares = append(middlewares, m)
+func (app *App) Use(m Middleware) {
+	app.middlewares = append(app.middlewares, m)
 }
 
-func applyMiddleware(finalHandler Handler) Handler {
+func applyMiddleware(finalHandler Handler, app *App) Handler {
 	return func(req Req, res Res) {
 		i := 0
 
 		var next func()
 		next = func() {
-			if i < len(middlewares) {
-				middleware := middlewares[i]
+			if i < len(app.middlewares) {
+				middleware := app.middlewares[i]
 				i++
 				middleware(req, res, next)
 			} else {

@@ -8,7 +8,13 @@ import (
 	"strings"
 )
 
-func Start(port int) {
+type App struct {
+	getRoutes   []Route
+	postRoutes  []Route
+	middlewares []Middleware
+}
+
+func (app *App) Start(port int) {
 	p := fmt.Sprintf(":%d", port)
 	server, err := net.Listen("tcp", p)
 	if err != nil {
@@ -21,11 +27,11 @@ func Start(port int) {
 			log.Println("err accepting socket")
 		}
 
-		go handleClient(socket)
+		go handleClient(socket, app)
 	}
 }
 
-func handleClient(socket net.Conn) {
+func handleClient(socket net.Conn, app *App) {
 	defer socket.Close()
 
 	rdr := bufio.NewReader(socket)
@@ -48,9 +54,9 @@ func handleClient(socket net.Conn) {
 	var params map[string]string
 
 	if method == "GET" {
-		handler, params = matchRoute(endPoint, getRoutes)
+		handler, params = matchRoute(endPoint, app.getRoutes)
 	} else if method == "POST" {
-		handler, params = matchRoute(endPoint, postRoutes)
+		handler, params = matchRoute(endPoint, app.postRoutes)
 	}
 
 	if handler != nil {

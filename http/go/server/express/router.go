@@ -2,15 +2,12 @@ package main
 
 import "strings"
 
-var getRoutes []Route
-var postRoutes []Route
-
-func Get(endpoint string, handler Handler) {
-	getRoutes = append(getRoutes, Route{endpoint, applyMiddleware(handler)})
+func (app *App) Get(endpoint string, handler Handler) {
+	app.getRoutes = append(app.getRoutes, Route{endpoint, applyMiddleware(handler, app)})
 }
 
-func Post(endpoint string, handler Handler) {
-	postRoutes = append(postRoutes, Route{endpoint, applyMiddleware(handler)})
+func (app *App) Post(endpoint string, handler Handler) {
+	app.postRoutes = append(app.postRoutes, Route{endpoint, applyMiddleware(handler, app)})
 }
 
 func matchRoute(requestPath string, routes []Route) (Handler, map[string]string) {
