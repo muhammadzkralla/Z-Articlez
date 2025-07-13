@@ -67,3 +67,20 @@ Example two shows how we can use the `user2` variable again in code by passing a
 ### Example 3
 
 Example three shows how we can use the `user2` variable again in code, but this time, we want to modify its value (perform a write operation). This can be done by passing a mutable borrow of the `user2` variable to the `update_username3` function that writes on the `name` field of the `user` object.
+
+## 1 Mutable OR N Immutable Borrows
+
+### Example 4
+
+Example four shows that we can't create an immutable borrow after creating at least one mutable borrow and using that mutable borrow later in code after creating the immutable borrow. This is because that this behaviour will cause the actual data be modified after creating an immutable borrow that expects the object not to be altered during its lifecycle.
+
+
+### Example 5
+
+Example five addresses how can we avoid this issue, by declaring the immutable borrow after all the mutable borrows of the object are not used later in code anymore. This way, the immutable borrow ensures that the value will not be modified until its lifecycle drops.
+
+### Example 6
+
+Example six shows that even if we dropped the immutable borrow, we still can't use the mutable borrow. Rust's borrow checker says: "You still have r2 alive in this scope. I don't care if you call drop(r2), I won't let you use r1 mutably again in this block."
+
+The `drop()` function drops the value at runtime, but does not shorten the borrow lifetime in the eyes of the compiler.
