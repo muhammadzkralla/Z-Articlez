@@ -3,6 +3,6 @@
 *.exe
 
 # Rust build artifacts
-/target
+**/target/
 **/*.rlib
 Cargo.lock
