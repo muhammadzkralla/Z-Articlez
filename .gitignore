@@ -2,3 +2,7 @@
 *.jar
 *.exe
 
+# Rust build artifacts
+/target
+**/*.rlib
+Cargo.lock
