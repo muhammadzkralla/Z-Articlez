@@ -4,7 +4,7 @@
 
 `longest()` is a function that is valid over the lifecycle `'a` and takes two arguments, `x` which is a borrow of a string that is valid over the generic lifecycle `'a`, and `y` which is a borrow of a string that is valid over the generic lifecycle `'a`, and returns a string that is valid over the generic lifecycle `'a`.
 
-Note that rust infers the value of the generic lifecycle `'a` automatically and we don't need to worry about this part. We just suppose that it's the shortest lifecycle of the given arguments.
+Note that Rust infers the value of the generic lifecycle `'a` automatically and we don't need to worry about this part. We just suppose that it's the shortest lifecycle of the given arguments.
 
 ## Rust's Lifetime Elision Rules
 
@@ -84,3 +84,49 @@ Example five addresses how can we avoid this issue, by declaring the immutable b
 Example six shows that even if we dropped the immutable borrow, we still can't use the mutable borrow. Rust's borrow checker says: "You still have r2 alive in this scope. I don't care if you call drop(r2), I won't let you use r1 mutably again in this block."
 
 The `drop()` function drops the value at runtime, but does not shorten the borrow lifetime in the eyes of the compiler.
+
+---
+
+## Variables and Mutability
+
+### Variables are Immutable by Default
+
+All variables are immutable by default unless declared mutable using the `mut` keyword in specifying them.
+
+### Immutable Variables vs Constants
+
+There are some differences between Immutable variables and constants in Rust. Both are used to store values that will not change in the future, but there are some differences. With constants, type of the value must be annotated. Constants may be set only to a constant expression, not the result of a value that could only be computed at runtime. For example:
+
+```rust
+const THREE_HOURS_IN_SECONDS: u32 = 60 * 60 * 3;
+```
+
+### Shadowing
+
+Shadowing is different from marking a variable as mut because we’ll get a compile-time error if we accidentally try to reassign to this variable without using the let keyword. By using let, we can perform a few transformations on a value but have the variable be immutable after those transformations have been completed. For example:
+
+```rust
+fn main() {
+    let x = 5;
+
+    let x = x + 1;
+
+    {
+        let x = x * 2;
+        println!("The value of x in the inner scope is: {x}");
+    }
+
+    println!("The value of x is: {x}");
+}
+```
+
+We can say that we make a variable mutable for some short amount of time by using shadowing.
+
+The other difference between mut and shadowing is that because we’re effectively creating a new variable when we use the let keyword again, we can change the type of the value but reuse the same name. For example, say our program asks a user to show how many spaces they want between some text by inputting space characters, and then we want to store that input as a number:
+
+```rust
+    let spaces = "   ";
+    let spaces = spaces.len();
+```
+
+The first `spaces` variable is a string type and the second `spaces` variable is a number type.
