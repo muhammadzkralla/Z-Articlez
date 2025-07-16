@@ -130,3 +130,112 @@ The other difference between mut and shadowing is that because we’re effective
 ```
 
 The first `spaces` variable is a string type and the second `spaces` variable is a number type.
+
+---
+
+## Data Types
+
+Data types can be scalar or compound.
+
+A scalar type represents a single value. Rust has four primary scalar types: `integers`, `floating-point numbers`, `Booleans`, and `characters`.
+
+Rust is a statically-typed language, and it can infer the type of variables sometimes and sometimes we need to specify the type explicitly like when converting a string to a numeric value for example:
+
+```rust
+let guess: u32 = "42".parse().expect("Not a number!");
+```
+
+## Scalar Data Types
+
+### Integer Types in Rust
+
+| Length | Signed | Unsigned |
+| ------ | ------ | -------- |
+| 8-bit  | i8     | u8       |
+| 16-bit | i16    | u16      |
+| 32-bit | i32    | u32      |
+| 64-bit | i64    | u64      |
+| 128-bit| i128   | u128     |
+| arch   | isize  | usize    |
+
+> [!NOTE]
+>  Integer types default to i32.
+> When you’re compiling in debug mode, Rust includes checks for integer overflow that cause your program to panic at runtime if this behavior occurs.
+> When you’re compiling in release mode with the --release flag, Rust does not include checks for integer overflow that cause panics. Instead, if overflow occurs, Rust performs two’s complement wrapping.
+
+### floating-point Types in Rust
+
+Rust’s floating-point types are `f32` and `f64`. The default type is f64 because on modern CPUs, it’s roughly the same speed as f32 but is capable of more precision.
+
+```rust
+fn main() {
+    let x = 2.0; // f64
+
+    let y: f32 = 3.0; // f32
+}
+```
+
+## Compound Data Types
+
+Compound types can group multiple values into one type. Rust has two primitive compound types: tuples and arrays.
+
+### Tuple Types in Rust
+
+A tuple group different values of different types together, for example:
+
+```rust
+fn main() {
+    let tup: (i32, f64, u8) = (500, 6.4, 1);
+}
+```
+
+To access its values:
+
+```rust
+fn main() {
+    let tup = (500, 6.4, 1);
+
+    let (x, y, z) = tup;
+
+    println!("The value of y is: {y}");
+}
+```
+
+Or:
+
+```rust
+fn main() {
+    let x: (i32, f64, u8) = (500, 6.4, 1);
+
+    let five_hundred = x.0;
+
+    let six_point_four = x.1;
+
+    let one = x.2;
+}
+```
+
+### Array Types in Rust
+
+Arrays group fixed size of elements of the same type, for example:
+
+```rust
+fn main() {
+    let a = [1, 2, 3, 4, 5];
+
+    let a: [i32; 5] = [1, 2, 3, 4, 5];
+
+    let a = [3; 5]; // equivalent to [3, 3, 3, 3, 3]
+}
+```
+
+To access its values:
+
+```rust
+fn main() {
+    let a = [1, 2, 3, 4, 5];
+
+    let first = a[0];
+    let second = a[1];
+}
+```
