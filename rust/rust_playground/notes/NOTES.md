@@ -239,3 +239,42 @@ fn main() {
     let second = a[1];
 }
 ```
+
+---
+
+## Functions in Rust
+
+Function example with arguments:
+
+```rust
+fn main() {
+    print_labeled_measurement(5, 'h');
+}
+
+fn print_labeled_measurement(value: i32, unit_label: char) {
+    println!("The measurement is: {value}{unit_label}");
+}
+```
+
+Functions in Rust are of two types:
+
+- Statements: instructions that perform some action and do not return a value.
+- Expressions: evaluate to a resultant value. Let’s look at some examples.
+
+```rust
+fn main() {
+    let y = {
+        let x = 3;
+        x + 1
+    };
+
+    println!("The value of y is: {y}");
+}
+```
+
+The value of the variable `y` here will be 4.
+
+> [!NOTE]
+> Rust is an expression-based language.
+
+In Rust, the return value of the function is synonymous with the value of the final expression in the block of the body of a function. You can return early from a function by using the return keyword and specifying a value, but most functions return the last expression implicitly and it does not contain a semicolon.
