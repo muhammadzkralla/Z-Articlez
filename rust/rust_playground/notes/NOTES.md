@@ -278,3 +278,131 @@ The value of the variable `y` here will be 4.
 > Rust is an expression-based language.
 
 In Rust, the return value of the function is synonymous with the value of the final expression in the block of the body of a function. You can return early from a function by using the return keyword and specifying a value, but most functions return the last expression implicitly and it does not contain a semicolon.
+
+---
+
+## Control Flow in Rust
+
+If condition syntax in Rust:
+
+```rust
+fn main() {
+    let number = 3;
+
+    if number < 5 {
+        println!("condition was true");
+    } else {
+        println!("condition was false");
+    }
+}
+```
+
+> [!NOTE]
+> It’s also worth noting that the condition in this code must be a `bool`. If the condition isn’t a `bool`, we’ll get an error.
+
+Using too many else if expressions can clutter your code, so if you have more than one, you might want to refactor your code. Chapter 6 describes a powerful Rust branching construct called match for these cases.
+
+Because if is an expression, we can use it on the right side of a let statement to assign the outcome to a variable, something similar to the ternary operator, for example:
+
+```rust
+fn main() {
+    let condition = true;
+    let number = if condition { 5 } else { 6 };
+
+    println!("The value of number is: {number}");
+}
+```
+
+## Repetition with Loops in Rust
+
+Rust has three kinds of loops: `loop`, `while`, and `for`.
+
+### Repeating Code with Loop:
+
+The `loop` keyword tells Rust to execute a block of code over and over again forever or until you explicitly tell it to stop, for example:
+
+```rust
+fn main() {
+    loop {
+        println!("again!");
+    }
+}
+```
+
+This will infinitely print "again!" in the terminal until you interrupt it with `SIGKILL_SIGNAL` manually.
+
+> [!NOTE]
+> You can avoid this by using the `break` keyword to step out of the loop programmatically.
+
+### Loop Labels:
+
+If you have loops within loops, break and continue apply to the innermost loop at that point. You can optionally specify a loop label on a loop that you can then use with break or continue to specify that those keywords apply to the labeled loop instead of the innermost loop.
+
+Loop labels must begin with a single quote. Here’s an example with two nested loops:
+
+```rust
+fn main() {
+    let mut count = 0;
+    'counting_up: loop {
+        println!("count = {count}");
+        let mut remaining = 10;
+
+        loop {
+            println!("remaining = {remaining}");
+            if remaining == 9 {
+                break;
+            }
+            if count == 2 {
+                break 'counting_up;
+            }
+            remaining -= 1;
+        }
+
+        count += 1;
+    }
+    println!("End count = {count}");
+}
+```
+
+### Repeating Code with While:
+
+Here's an example syntax for the while loops in Rust:
+
+```rust
+fn main() {
+    let mut number = 3;
+
+    while number != 0 {
+        println!("{number}!");
+
+        number -= 1;
+    }
+
+    println!("LIFTOFF!!!");
+}
+```
+
+### Repeating Code with For:
+
+Here's an example syntax for the "for each" loops in Rust:
+
+```rust
+fn main() {
+    let a = [10, 20, 30, 40, 50];
+
+    for element in a {
+        println!("the value is: {element}");
+    }
+}
+```
+
+Here's an example syntax for the "for range" loops in Rust:
+
+```rust
+fn main() {
+    for number in (1..4).rev() {
+        println!("{number}!");
+    }
+    println!("LIFTOFF!!!");
+}
+```
