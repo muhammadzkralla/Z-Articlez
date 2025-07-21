@@ -283,6 +283,8 @@ In Rust, the return value of the function is synonymous with the value of the fi
 
 ## Control Flow in Rust
 
+### If Conditions in Rust
+
 If condition syntax in Rust:
 
 ```rust
@@ -334,7 +336,7 @@ This will infinitely print "again!" in the terminal until you interrupt it with 
 > [!NOTE]
 > You can avoid this by using the `break` keyword to step out of the loop programmatically.
 
-### Loop Labels:
+### Loop in Rust
 
 If you have loops within loops, break and continue apply to the innermost loop at that point. You can optionally specify a loop label on a loop that you can then use with break or continue to specify that those keywords apply to the labeled loop instead of the innermost loop.
 
@@ -364,7 +366,7 @@ fn main() {
 }
 ```
 
-### Repeating Code with While:
+### While Loops in Rust
 
 Here's an example syntax for the while loops in Rust:
 
@@ -382,7 +384,7 @@ fn main() {
 }
 ```
 
-### Repeating Code with For:
+### For Loops in Rust
 
 Here's an example syntax for the "for each" loops in Rust:
 
