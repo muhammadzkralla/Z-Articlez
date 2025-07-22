@@ -1,6 +1,3 @@
-use once_cell::sync::Lazy;
-use std::sync::Mutex;
-
 const WIDTH: usize = 120;
 const HEIGHT: usize = 70;
 const GRAVITATIONAL_CONST: f64 = 1e-3;
