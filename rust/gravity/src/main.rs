@@ -76,6 +76,20 @@ fn update_pos(sun: &Body, planets: &mut Vec<Body>, screen: &mut Vec<Vec<char>>) 
     }
 }
 
+fn render(screen: &mut Vec<Vec<char>>) {
+    // Clear terminal
+    print!("\x1B[2J\x1B[H");
+
+    for row in screen.iter() {
+        let mut line = String::new();
+        for ch in row.iter() {
+            line.push(*ch);
+        }
+
+        println!("{}", line);
+    }
+}
+
 fn calc_vy(body1: &Body, body2: &Body) -> f64 {
     let fy = calc_fy(&body1, &body2);
 
@@ -102,20 +116,6 @@ fn calc_fx(body1: &Body, body2: &Body) -> f64 {
     let dx = body1.x - body2.x;
 
     return force * (dx / dist);
-}
-
-fn draw(screen: &mut Vec<Vec<char>>) {
-    // Clear terminal
-    print!("\x1B[2J\x1B[H");
-
-    for row in screen.iter() {
-        let mut line = String::new();
-        for ch in row.iter() {
-            line.push(*ch);
-        }
-
-        println!("{}", line);
-    }
 }
 
 fn calc_force(body1: &Body, body2: &Body) -> f64 {
@@ -226,7 +226,7 @@ fn main() {
         clear_screen(&mut screen);
         update_pos(&sun, &mut planets, &mut screen);
 
-        draw(&mut screen);
+        render(&mut screen);
 
         std::thread::sleep(std::time::Duration::from_millis(120));
     }
