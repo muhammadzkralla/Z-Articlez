@@ -1,5 +1,5 @@
-const WIDTH: usize = 120;
-const HEIGHT: usize = 70;
+const WIDTH: usize = 140;
+const HEIGHT: usize = 34;
 const GRAVITATIONAL_CONST: f64 = 1e-3;
 
 struct Body {
