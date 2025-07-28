@@ -408,3 +408,176 @@ fn main() {
     println!("LIFTOFF!!!");
 }
 ```
+
+---
+
+## The Ownership Model in Rust
+
+This Rust code:
+
+```rust
+    let mut s = "test";
+```
+
+Is equivalent to this C code:
+
+```c
+    const char* s = "test";
+```
+
+The string literals are stored in read-only memory in both languages. You can reassign their values but you can not modify their values. In code this looks like:
+
+```rust
+    let mut s = "test";
+    s = "best"; // s is a &str reference; you're changing what it points to
+```
+
+And in C:
+
+```c
+    char *s = "test";
+    s = "best"; // This just changes the pointer's value
+```
+
+But you can not do the following:
+
+```rust
+    let mut s = "test";
+    s.replace_range(0..1, "B"); // compile error — &str is immutable
+```
+
+```c
+    char *s = "test";
+    s[0] = 'B'; // Undefined behavior — modifying read-only memory
+```
+
+TLDR: The pointer is stored on the stack while the string literal is stored in the read-only memory. You can reassign the reference of the pointer, but you can not modify the value of the string literal, just like in C.
+
+While this Rust code:
+
+```rust
+    let mut sss = String::from("test2");
+```
+
+Is equivalent to this C code:
+
+```c
+    char* sss = malloc(strlen("test2") + 1);
+    strcpy(sss, "test2");
+```
+
+In order to support a mutable, growable piece of text, we need to allocate an amount of memory on the heap, unknown at compile time, to hold the contents. This means:
+
+- The memory must be requested from the memory allocator at runtime.
+- We need a way of returning this memory to the allocator when we’re done with our String.
+
+That first part is done by us: when we call String::from, its implementation requests the memory it needs. This is pretty much universal in programming languages.
+
+However, the second part is different. In languages with a garbage collector (GC), the GC keeps track of and cleans up memory that isn’t being used anymore, and we don’t need to think about it. In most languages without a GC, it’s our responsibility to identify when memory is no longer being used and to call code to explicitly free it, just as we did to request it. Doing this correctly has historically been a difficult programming problem. If we forget, we’ll waste memory. If we do it too early, we’ll have an invalid variable. If we do it twice, that’s a bug too. We need to pair exactly one allocate with exactly one free.
+
+Rust takes a different path: the memory is automatically returned once the variable that owns it goes out of scope.
+
+When a variable goes out of scope, Rust calls a special function for us. This function is called drop, and it’s where the author of String can put the code to return the memory. Rust calls drop automatically at the closing curly bracket. Similar to the Resource Acquisition Is Initialization principle in C++.
+
+### Variables and Data Interacting with Move
+
+This will not move ownership of x to y:
+
+```rust
+    let x = 5;
+    let y = x;
+```
+
+While this will move the ownership of s1 to s2:
+
+```rust
+    let s1 = String::from("hello");
+    let s2 = s1; // s1 now is not valid anymore
+```
+
+This happens to avoid the very famous memory-safety bug, the double freeing issue.
+
+In addition, there’s a design choice that’s implied by this: Rust will never automatically create “deep” copies of your data. Therefore, any automatic copying can be assumed to be inexpensive in terms of runtime performance.
+
+### Scope and Assignment
+
+For this Rust code:
+
+```rust
+    let mut s = String::from("hello");
+    s = String::from("ahoy");
+
+    println!("{s}, world!");
+```
+
+The "hello" string literal is dropped as nothing is pointing to it anymore.
+
+### Variables and Data Interacting with Clone
+
+If we do want to deeply copy the heap data of the String, not just the stack data, we can use a common method called clone.
+
+For example:
+
+```rust
+    let s1 = String::from("hello");
+    let s2 = s1.clone();
+
+    println!("s1 = {s1}, s2 = {s2}");
+```
+
+This performs a heap copy too, so each variable of `s1` and `s2` are pointing to completely different parts of the heap with the exact same values. Please note that this is an expensive operation.
+
+### Stack-Only Data: Copy
+
+For this Rust code:
+
+```rust
+    let x = 5;
+    let y = x;
+
+    println!("x = {x}, y = {y}");
+```
+
+The variable `x` is not moved to the variable `y`, and instead the variable `y` gets a copy of the value of the variable `x` which is 5, this means that the value of `x` will be 5 and it's a valid variable and the value of `y` will be 5 and it's a valid variable too.
+
+The reason is that types such as integers that have a known size at compile time are stored entirely on the stack, so copies of the actual values are quick to make.
+
+That means there’s no reason we would want to prevent x from being valid after we create the variable y. In other words, there’s no difference between deep and shallow copying here, so calling clone wouldn’t do anything different from the usual shallow copying, and we can leave it out.
+
+### The Copy Trait
+
+Rust has a special annotation called the Copy trait that we can place on types that are stored on the stack, as integers are (we’ll talk more about traits in Chapter 10). If a type implements the Copy trait, variables that use it do not move, but rather are trivially copied, making them still valid after assignment to another variable.
+
+Rust won’t let us annotate a type with Copy if the type, or any of its parts, has implemented the Drop trait.
+
+So, what types implement the Copy trait? You can check the documentation for the given type to be sure, but as a general rule, any group of simple scalar values can implement Copy, and nothing that requires allocation or is some form of resource can implement Copy. Here are some of the types that implement Copy:
+
+- All the integer types
+- The boolean types
+- All the floating-point types
+- The character types
+- Tuples, if they only contain types that also implement copy.
+
+### Return Values and Scope
+
+The ownership of a variable follows the same pattern every time: assigning a value to another variable moves it. When a variable that includes data on the heap goes out of scope, the value will be cleaned up by drop unless ownership of the data has been moved to another variable.
+
+While this works, taking ownership and then returning ownership with every function is a bit tedious. What if we want to let a function use a value but not take ownership? It’s quite annoying that anything we pass in also needs to be passed back if we want to use it again, in addition to any data resulting from the body of the function that we might want to return as well.
+
+Rust does let us return multiple values using a tuple:
+
+```rust
+fn main() {
+    let s1 = String::from("hello");
+
+    let (s2, len) = calculate_length(s1);
+
+    println!("The length of '{s2}' is {len}.");
+}
+
+fn calculate_length(s: String) -> (String, usize) {
+    let length = s.len();
+
+    (s, length)
+}
+```
