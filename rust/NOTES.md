@@ -499,27 +499,145 @@ fn calculate_length(s: String) -> (String, usize) {
 
 # References and Borrowing
 
-## longest.rs
+## Immutable References
+
+Here's a simple example code that demonstrates how can we pass an immutable borrow of some variable:
+
+```rust
+fn main() {
+    let s1 = String::from("hello");
+
+    let len = calculate_length(&s1);
+
+    println!("The length of '{s1}' is {len}.");
+}
+
+fn calculate_length(s: &String) -> usize {
+    s.len()
+}
+```
+
+The `&s1` syntax lets us create a reference that refers to the value of `s1` but does not own it. Because the reference does not own it, the value it points to will not be dropped when the reference stops being used.
+
+```rust
+fn calculate_length(s: &String) -> usize { // s is a reference to a String
+    s.len()
+} // Here, s goes out of scope. But because s does not have ownership of what
+  // it refers to, the value is not dropped.
+```
+
+> [!NOTE]
+> The opposite of referencing by using `&` is dereferencing, which is accomplished with the dereference operator, `*`.
+
+## Mutable References
+
+Here's a simple example code that demonstrates how can we pass a mutable borrow of some variable:
+
+```rust
+fn main() {
+    let mut s = String::from("hello");
+
+    change(&mut s);
+}
+
+fn change(some_string: &mut String) {
+    some_string.push_str(", world");
+}
+```
+
+Mutable references have one big restriction: if you have a mutable reference to a value, you can have no other references to that value. For example this code, won't compile as it requires two mutable borrows:
+
+```rust
+    let mut s = String::from("hello");
+
+    let r1 = &mut s;
+    let r2 = &mut s; // makes error
+
+    println!("{}, {}", r1, r2);
+```
+
+This error says that this code is invalid because we cannot borrow s as mutable more than once at a time.
+
+We can workaround this by doing something like this:
+
+```rust
+    let mut s = String::from("hello");
+
+    {
+        let r1 = &mut s;
+    } // r1 goes out of scope here, so we can make a new reference with no problems.
+
+    let r2 = &mut s;
+```
+
+We also cannot have a mutable reference while we have an immutable one to the same value. For example:
+
+```rust
+    let mut s = String::from("hello");
+
+    let r1 = &s; // no problem
+    let r2 = &s; // no problem
+    let r3 = &mut s; // BIG PROBLEM
+
+    println!("{}, {}, and {}", r1, r2, r3);
+```
+
+> [!IMPORTANT]
+> Note that a reference’s scope starts from where it is introduced and continues through the last time that reference is used. For instance, this code will compile because the last usage of the immutable references is in the println!, before the mutable reference is introduced:
+
+```rust
+    let mut s = String::from("hello");
+
+    let r1 = &s; // no problem
+    let r2 = &s; // no problem
+    println!("{r1} and {r2}");
+    // Variables r1 and r2 will not be used after this point.
+
+    let r3 = &mut s; // no problem
+    println!("{r3}");
+```
+
+## Dangling Pointers
+
+If you have a reference to some data, the compiler will ensure that the data will not go out of scope before the reference to the data does.
+
+For example, this code won't compile:
+
+```rust
+fn main() {
+    let reference_to_nothing = dangle();
+}
+
+fn dangle() -> &String {
+    let s = String::from("hello");
+
+    &s
+}
+```
+
+## Examples
+
+### longest.rs
 
 `longest()` is a function that is valid over the lifecycle `'a` and takes two arguments, `x` which is a borrow of a string that is valid over the generic lifecycle `'a`, and `y` which is a borrow of a string that is valid over the generic lifecycle `'a`, and returns a string that is valid over the generic lifecycle `'a`.
 
 Note that Rust infers the value of the generic lifecycle `'a` automatically and we don't need to worry about this part. We just suppose that it's the shortest lifecycle of the given arguments.
 
-## Rust's Lifetime Elision Rules
+### Rust's Lifetime Elision Rules
 
-### Rule 1: Each parameter gets its own lifetime
+#### Rule 1: Each parameter gets its own lifetime
 
 ```rust
 fn foo(x: &str); // treated as fn foo<'a>(x: &'a str)
 ```
 
-### Rule 2: If there’s only one input reference, the output gets its lifetime
+#### Rule 2: If there’s only one input reference, the output gets its lifetime
 
 ```rust
 fn identity(x: &str) -> &str; // becomes fn identity<'a>(x: &'a str) -> &'a str
 ```
 
-### Rule 3: If multiple inputs, and one is &self or &mut self, use its lifetime
+#### Rule 3: If multiple inputs, and one is &self or &mut self, use its lifetime
 
 ```rust
 impl MyStruct {
@@ -527,7 +645,7 @@ impl MyStruct {
 }
 ```
 
-## Dropped Lifecycle Example
+### Dropped Lifecycle Example
 
 ```rust
 fn main() {
@@ -541,7 +659,7 @@ fn main() {
 }
 ```
 
-### TLDR
+#### TLDR
 
 - Rust infers lifetimes when it can (thanks to elision rules).
 - When returning references involving multiple input lifetimes, you must write them explicitly.
@@ -549,36 +667,36 @@ fn main() {
 
 ---
 
-## user.rs
+### user.rs
 
 We mocked a simple struct called `User` with only one field called `name` that's a string. We implement only one function called `new` that acts like a constructor to create a new `User` object.
 
-## Immutable vs Mutable Borrows
+### Immutable vs Mutable Borrows
 
-### Example 1
+#### Example 1
 
 Example one shows how ownership moves from `user1` to `user2` indicating the expiration of the lifecycle of the `user1` variable lifecycle meaning that we can't use it anymore later in code. Similarly, when we called the function `print_username1`, the ownership moved from `user2` to `user3` indicating the expiration of the lifecycle of the `user2` variable lifecycle meaning that we can't use it anymore later in code.
 
-### Example 2
+#### Example 2
 
 Example two shows how we can use the `user2` variable again in code by passing an immutable borrow of the `user2` variable to the `print_username1` function instead of the actual `user2` variable. This allows us to use the `user2` again later in the code without moving the ownership to `user3`. Note that this is applicable for read operations only.
 
-### Example 3
+#### Example 3
 
 Example three shows how we can use the `user2` variable again in code, but this time, we want to modify its value (perform a write operation). This can be done by passing a mutable borrow of the `user2` variable to the `update_username3` function that writes on the `name` field of the `user` object.
 
-## 1 Mutable OR N Immutable Borrows
+### 1 Mutable OR N Immutable Borrows
 
-### Example 4
+#### Example 4
 
 Example four shows that we can't create an immutable borrow after creating at least one mutable borrow and using that mutable borrow later in code after creating the immutable borrow. This is because that this behaviour will cause the actual data be modified after creating an immutable borrow that expects the object not to be altered during its lifecycle.
 
 
-### Example 5
+#### Example 5
 
 Example five addresses how can we avoid this issue, by declaring the immutable borrow after all the mutable borrows of the object are not used later in code anymore. This way, the immutable borrow ensures that the value will not be modified until its lifecycle drops.
 
-### Example 6
+#### Example 6
 
 Example six shows that even if we dropped the immutable borrow, we still can't use the mutable borrow. Rust's borrow checker says: "You still have r2 alive in this scope. I don't care if you call drop(r2), I won't let you use r1 mutably again in this block."
 
