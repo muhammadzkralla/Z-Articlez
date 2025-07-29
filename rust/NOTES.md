@@ -1,99 +1,12 @@
 # Notes
 
-## longest.rs
+# Variables and Mutability
 
-`longest()` is a function that is valid over the lifecycle `'a` and takes two arguments, `x` which is a borrow of a string that is valid over the generic lifecycle `'a`, and `y` which is a borrow of a string that is valid over the generic lifecycle `'a`, and returns a string that is valid over the generic lifecycle `'a`.
-
-Note that Rust infers the value of the generic lifecycle `'a` automatically and we don't need to worry about this part. We just suppose that it's the shortest lifecycle of the given arguments.
-
-## Rust's Lifetime Elision Rules
-
-### Rule 1: Each parameter gets its own lifetime
-
-```rust
-fn foo(x: &str); // treated as fn foo<'a>(x: &'a str)
-```
-
-### Rule 2: If there’s only one input reference, the output gets its lifetime
-
-```rust
-fn identity(x: &str) -> &str; // becomes fn identity<'a>(x: &'a str) -> &'a str
-```
-
-### Rule 3: If multiple inputs, and one is &self or &mut self, use its lifetime
-
-```rust
-impl MyStruct {
-    fn get_name(&self) -> &str; // becomes fn get_name<'a>(&'a self) -> &'a str
-}
-```
-
-## Dropped Lifecycle Example
-
-```rust
-fn main() {
-    let string1 = String::from("abc"); // string1 lives until end of main
-    let result;
-    {
-        let string2 = String::from("abcdef"); // string2 lives only in this block
-        result = longest(&string1, &string2); // ERROR!
-    }
-    println!("{}", result); // may be referencing dropped data
-}
-```
-
-## TLDR
-
-- Rust infers lifetimes when it can (thanks to elision rules).
-- When returning references involving multiple input lifetimes, you must write them explicitly.
-- When in doubt, write `'a`, the compiler will guide you.
-
----
-
-## user.rs
-
-We mocked a simple struct called `User` with only one field called `name` that's a string. We implement only one function called `new` that acts like a constructor to create a new `User` object.
-
-## Immutable vs Mutable Borrows
-
-### Example 1
-
-Example one shows how ownership moves from `user1` to `user2` indicating the expiration of the lifecycle of the `user1` variable lifecycle meaning that we can't use it anymore later in code. Similarly, when we called the function `print_username1`, the ownership moved from `user2` to `user3` indicating the expiration of the lifecycle of the `user2` variable lifecycle meaning that we can't use it anymore later in code.
-
-### Example 2
-
-Example two shows how we can use the `user2` variable again in code by passing an immutable borrow of the `user2` variable to the `print_username1` function instead of the actual `user2` variable. This allows us to use the `user2` again later in the code without moving the ownership to `user3`. Note that this is applicable for read operations only.
-
-### Example 3
-
-Example three shows how we can use the `user2` variable again in code, but this time, we want to modify its value (perform a write operation). This can be done by passing a mutable borrow of the `user2` variable to the `update_username3` function that writes on the `name` field of the `user` object.
-
-## 1 Mutable OR N Immutable Borrows
-
-### Example 4
-
-Example four shows that we can't create an immutable borrow after creating at least one mutable borrow and using that mutable borrow later in code after creating the immutable borrow. This is because that this behaviour will cause the actual data be modified after creating an immutable borrow that expects the object not to be altered during its lifecycle.
-
-
-### Example 5
-
-Example five addresses how can we avoid this issue, by declaring the immutable borrow after all the mutable borrows of the object are not used later in code anymore. This way, the immutable borrow ensures that the value will not be modified until its lifecycle drops.
-
-### Example 6
-
-Example six shows that even if we dropped the immutable borrow, we still can't use the mutable borrow. Rust's borrow checker says: "You still have r2 alive in this scope. I don't care if you call drop(r2), I won't let you use r1 mutably again in this block."
-
-The `drop()` function drops the value at runtime, but does not shorten the borrow lifetime in the eyes of the compiler.
-
----
-
-## Variables and Mutability
-
-### Variables are Immutable by Default
+## Variables are Immutable by Default
 
 All variables are immutable by default unless declared mutable using the `mut` keyword in specifying them.
 
-### Immutable Variables vs Constants
+## Immutable Variables vs Constants
 
 There are some differences between Immutable variables and constants in Rust. Both are used to store values that will not change in the future, but there are some differences. With constants, type of the value must be annotated. Constants may be set only to a constant expression, not the result of a value that could only be computed at runtime. For example:
 
@@ -101,7 +14,7 @@ There are some differences between Immutable variables and constants in Rust. Bo
 const THREE_HOURS_IN_SECONDS: u32 = 60 * 60 * 3;
 ```
 
-### Shadowing
+## Shadowing
 
 Shadowing is different from marking a variable as mut because we’ll get a compile-time error if we accidentally try to reassign to this variable without using the let keyword. By using let, we can perform a few transformations on a value but have the variable be immutable after those transformations have been completed. For example:
 
@@ -133,7 +46,7 @@ The first `spaces` variable is a string type and the second `spaces` variable is
 
 ---
 
-## Data Types
+# Data Types
 
 Data types can be scalar or compound.
 
@@ -242,7 +155,7 @@ fn main() {
 
 ---
 
-## Functions in Rust
+# Functions in Rust
 
 Function example with arguments:
 
@@ -281,9 +194,9 @@ In Rust, the return value of the function is synonymous with the value of the fi
 
 ---
 
-## Control Flow in Rust
+# Control Flow in Rust
 
-### If Conditions in Rust
+## If Conditions in Rust
 
 If condition syntax in Rust:
 
@@ -319,7 +232,7 @@ fn main() {
 
 Rust has three kinds of loops: `loop`, `while`, and `for`.
 
-### Repeating Code with Loop:
+## Repeating Code with Loop:
 
 The `loop` keyword tells Rust to execute a block of code over and over again forever or until you explicitly tell it to stop, for example:
 
@@ -336,7 +249,7 @@ This will infinitely print "again!" in the terminal until you interrupt it with 
 > [!NOTE]
 > You can avoid this by using the `break` keyword to step out of the loop programmatically.
 
-### Loop in Rust
+## Loop in Rust
 
 If you have loops within loops, break and continue apply to the innermost loop at that point. You can optionally specify a loop label on a loop that you can then use with break or continue to specify that those keywords apply to the labeled loop instead of the innermost loop.
 
@@ -366,7 +279,7 @@ fn main() {
 }
 ```
 
-### While Loops in Rust
+## While Loops in Rust
 
 Here's an example syntax for the while loops in Rust:
 
@@ -384,7 +297,7 @@ fn main() {
 }
 ```
 
-### For Loops in Rust
+## For Loops in Rust
 
 Here's an example syntax for the "for each" loops in Rust:
 
@@ -411,7 +324,7 @@ fn main() {
 
 ---
 
-## The Ownership Model in Rust
+# The Ownership Model in Rust
 
 This Rust code:
 
@@ -479,7 +392,7 @@ Rust takes a different path: the memory is automatically returned once the varia
 
 When a variable goes out of scope, Rust calls a special function for us. This function is called drop, and it’s where the author of String can put the code to return the memory. Rust calls drop automatically at the closing curly bracket. Similar to the Resource Acquisition Is Initialization principle in C++.
 
-### Variables and Data Interacting with Move
+## Variables and Data Interacting with Move
 
 This will not move ownership of x to y:
 
@@ -499,7 +412,7 @@ This happens to avoid the very famous memory-safety bug, the double freeing issu
 
 In addition, there’s a design choice that’s implied by this: Rust will never automatically create “deep” copies of your data. Therefore, any automatic copying can be assumed to be inexpensive in terms of runtime performance.
 
-### Scope and Assignment
+## Scope and Assignment
 
 For this Rust code:
 
@@ -512,7 +425,7 @@ For this Rust code:
 
 The "hello" string literal is dropped as nothing is pointing to it anymore.
 
-### Variables and Data Interacting with Clone
+## Variables and Data Interacting with Clone
 
 If we do want to deeply copy the heap data of the String, not just the stack data, we can use a common method called clone.
 
@@ -527,7 +440,7 @@ For example:
 
 This performs a heap copy too, so each variable of `s1` and `s2` are pointing to completely different parts of the heap with the exact same values. Please note that this is an expensive operation.
 
-### Stack-Only Data: Copy
+## Stack-Only Data: Copy
 
 For this Rust code:
 
@@ -544,7 +457,7 @@ The reason is that types such as integers that have a known size at compile time
 
 That means there’s no reason we would want to prevent x from being valid after we create the variable y. In other words, there’s no difference between deep and shallow copying here, so calling clone wouldn’t do anything different from the usual shallow copying, and we can leave it out.
 
-### The Copy Trait
+## The Copy Trait
 
 Rust has a special annotation called the Copy trait that we can place on types that are stored on the stack, as integers are (we’ll talk more about traits in Chapter 10). If a type implements the Copy trait, variables that use it do not move, but rather are trivially copied, making them still valid after assignment to another variable.
 
@@ -558,7 +471,7 @@ So, what types implement the Copy trait? You can check the documentation for the
 - The character types
 - Tuples, if they only contain types that also implement copy.
 
-### Return Values and Scope
+## Return Values and Scope
 
 The ownership of a variable follows the same pattern every time: assigning a value to another variable moves it. When a variable that includes data on the heap goes out of scope, the value will be cleaned up by drop unless ownership of the data has been moved to another variable.
 
@@ -581,3 +494,94 @@ fn calculate_length(s: String) -> (String, usize) {
     (s, length)
 }
 ```
+
+---
+
+# References and Borrowing
+
+## longest.rs
+
+`longest()` is a function that is valid over the lifecycle `'a` and takes two arguments, `x` which is a borrow of a string that is valid over the generic lifecycle `'a`, and `y` which is a borrow of a string that is valid over the generic lifecycle `'a`, and returns a string that is valid over the generic lifecycle `'a`.
+
+Note that Rust infers the value of the generic lifecycle `'a` automatically and we don't need to worry about this part. We just suppose that it's the shortest lifecycle of the given arguments.
+
+## Rust's Lifetime Elision Rules
+
+### Rule 1: Each parameter gets its own lifetime
+
+```rust
+fn foo(x: &str); // treated as fn foo<'a>(x: &'a str)
+```
+
+### Rule 2: If there’s only one input reference, the output gets its lifetime
+
+```rust
+fn identity(x: &str) -> &str; // becomes fn identity<'a>(x: &'a str) -> &'a str
+```
+
+### Rule 3: If multiple inputs, and one is &self or &mut self, use its lifetime
+
+```rust
+impl MyStruct {
+    fn get_name(&self) -> &str; // becomes fn get_name<'a>(&'a self) -> &'a str
+}
+```
+
+## Dropped Lifecycle Example
+
+```rust
+fn main() {
+    let string1 = String::from("abc"); // string1 lives until end of main
+    let result;
+    {
+        let string2 = String::from("abcdef"); // string2 lives only in this block
+        result = longest(&string1, &string2); // ERROR!
+    }
+    println!("{}", result); // may be referencing dropped data
+}
+```
+
+### TLDR
+
+- Rust infers lifetimes when it can (thanks to elision rules).
+- When returning references involving multiple input lifetimes, you must write them explicitly.
+- When in doubt, write `'a`, the compiler will guide you.
+
+---
+
+## user.rs
+
+We mocked a simple struct called `User` with only one field called `name` that's a string. We implement only one function called `new` that acts like a constructor to create a new `User` object.
+
+## Immutable vs Mutable Borrows
+
+### Example 1
+
+Example one shows how ownership moves from `user1` to `user2` indicating the expiration of the lifecycle of the `user1` variable lifecycle meaning that we can't use it anymore later in code. Similarly, when we called the function `print_username1`, the ownership moved from `user2` to `user3` indicating the expiration of the lifecycle of the `user2` variable lifecycle meaning that we can't use it anymore later in code.
+
+### Example 2
+
+Example two shows how we can use the `user2` variable again in code by passing an immutable borrow of the `user2` variable to the `print_username1` function instead of the actual `user2` variable. This allows us to use the `user2` again later in the code without moving the ownership to `user3`. Note that this is applicable for read operations only.
+
+### Example 3
+
+Example three shows how we can use the `user2` variable again in code, but this time, we want to modify its value (perform a write operation). This can be done by passing a mutable borrow of the `user2` variable to the `update_username3` function that writes on the `name` field of the `user` object.
+
+## 1 Mutable OR N Immutable Borrows
+
+### Example 4
+
+Example four shows that we can't create an immutable borrow after creating at least one mutable borrow and using that mutable borrow later in code after creating the immutable borrow. This is because that this behaviour will cause the actual data be modified after creating an immutable borrow that expects the object not to be altered during its lifecycle.
+
+
+### Example 5
+
+Example five addresses how can we avoid this issue, by declaring the immutable borrow after all the mutable borrows of the object are not used later in code anymore. This way, the immutable borrow ensures that the value will not be modified until its lifecycle drops.
+
+### Example 6
+
+Example six shows that even if we dropped the immutable borrow, we still can't use the mutable borrow. Rust's borrow checker says: "You still have r2 alive in this scope. I don't care if you call drop(r2), I won't let you use r1 mutably again in this block."
+
+The `drop()` function drops the value at runtime, but does not shorten the borrow lifetime in the eyes of the compiler.
+
+---
