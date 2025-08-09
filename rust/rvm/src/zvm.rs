@@ -66,6 +66,8 @@ struct ClassFile {
     access_flags: u16,
     this_class: u16,
     super_class: u16,
+    interfaces_count: u16,
+    interfaces: Vec<u16>,
 }
 
 impl ClassFile {
@@ -79,6 +81,8 @@ impl ClassFile {
             access_flags: 0,
             this_class: 0,
             super_class: 0,
+            interfaces_count: 0,
+            interfaces: Vec::new(),
         }
     }
 }
@@ -106,6 +110,10 @@ pub fn zvm() {
 
     get_super_class(&buf, &mut class_file, &mut offset);
 
+    get_interfaces_count(&buf, &mut class_file, &mut offset);
+
+    get_interfaces(&buf, &mut class_file, &mut offset);
+
     println!("Magic: 0x{:X}", class_file.magic);
 
     println!("Minor: 0x{:X}", class_file.minor);
@@ -121,6 +129,10 @@ pub fn zvm() {
     println!("This Class: {}", class_file.this_class);
 
     println!("Super Class: {}", class_file.super_class);
+
+    println!("Interfaces Count: {}", class_file.interfaces_count);
+
+    print_interfaces(&class_file);
 
     // print_hex(&buf);
     //
@@ -418,6 +430,27 @@ fn get_super_class(buf: &Vec<u8>, class_file: &mut ClassFile, offset: &mut usize
     *offset += 2;
 }
 
+fn get_interfaces_count(buf: &Vec<u8>, class_file: &mut ClassFile, offset: &mut usize) {
+    let interfaces_count = u16::from_be_bytes([buf[*offset], buf[*offset + 1]]);
+    class_file.interfaces_count = interfaces_count;
+
+    *offset += 2;
+}
+
+fn get_interfaces(buf: &Vec<u8>, class_file: &mut ClassFile, offset: &mut usize) {
+    let interfaces_count = class_file.interfaces_count;
+
+    if interfaces_count == 0 {
+        return;
+    }
+
+    for _ in 0..interfaces_count {
+        let current_interface_ref = u16::from_be_bytes([buf[*offset], buf[*offset + 1]]);
+        class_file.interfaces.push(current_interface_ref);
+        *offset += 2;
+    }
+}
+
 fn print_constant_pool(class_file: &ClassFile) {
     println!("\nConstant Pool:");
 
@@ -573,6 +606,19 @@ fn print_access_flags(class_file: &ClassFile) {
     }
 
     println!()
+}
+
+fn print_interfaces(class_file: &ClassFile) {
+    if class_file.interfaces.is_empty() {
+        println!("Interfaces: None");
+        return;
+    }
+
+    println!("Interfaces:");
+
+    for (i, interface_ref) in class_file.interfaces.iter().enumerate() {
+        println!("  [{}]: #{}", i, interface_ref);
+    }
 }
 
 fn print_hex(buf: &Vec<u8>) {
