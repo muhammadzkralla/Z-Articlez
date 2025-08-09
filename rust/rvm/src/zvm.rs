@@ -1,10 +1,68 @@
 use std::{fs::File, io::Read, vec};
 
+#[derive(Debug, Clone)]
+pub enum CpInfo {
+    Utf8 {
+        length: u16,
+        bytes: Vec<u8>,
+    },
+    Integer {
+        bytes: u32,
+    },
+    Float {
+        bytes: u32,
+    },
+    Long {
+        high_bytes: u32,
+        low_bytes: u32,
+    },
+    Double {
+        high_bytes: u32,
+        low_bytes: u32,
+    },
+    Class {
+        name_index: u16,
+    },
+    String {
+        string_index: u16,
+    },
+    Fieldref {
+        class_index: u16,
+        name_and_type_index: u16,
+    },
+    Methodref {
+        class_index: u16,
+        name_and_type_index: u16,
+    },
+    InterfaceMethodref {
+        class_index: u16,
+        name_and_type_index: u16,
+    },
+    NameAndType {
+        name_index: u16,
+        descriptor_index: u16,
+    },
+    MethodHandle {
+        reference_kind: u8,
+        reference_index: u16,
+    },
+    MethodType {
+        descriptor_index: u16,
+    },
+    InvokeDynamic {
+        bootstrap_method_attr_index: u16,
+        name_and_type_index: u16,
+    },
+    // Placeholder for double/long entries (they take 2 slots)
+    Empty,
+}
+
 struct ClassFile {
     magic: u32,
     minor: u16,
     major: u16,
     constant_pool_count: u16,
+    constant_pool: Vec<CpInfo>,
 }
 
 impl ClassFile {
@@ -14,6 +72,7 @@ impl ClassFile {
             minor: 0,
             major: 0,
             constant_pool_count: 0,
+            constant_pool: Vec::new(),
         }
     }
 }
@@ -33,6 +92,8 @@ pub fn zvm() {
 
     get_constant_pool_count(&buf, &mut class_file);
 
+    get_constant_pool(&buf, &mut class_file);
+
     println!("Magic: {:X}", class_file.magic);
 
     println!("Minor: {:X}", class_file.minor);
@@ -40,6 +101,8 @@ pub fn zvm() {
     println!("Major: {:X}", class_file.major);
 
     println!("Constant Pool Count: {:X}", class_file.constant_pool_count);
+
+    print_constant_pool(&class_file);
 
     // print_hex(&buf);
     //
@@ -66,6 +129,365 @@ fn get_major(buf: &Vec<u8>, class_file: &mut ClassFile) {
 fn get_constant_pool_count(buf: &Vec<u8>, class_file: &mut ClassFile) {
     let constant_pool_count = u16::from_be_bytes([buf[8], buf[9]]);
     class_file.constant_pool_count = constant_pool_count;
+}
+
+fn get_constant_pool(buf: &Vec<u8>, class_file: &mut ClassFile) {
+    let mut offset = 10;
+    let pool_count = class_file.constant_pool_count as usize;
+
+    // Initialize with empty entries
+    class_file.constant_pool = vec![CpInfo::Empty; pool_count];
+
+    // Constant pool is 1-indexed
+    let mut i = 1;
+    while i < pool_count {
+        // Take the byte of the tag and increment offset
+        let tag = buf[offset];
+        offset += 1;
+
+        let entry = match tag {
+            // CONSTANT_Utf8
+            1 => {
+                // Take the two bytes of the `length` field and increment offset
+                let length = u16::from_be_bytes([buf[offset], buf[offset + 1]]);
+                offset += 2;
+
+                // Take the `length` bytes and increment offset
+                let bytes = buf[offset..offset + length as usize].to_vec();
+                offset += length as usize;
+
+                // Return entry
+                CpInfo::Utf8 { length, bytes }
+            }
+            // CONSTANT_Integer
+            3 => {
+                // Take the four bytes of the `bytes` field and increment offset
+                let bytes = u32::from_be_bytes([
+                    buf[offset],
+                    buf[offset + 1],
+                    buf[offset + 2],
+                    buf[offset + 3],
+                ]);
+                offset += 4;
+
+                CpInfo::Integer { bytes }
+            }
+            // CONSTANT_Float
+            4 => {
+                // Take the four bytes of the `bytes` field and increment offset
+                let bytes = u32::from_be_bytes([
+                    buf[offset],
+                    buf[offset + 1],
+                    buf[offset + 2],
+                    buf[offset + 3],
+                ]);
+                offset += 4;
+
+                CpInfo::Float { bytes }
+            }
+            // CONSTANT_Long
+            5 => {
+                // Take the four bytes of the `high_bytes` field and increment offset
+                let high_bytes = u32::from_be_bytes([
+                    buf[offset],
+                    buf[offset + 1],
+                    buf[offset + 2],
+                    buf[offset + 3],
+                ]);
+                // Take the four bytes of the `low_bytes` field and increment offset
+                let low_bytes = u32::from_be_bytes([
+                    buf[offset + 4],
+                    buf[offset + 5],
+                    buf[offset + 6],
+                    buf[offset + 7],
+                ]);
+                offset += 8;
+
+                CpInfo::Long {
+                    high_bytes,
+                    low_bytes,
+                }
+            }
+            // CONSTANT_Double
+            6 => {
+                // Take the four bytes of the `high_bytes` field and increment offset
+                let high_bytes = u32::from_be_bytes([
+                    buf[offset],
+                    buf[offset + 1],
+                    buf[offset + 2],
+                    buf[offset + 3],
+                ]);
+                // Take the four bytes of the `low_bytes` field and increment offset
+                let low_bytes = u32::from_be_bytes([
+                    buf[offset + 4],
+                    buf[offset + 5],
+                    buf[offset + 6],
+                    buf[offset + 7],
+                ]);
+                offset += 8;
+
+                CpInfo::Double {
+                    high_bytes,
+                    low_bytes,
+                }
+            }
+            // CONSTANT_Class
+            7 => {
+                // Take the two bytes of the `name_index` field and increment offset
+                let name_index = u16::from_be_bytes([buf[offset], buf[offset + 1]]);
+                offset += 2;
+
+                CpInfo::Class { name_index }
+            }
+            // CONSTANT_String
+            8 => {
+                // Take the two bytes of the `string_index` field and increment offset
+                let string_index = u16::from_be_bytes([buf[offset], buf[offset + 1]]);
+                offset += 2;
+
+                CpInfo::String { string_index }
+            }
+            // CONSTANT_Fieldref
+            9 => {
+                // Take the two bytes of the `class_index` field
+                let class_index = u16::from_be_bytes([buf[offset], buf[offset + 1]]);
+
+                // Take the two bytes of the `name_and_type_index` field
+                let name_and_type_index = u16::from_be_bytes([buf[offset + 2], buf[offset + 3]]);
+
+                // increment offset
+                offset += 4;
+
+                CpInfo::Fieldref {
+                    class_index,
+                    name_and_type_index,
+                }
+            }
+            // CONSTANT_Methodref
+            10 => {
+                // Take the two bytes of the `class_index` field
+                let class_index = u16::from_be_bytes([buf[offset], buf[offset + 1]]);
+
+                // Take the two bytes of the `name_and_type_index` field
+                let name_and_type_index = u16::from_be_bytes([buf[offset + 2], buf[offset + 3]]);
+
+                // increment offset
+                offset += 4;
+
+                CpInfo::Methodref {
+                    class_index,
+                    name_and_type_index,
+                }
+            }
+            // CONSTANT_InterfaceMethodref
+            11 => {
+                // Take the two bytes of the `class_index` field
+                let class_index = u16::from_be_bytes([buf[offset], buf[offset + 1]]);
+
+                // Take the two bytes of the `name_and_type_index` field
+                let name_and_type_index = u16::from_be_bytes([buf[offset + 2], buf[offset + 3]]);
+
+                // increment offset
+                offset += 4;
+
+                CpInfo::InterfaceMethodref {
+                    class_index,
+                    name_and_type_index,
+                }
+            }
+            // CONSTANT_NameAndType
+            12 => {
+                // Take the two bytes of the `name_index` field
+                let name_index = u16::from_be_bytes([buf[offset], buf[offset + 1]]);
+
+                // Take the two bytes of the `descriptor_index` field
+                let descriptor_index = u16::from_be_bytes([buf[offset + 2], buf[offset + 3]]);
+
+                // increment offset
+                offset += 4;
+
+                CpInfo::NameAndType {
+                    name_index,
+                    descriptor_index,
+                }
+            }
+            // CONSTANT_MethodHandle
+            15 => {
+                // Take the byte of the `reference_kind` field
+                let reference_kind = buf[offset];
+
+                // Take the two bytes of the `reference_index` field
+                let reference_index = u16::from_be_bytes([buf[offset + 1], buf[offset + 2]]);
+
+                // increment offset
+                offset += 3;
+
+                CpInfo::MethodHandle {
+                    reference_kind,
+                    reference_index,
+                }
+            }
+            // CONSTANT_MethodType
+            16 => {
+                // Take the two bytes of the `descriptor_index` and increment offset
+                let descriptor_index = u16::from_be_bytes([buf[offset], buf[offset + 1]]);
+                offset += 2;
+
+                CpInfo::MethodType { descriptor_index }
+            }
+            // CONSTANT_InvokeDynamic
+            18 => {
+                // Take the two bytes of the `bootstrap_method_attr_index`
+                let bootstrap_method_attr_index =
+                    u16::from_be_bytes([buf[offset], buf[offset + 1]]);
+
+                // Take the two bytes of the `name_and_type_index`
+                let name_and_type_index = u16::from_be_bytes([buf[offset + 2], buf[offset + 3]]);
+
+                // increment offset
+                offset += 4;
+
+                CpInfo::InvokeDynamic {
+                    bootstrap_method_attr_index,
+                    name_and_type_index,
+                }
+            }
+
+            // default
+            _ => {
+                panic!("Unknown constant pool tag: {}", tag);
+            }
+        };
+
+        // Now that we parsed the entry, we need to store it in the `constant_pool` field
+        // of the class_file
+        // TODO: Why we need deep copying here??
+        class_file.constant_pool[i] = entry.clone();
+
+        // Long and Double entries take up two slots, so we need to assign the next
+        // entry to them as empty and jump to the next entry
+        if matches!(entry, CpInfo::Long { .. } | CpInfo::Double { .. }) {
+            // Set the next entry as empty and skip one entry
+            i += 2;
+            class_file.constant_pool[i] = CpInfo::Empty;
+        } else {
+            // Move to process the next entry
+            i += 1;
+        }
+    }
+}
+
+fn print_constant_pool(class_file: &ClassFile) {
+    println!("\nConstant Pool:");
+
+    for (i, entry) in class_file.constant_pool.iter().enumerate() {
+        // Constant pool is 1-indexed
+        if i == 0 {
+            continue;
+        }
+
+        match entry {
+            CpInfo::Utf8 { length, bytes } => {
+                let string = String::from_utf8_lossy(bytes);
+                println!("  #{}: Utf8 [{}]", i, string);
+            }
+            CpInfo::Integer { bytes } => {
+                println!("  #{}: Integer [{}]", i, *bytes as i32);
+            }
+            CpInfo::Float { bytes } => {
+                let float_val = f32::from_bits(*bytes);
+                println!("  #{}: Float [{}]", i, float_val);
+            }
+            CpInfo::Long {
+                high_bytes,
+                low_bytes,
+            } => {
+                // AS SPECIFIED BY THE SPECS:
+                // ((long) high_bytes << 32) + low_bytes
+                let long = ((*high_bytes as u64) << 32) + (*low_bytes as u64);
+                println!("  #{}: Long [{}]", i, long as i64);
+            }
+            CpInfo::Double {
+                high_bytes,
+                low_bytes,
+            } => {
+                // AS SPECIFIED BY THE SPECS:
+                // ((long) high_bytes << 32) + low_bytes
+                let bits = ((*high_bytes as u64) << 32) + (*low_bytes as u64);
+                let double = f64::from_bits(bits);
+                println!("  #{}: Double [{}]", i, double);
+            }
+            CpInfo::Class { name_index } => {
+                println!("  #{}: Class [name_index=#{}]", i, name_index);
+            }
+            CpInfo::String { string_index } => {
+                println!("  #{}: String [string_index=#{}]", i, string_index);
+            }
+            CpInfo::Fieldref {
+                class_index,
+                name_and_type_index,
+            } => {
+                println!(
+                    "  #{}: Fieldref [class_index=#{}, name_and_type_index=#{}]",
+                    i, class_index, name_and_type_index
+                );
+            }
+            CpInfo::Methodref {
+                class_index,
+                name_and_type_index,
+            } => {
+                println!(
+                    "  #{}: Methodref [class_index=#{}, name_and_type_index=#{}]",
+                    i, class_index, name_and_type_index
+                );
+            }
+            CpInfo::InterfaceMethodref {
+                class_index,
+                name_and_type_index,
+            } => {
+                println!(
+                    "  #{}: InterfaceMethodref [class_index=#{}, name_and_type_index=#{}]",
+                    i, class_index, name_and_type_index
+                );
+            }
+            CpInfo::NameAndType {
+                name_index,
+                descriptor_index,
+            } => {
+                println!(
+                    "  #{}: NameAndType [name_index=#{}, descriptor_index=#{}]",
+                    i, name_index, descriptor_index
+                );
+            }
+            CpInfo::MethodHandle {
+                reference_kind,
+                reference_index,
+            } => {
+                println!(
+                    "  #{}: MethodHandle [reference_kind={}, reference_index=#{}]",
+                    i, reference_kind, reference_index
+                );
+            }
+            CpInfo::MethodType { descriptor_index } => {
+                println!(
+                    "  #{}: MethodType [descriptor_index=#{}]",
+                    i, descriptor_index
+                );
+            }
+            CpInfo::InvokeDynamic {
+                bootstrap_method_attr_index,
+                name_and_type_index,
+            } => {
+                println!(
+                    "  #{}: InvokeDynamic [bootstrap_method_attr_index={}, name_and_type_index=#{}]",
+                    i, bootstrap_method_attr_index, name_and_type_index
+                );
+            }
+            CpInfo::Empty => {
+                println!("EMPTY ENTRY!")
+            }
+        }
+    }
 }
 
 fn print_hex(buf: &Vec<u8>) {
