@@ -63,6 +63,7 @@ struct ClassFile {
     major: u16,
     constant_pool_count: u16,
     constant_pool: Vec<CpInfo>,
+    access_flags: u16,
 }
 
 impl ClassFile {
@@ -73,6 +74,7 @@ impl ClassFile {
             major: 0,
             constant_pool_count: 0,
             constant_pool: Vec::new(),
+            access_flags: 0,
         }
     }
 }
@@ -92,17 +94,21 @@ pub fn zvm() {
 
     get_constant_pool_count(&buf, &mut class_file);
 
-    get_constant_pool(&buf, &mut class_file);
+    let mut offset = get_constant_pool(&buf, &mut class_file);
 
-    println!("Magic: {:X}", class_file.magic);
+    get_access_flags(&buf, &mut class_file, &mut offset);
 
-    println!("Minor: {:X}", class_file.minor);
+    println!("Magic: 0x{:X}", class_file.magic);
 
-    println!("Major: {:X}", class_file.major);
+    println!("Minor: 0x{:X}", class_file.minor);
 
-    println!("Constant Pool Count: {:X}", class_file.constant_pool_count);
+    println!("Major: 0x{:X}", class_file.major);
+
+    println!("Constant Pool Count: {}", class_file.constant_pool_count);
 
     print_constant_pool(&class_file);
+
+    print_access_flags(&class_file);
 
     // print_hex(&buf);
     //
@@ -131,7 +137,7 @@ fn get_constant_pool_count(buf: &Vec<u8>, class_file: &mut ClassFile) {
     class_file.constant_pool_count = constant_pool_count;
 }
 
-fn get_constant_pool(buf: &Vec<u8>, class_file: &mut ClassFile) {
+fn get_constant_pool(buf: &Vec<u8>, class_file: &mut ClassFile) -> usize {
     let mut offset = 10;
     let pool_count = class_file.constant_pool_count as usize;
 
@@ -375,6 +381,15 @@ fn get_constant_pool(buf: &Vec<u8>, class_file: &mut ClassFile) {
             i += 1;
         }
     }
+
+    offset
+}
+
+fn get_access_flags(buf: &Vec<u8>, class_file: &mut ClassFile, offset: &mut usize) {
+    let access_flags = u16::from_be_bytes([buf[*offset], buf[*offset + 1]]);
+    class_file.access_flags = access_flags;
+
+    *offset += 2;
 }
 
 fn print_constant_pool(class_file: &ClassFile) {
@@ -487,6 +502,48 @@ fn print_constant_pool(class_file: &ClassFile) {
                 println!("EMPTY ENTRY!")
             }
         }
+    }
+}
+
+fn print_access_flags(class_file: &ClassFile) {
+    println!("\nAccess Flags: 0x{:04X}", class_file.access_flags);
+
+    let flags = class_file.access_flags;
+    let mut flag_names = Vec::new();
+
+    // Check each access flag bit according to JVM spec
+    if flags & 0x0001 != 0 {
+        flag_names.push("ACC_PUBLIC");
+    }
+    if flags & 0x0010 != 0 {
+        flag_names.push("ACC_FINAL");
+    }
+    if flags & 0x0020 != 0 {
+        flag_names.push("ACC_SUPER");
+    }
+    if flags & 0x0200 != 0 {
+        flag_names.push("ACC_INTERFACE");
+    }
+    if flags & 0x0400 != 0 {
+        flag_names.push("ACC_ABSTRACT");
+    }
+    if flags & 0x1000 != 0 {
+        flag_names.push("ACC_SYNTHETIC");
+    }
+    if flags & 0x2000 != 0 {
+        flag_names.push("ACC_ANNOTATION");
+    }
+    if flags & 0x4000 != 0 {
+        flag_names.push("ACC_ENUM");
+    }
+    if flags & 0x8000 != 0 {
+        flag_names.push("ACC_MODULE");
+    }
+
+    if flag_names.is_empty() {
+        println!("  No access flags set");
+    } else {
+        println!("  Flags: {}", flag_names.join(", "));
     }
 }
 
