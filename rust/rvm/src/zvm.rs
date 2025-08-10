@@ -53,7 +53,6 @@ pub enum CpInfo {
         bootstrap_method_attr_index: u16,
         name_and_type_index: u16,
     },
-    // Placeholder for double/long entries (they take 2 slots)
     Empty,
 }
 
@@ -68,6 +67,8 @@ struct ClassFile {
     super_class: u16,
     interfaces_count: u16,
     interfaces: Vec<u16>,
+    fields_count: u16,
+    fields: Vec<FieldInfo>,
 }
 
 impl ClassFile {
@@ -83,8 +84,26 @@ impl ClassFile {
             super_class: 0,
             interfaces_count: 0,
             interfaces: Vec::new(),
+            fields_count: 0,
+            fields: Vec::new(),
         }
     }
+}
+
+#[derive(Debug, Clone)]
+pub struct FieldInfo {
+    access_flags: u16,
+    name_index: u16,
+    descriptor_index: u16,
+    attributes_count: u16,
+    attributes: Vec<AttributeInfo>,
+}
+
+#[derive(Debug, Clone)]
+pub struct AttributeInfo {
+    attribute_name_index: u16,
+    attribute_length: u32,
+    info: Vec<u8>,
 }
 
 pub fn zvm() {
@@ -114,6 +133,8 @@ pub fn zvm() {
 
     get_interfaces(&buf, &mut class_file, &mut offset);
 
+    get_fields_count(&buf, &mut class_file, &mut offset);
+
     println!("Magic: 0x{:X}", class_file.magic);
 
     println!("Minor: 0x{:X}", class_file.minor);
@@ -133,6 +154,10 @@ pub fn zvm() {
     println!("Interfaces Count: {}", class_file.interfaces_count);
 
     print_interfaces(&class_file);
+
+    println!("Fields Count: {}", class_file.fields_count);
+
+    print_fields(&class_file);
 
     // print_hex(&buf);
     //
@@ -451,6 +476,88 @@ fn get_interfaces(buf: &Vec<u8>, class_file: &mut ClassFile, offset: &mut usize)
     }
 }
 
+fn get_fields_count(buf: &Vec<u8>, class_file: &mut ClassFile, offset: &mut usize) {
+    let fields_count = u16::from_be_bytes([buf[*offset], buf[*offset + 1]]);
+    class_file.fields_count = fields_count;
+
+    *offset += 2;
+}
+
+fn get_fields(buf: &Vec<u8>, class_file: &mut ClassFile, offset: &mut usize) {
+    let fields_count = class_file.fields_count as usize;
+
+    for _ in 0..fields_count {
+        let field = parse_field_info(buf, offset);
+        class_file.fields.push(field);
+    }
+}
+
+fn parse_field_info(buf: &Vec<u8>, offset: &mut usize) -> FieldInfo {
+    // access_flags: u16,
+    // name_index: u16,
+    // descriptor_index: u16,
+    // attributes_count: u16,
+    // attributes: Vec<AttributeInfo>,
+
+    let access_flags = u16::from_be_bytes([buf[*offset], buf[*offset + 1]]);
+    *offset += 2;
+
+    let name_index = u16::from_be_bytes([buf[*offset], buf[*offset + 1]]);
+    *offset += 2;
+
+    let descriptor_index = u16::from_be_bytes([buf[*offset], buf[*offset + 1]]);
+    *offset += 2;
+
+    let attributes_count = u16::from_be_bytes([buf[*offset], buf[*offset + 1]]);
+    *offset += 2;
+
+    let mut attributes = Vec::new();
+
+    for _ in 0..attributes_count {
+        let attr = parse_attr_info(buf, offset);
+        attributes.push(attr);
+    }
+
+    FieldInfo {
+        access_flags,
+        name_index,
+        descriptor_index,
+        attributes_count,
+        attributes,
+    }
+}
+
+fn parse_attr_info(buf: &Vec<u8>, offset: &mut usize) -> AttributeInfo {
+    // attribute_name_index: u16,
+    // attribute_length: u32,
+    // info: Vec<u8>,
+
+    let attribute_name_index = u16::from_be_bytes([buf[*offset], buf[*offset + 1]]);
+    *offset += 2;
+
+    let attribute_length = u32::from_be_bytes([
+        buf[*offset],
+        buf[*offset + 1],
+        buf[*offset + 2],
+        buf[*offset + 3],
+    ]);
+    *offset += 4;
+
+    let mut info = Vec::new();
+
+    for _ in 0..attribute_length {
+        let b = buf[*offset];
+        *offset += 1;
+        info.push(b);
+    }
+
+    AttributeInfo {
+        attribute_name_index,
+        attribute_length,
+        info,
+    }
+}
+
 fn print_constant_pool(class_file: &ClassFile) {
     println!("\nConstant Pool:");
 
@@ -618,6 +725,50 @@ fn print_interfaces(class_file: &ClassFile) {
 
     for (i, interface_ref) in class_file.interfaces.iter().enumerate() {
         println!("  [{}]: #{}", i, interface_ref);
+    }
+}
+
+// #[derive(Debug, Clone)]
+// pub struct FieldInfo {
+//     access_flags: u16,
+//     name_index: u16,
+//     descriptor_index: u16,
+//     attributes_count: u16,
+//     attributes: Vec<AttributeInfo>,
+// }
+//
+// #[derive(Debug, Clone)]
+// pub struct AttributeInfo {
+//     attribute_name_index: u16,
+//     attribute_length: u32,
+//     info: Vec<u8>,
+// }
+
+fn print_fields(class_file: &ClassFile) {
+    if class_file.fields.is_empty() {
+        println!("Fields: None");
+        return;
+    }
+
+    println!("Fields:");
+    for (i, field) in class_file.fields.iter().enumerate() {
+        println!("  [{}]: Access Flags: 0x{:04X}", i, field.access_flags);
+
+        println!("  [{}]: Name: {}", i, field.name_index);
+        println!("  [{}]: Descriptor: {}", i, field.descriptor_index);
+        println!("  [{}]: Attributes Count: {}", i, field.attributes_count);
+
+        for (j, attr) in field.attributes.iter().enumerate() {
+            println!("  Attributes:");
+            println!("      [{}]: Name: {}", j, attr.attribute_name_index);
+            println!("      [{}]: Length: {}", j, attr.attribute_length);
+            println!("      [{}]: Info: {}", j, attr.attribute_length);
+
+            for (k, b) in attr.info.iter().enumerate() {
+                println!("      Info:");
+                println!("          [{}]: Byte: {}", j, b);
+            }
+        }
     }
 }
 
