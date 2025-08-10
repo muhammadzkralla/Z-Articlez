@@ -71,6 +71,8 @@ struct ClassFile {
     fields: Vec<FieldInfo>,
     methods_count: u16,
     methods: Vec<MethodInfo>,
+    attributes_count: u16,
+    attributes: Vec<AttributeInfo>,
 }
 
 impl ClassFile {
@@ -90,6 +92,8 @@ impl ClassFile {
             fields: Vec::new(),
             methods_count: 0,
             methods: Vec::new(),
+            attributes_count: 0,
+            attributes: Vec::new(),
         }
     }
 }
@@ -170,6 +174,10 @@ pub fn zvm() {
 
     get_methods(&buf, &mut class_file, &mut offset);
 
+    get_attributes_count(&buf, &mut class_file, &mut offset);
+
+    get_attributes(&buf, &mut class_file, &mut offset);
+
     println!("Magic: 0x{:X}", class_file.magic);
 
     println!("Minor: 0x{:X}", class_file.minor);
@@ -197,6 +205,18 @@ pub fn zvm() {
     println!("Methods Count: {}", class_file.methods_count);
 
     print_methods(&class_file);
+
+    println!("Attributes Count: {}", class_file.attributes_count);
+
+    print_attributes(&class_file);
+
+    println!("------------------------------------");
+
+    println!("PARSING THE CLASS FILE IS OVER");
+
+    println!("Current Offset Value: 0x{:04X}", offset);
+
+    println!("Bytes Processed: {}", offset);
 
     // print_hex(&buf);
     //
@@ -648,6 +668,22 @@ fn parse_method_info(buf: &Vec<u8>, offset: &mut usize) -> MethodInfo {
     }
 }
 
+fn get_attributes_count(buf: &Vec<u8>, class_file: &mut ClassFile, offset: &mut usize) {
+    let attributes_count = u16::from_be_bytes([buf[*offset], buf[*offset + 1]]);
+    class_file.attributes_count = attributes_count;
+
+    *offset += 2;
+}
+
+fn get_attributes(buf: &Vec<u8>, class_file: &mut ClassFile, offset: &mut usize) {
+    let attributes_count = class_file.attributes_count as usize;
+
+    for _ in 0..attributes_count {
+        let attr = parse_attr_info(buf, offset);
+        class_file.attributes.push(attr);
+    }
+}
+
 fn print_constant_pool(class_file: &ClassFile) {
     println!("\nConstant Pool:");
 
@@ -886,6 +922,26 @@ fn print_methods(class_file: &ClassFile) {
             }
             println!();
         }
+    }
+}
+
+fn print_attributes(class_file: &ClassFile) {
+    if class_file.attributes.is_empty() {
+        println!("Attributes: None");
+        return;
+    }
+
+    println!("Attributes:");
+    for (i, attr) in class_file.attributes.iter().enumerate() {
+        println!("      [{}]: Name: {}", i, attr.attribute_name_index);
+        println!("      [{}]: Length: {}", i, attr.attribute_length);
+        println!("      [{}]: Info: {}", i, attr.attribute_length);
+
+        print!("      Info Bytes: ");
+        for (j, b) in attr.info.iter().enumerate() {
+            print!("{}, ", b);
+        }
+        println!();
     }
 }
 
