@@ -135,6 +135,8 @@ pub fn zvm() {
 
     get_fields_count(&buf, &mut class_file, &mut offset);
 
+    get_fields(&buf, &mut class_file, &mut offset);
+
     println!("Magic: 0x{:X}", class_file.magic);
 
     println!("Minor: 0x{:X}", class_file.minor);
