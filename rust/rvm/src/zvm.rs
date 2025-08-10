@@ -69,6 +69,8 @@ struct ClassFile {
     interfaces: Vec<u16>,
     fields_count: u16,
     fields: Vec<FieldInfo>,
+    methods_count: u16,
+    methods: Vec<MethodInfo>,
 }
 
 impl ClassFile {
@@ -86,12 +88,39 @@ impl ClassFile {
             interfaces: Vec::new(),
             fields_count: 0,
             fields: Vec::new(),
+            methods_count: 0,
+            methods: Vec::new(),
         }
     }
 }
 
+// field_info {
+//     u2             access_flags;
+//     u2             name_index;
+//     u2             descriptor_index;
+//     u2             attributes_count;
+//     attribute_info attributes[attributes_count];
+// }
+//
+//  method_info {
+//     u2             access_flags;
+//     u2             name_index;
+//     u2             descriptor_index;
+//     u2             attributes_count;
+//     attribute_info attributes[attributes_count];
+// }
+
 #[derive(Debug, Clone)]
 pub struct FieldInfo {
+    access_flags: u16,
+    name_index: u16,
+    descriptor_index: u16,
+    attributes_count: u16,
+    attributes: Vec<AttributeInfo>,
+}
+
+#[derive(Debug, Clone)]
+pub struct MethodInfo {
     access_flags: u16,
     name_index: u16,
     descriptor_index: u16,
@@ -137,6 +166,10 @@ pub fn zvm() {
 
     get_fields(&buf, &mut class_file, &mut offset);
 
+    get_methods_count(&buf, &mut class_file, &mut offset);
+
+    get_methods(&buf, &mut class_file, &mut offset);
+
     println!("Magic: 0x{:X}", class_file.magic);
 
     println!("Minor: 0x{:X}", class_file.minor);
@@ -160,6 +193,10 @@ pub fn zvm() {
     println!("Fields Count: {}", class_file.fields_count);
 
     print_fields(&class_file);
+
+    println!("Methods Count: {}", class_file.methods_count);
+
+    print_methods(&class_file);
 
     // print_hex(&buf);
     //
@@ -560,6 +597,57 @@ fn parse_attr_info(buf: &Vec<u8>, offset: &mut usize) -> AttributeInfo {
     }
 }
 
+fn get_methods_count(buf: &Vec<u8>, class_file: &mut ClassFile, offset: &mut usize) {
+    let methods_count = u16::from_be_bytes([buf[*offset], buf[*offset + 1]]);
+    class_file.methods_count = methods_count;
+
+    *offset += 2;
+}
+
+fn get_methods(buf: &Vec<u8>, class_file: &mut ClassFile, offset: &mut usize) {
+    let methods_count = class_file.methods_count as usize;
+
+    for _ in 0..methods_count {
+        let field = parse_method_info(buf, offset);
+        class_file.methods.push(field);
+    }
+}
+
+fn parse_method_info(buf: &Vec<u8>, offset: &mut usize) -> MethodInfo {
+    // access_flags: u16,
+    // name_index: u16,
+    // descriptor_index: u16,
+    // attributes_count: u16,
+    // attributes: Vec<AttributeInfo>,
+
+    let access_flags = u16::from_be_bytes([buf[*offset], buf[*offset + 1]]);
+    *offset += 2;
+
+    let name_index = u16::from_be_bytes([buf[*offset], buf[*offset + 1]]);
+    *offset += 2;
+
+    let descriptor_index = u16::from_be_bytes([buf[*offset], buf[*offset + 1]]);
+    *offset += 2;
+
+    let attributes_count = u16::from_be_bytes([buf[*offset], buf[*offset + 1]]);
+    *offset += 2;
+
+    let mut attributes = Vec::new();
+
+    for _ in 0..attributes_count {
+        let attr = parse_attr_info(buf, offset);
+        attributes.push(attr);
+    }
+
+    MethodInfo {
+        access_flags,
+        name_index,
+        descriptor_index,
+        attributes_count,
+        attributes,
+    }
+}
+
 fn print_constant_pool(class_file: &ClassFile) {
     println!("\nConstant Pool:");
 
@@ -755,7 +843,6 @@ fn print_fields(class_file: &ClassFile) {
     println!("Fields:");
     for (i, field) in class_file.fields.iter().enumerate() {
         println!("  [{}]: Access Flags: 0x{:04X}", i, field.access_flags);
-
         println!("  [{}]: Name: {}", i, field.name_index);
         println!("  [{}]: Descriptor: {}", i, field.descriptor_index);
         println!("  [{}]: Attributes Count: {}", i, field.attributes_count);
@@ -768,8 +855,36 @@ fn print_fields(class_file: &ClassFile) {
 
             for (k, b) in attr.info.iter().enumerate() {
                 println!("      Info:");
-                println!("          [{}]: Byte: {}", j, b);
+                println!("          [{}]: Byte: {}", k, b);
             }
+        }
+    }
+}
+
+fn print_methods(class_file: &ClassFile) {
+    if class_file.methods.is_empty() {
+        println!("Methods: None");
+        return;
+    }
+
+    println!("Methods:");
+    for (i, method) in class_file.methods.iter().enumerate() {
+        println!("  [{}]: Access Flags: 0x{:04X}", i, method.access_flags);
+        println!("  [{}]: Name: {}", i, method.name_index);
+        println!("  [{}]: Descriptor: {}", i, method.descriptor_index);
+        println!("  [{}]: Attributes Count: {}", i, method.attributes_count);
+
+        for (j, attr) in method.attributes.iter().enumerate() {
+            println!("  Attributes:");
+            println!("      [{}]: Name: {}", j, attr.attribute_name_index);
+            println!("      [{}]: Length: {}", j, attr.attribute_length);
+            println!("      [{}]: Info: {}", j, attr.attribute_length);
+
+            print!("      Info Bytes: ");
+            for (k, b) in attr.info.iter().enumerate() {
+                print!("{}, ", b);
+            }
+            println!();
         }
     }
 }
